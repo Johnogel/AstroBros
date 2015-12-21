@@ -42,9 +42,11 @@ private Body astro_body;
         circle_fixture.shape = circle_shape;
         circle_fixture.density = .5f;
         circle_fixture.friction = .8f;
-        circle_fixture.restitution = .5f;
+        circle_fixture.restitution = .0f;
         
         astro_body.createFixture(circle_fixture);
+        
+        astro_body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
     }
     

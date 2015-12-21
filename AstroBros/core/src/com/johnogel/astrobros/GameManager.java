@@ -25,14 +25,20 @@ private FPSLogger logger;
 private int width, height;
 private OrthographicCamera camera;
 private ArrayList<GameObject> game_objects;
+
+private float fps;
     public GameManager(){
-        width = Gdx.graphics.getWidth()/3;
-        height = Gdx.graphics.getHeight()/3;
+        this.fps = 1/60f;
+        width = Gdx.graphics.getWidth()/5;
+        height = Gdx.graphics.getHeight()/5;
+        
         world = new World(new Vector2(0,0), false);
         renderer = new Box2DDebugRenderer();
+        
         logger = new FPSLogger();
         camera = new OrthographicCamera(width, height);
-        
+        camera.position.set(width * .5f, height * .5f, 0);
+        camera.update();
         game_objects = new ArrayList();
         for (int i = 0; i < 15; i++){
             game_objects.add(new AstroBro(world, camera));
@@ -44,7 +50,7 @@ private ArrayList<GameObject> game_objects;
     
     @Override
     public void render(){
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
     
@@ -56,6 +62,7 @@ private ArrayList<GameObject> game_objects;
 
     @Override
     public void update() {
+        world.step(this.fps, 6, 2);
         
     }
     
