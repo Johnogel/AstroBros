@@ -5,13 +5,24 @@
  */
 package com.johnogel.astrobros;
 
+import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
+
 /**
  *
  * @author johno-gel
  */
 public class GameManager implements Controller{
-    
+World world; 
+Box2DDebugRenderer renderer;
+FPSLogger logger;
     public GameManager(){
+        world = new World(new Vector2(0,0), false);
+        renderer = new Box2DDebugRenderer();
+        logger = new FPSLogger();
+        
         
     }
     
