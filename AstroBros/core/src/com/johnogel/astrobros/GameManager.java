@@ -61,7 +61,8 @@ private Player player;
         }
         
         game_objects.add(player);
- 
+        
+        handler.setCombinedMatrix(camera);
         
     }
     
@@ -69,19 +70,22 @@ private Player player;
     public void render(){
         
         Gdx.gl20.glClearColor(0, 0, 0, 1);
+        
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        
+       
         handler.updateAndRender();
-        renderer.render(world, camera.combined);
         
+        renderer.render(world, camera.combined);
         
     }
 
     @Override
     public void update() {
+        
         handler.setCombinedMatrix(camera);
+        
         player.update();
+        
         world.step(this.fps, 6, 2);
         
     }
