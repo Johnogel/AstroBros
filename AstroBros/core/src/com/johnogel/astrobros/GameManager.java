@@ -5,12 +5,13 @@
  */
 package com.johnogel.astrobros;
 
+import box2dLight.Light;
+import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -30,27 +31,36 @@ private OrthographicCamera camera;
 private Array<GameObject> game_objects;
 private Array<Body> bodies;
 private int max_count;
-private RayHandler handler;
+private RayHandler ray_handler;
+private SuperManager mngr;
 private float fps;
+private Array<Light> lights;
+private boolean started;
 
 //player obviously
 private Player player;
-    public GameManager(World world, OrthographicCamera camera, RayHandler handler){
+    public GameManager(SuperManager mngr){
+        this.mngr = mngr;
         this.fps = 1/60f;
         max_count = 15;
+        
+        started = false;
+        
+        lights = new Array();
+        
         width = Gdx.graphics.getWidth()/5;
         height = Gdx.graphics.getHeight()/5;
        
         bodies = new Array();
         
-        this.handler = handler;
-        this.world = world;
+        this.ray_handler = mngr.getRayHandler();
+        this.world = mngr.getWorld();
         renderer = new Box2DDebugRenderer();
         
         this.world.getBodies(bodies);
         
         logger = new FPSLogger();
-        this.camera = camera;
+        this.camera = mngr.getCamera();
         this.camera.position.set(width * .5f, height * .5f, 0);
         this.camera.update();
         game_objects = new Array();
@@ -63,18 +73,20 @@ private Player player;
         
         game_objects.add(player);
         
-        handler.setCombinedMatrix(camera);
+        ray_handler.setCombinedMatrix(camera);
+        
+        this.addLight(800, Color.YELLOW, 350, width/2, height/2 );
         
     }
     
     @Override
     public void render(){
-        
+              
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        handler.updateAndRender();
+        ray_handler.updateAndRender();
         
         renderer.render(world, camera.combined);
         
@@ -83,7 +95,7 @@ private Player player;
     @Override
     public void update() {
         
-        handler.setCombinedMatrix(camera);
+        ray_handler.setCombinedMatrix(camera);
         
         player.update();
         
@@ -103,16 +115,46 @@ private Player player;
         }
       
     }
-
+    
+    
+    public void toggleLights(){
+        for (Light l : lights){
+            l.setActive(!l.isActive());
+        }
+    }
+    
     @Override
     public void dispose() {
         world.dispose();
     }
 
+    public void addLight(int num_rays, Color color, int reach, int x, int y){
+        lights.add(new PointLight(ray_handler, num_rays, color, reach, x, y));
+    }
+    
     @Override
     public void updateLights() {
-        AstroBros.createPointLight(800, Color.YELLOW, 350, width/2, height/2 );
-        handler.setCombinedMatrix(camera);
+        
+        ray_handler.setCombinedMatrix(camera);
+    }
+
+    @Override
+    public void addLight(Light light) {
+        lights.add(light);
+    }
+
+    @Override
+    public void turnOffLights() {
+        for (Light l : lights){
+            l.setActive(false);
+        }
+    }
+
+    @Override
+    public void turnOnLights() {
+        for (Light l : lights){
+            l.setActive(true);
+        }
     }
     
 }

@@ -5,6 +5,8 @@
  */
 package com.johnogel.astrobros;
 
+import box2dLight.Light;
+
 /**
  *
  * @author johno-gel
@@ -13,6 +15,9 @@ public interface Controller {
     
     public void update();
     public void render();
+    public void addLight(Light light);
+    public void turnOffLights();
+    public void turnOnLights();
     public void updateLights();
     public void dispose();
     
