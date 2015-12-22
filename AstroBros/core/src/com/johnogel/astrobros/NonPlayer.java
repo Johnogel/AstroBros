@@ -5,11 +5,8 @@
  */
 package com.johnogel.astrobros;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -18,18 +15,12 @@ import com.badlogic.gdx.physics.box2d.World;
  *
  * @author johno-gel
  */
-public class AstroBro implements GameObject{
-protected World world;
-protected OrthographicCamera camera;
-private Sound[] sound;
-protected Body astro_body;
-    public AstroBro(World world, OrthographicCamera camera){
-        this.world = world;
-        this.camera = camera;
-        sound = new Sound[20];
-        
+public class NonPlayer extends AstroBro{
+
+    public NonPlayer(World world, OrthographicCamera camera) {
+        super(world, camera);
         BodyDef circle_def = new BodyDef();
-        circle_def.type = BodyType.DynamicBody;
+        circle_def.type = BodyDef.BodyType.DynamicBody;
         float x = (float) (camera.viewportWidth*Math.random());
         float y = (float) (camera.viewportHeight*Math.random());
         circle_def.position.set(x,y);
@@ -47,15 +38,6 @@ protected Body astro_body;
         astro_body.createFixture(circle_fixture);
         
         astro_body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
-        
-    }
-    
-    @Override
-    public void update() {
-    }
-
-    @Override
-    public void render() {
     }
     
 }

@@ -31,6 +31,9 @@ private Array<Body> bodies;
 private int max_count;
 private RayHandler handler;
 private float fps;
+
+//player obviously
+private Player player;
     public GameManager(World world, OrthographicCamera camera, RayHandler handler){
         this.fps = 1/60f;
         max_count = 15;
@@ -51,9 +54,13 @@ private float fps;
         this.camera.update();
         game_objects = new Array();
         
+        player = new Player(world, camera);
+        
         for (int i = 0; i < max_count; i++){
-            game_objects.add(new AstroBro(world, camera));
+            game_objects.add(new NonPlayer(world, camera));
         }
+        
+        game_objects.add(player);
  
         
     }
@@ -74,11 +81,18 @@ private float fps;
     @Override
     public void update() {
         handler.setCombinedMatrix(camera);
+        player.update();
         world.step(this.fps, 6, 2);
         
     }
     
     private void renderGameObjects(){
+        for (GameObject o : game_objects){
+            o.render();
+        }
+      
+    }
+    private void updateGameObjects(){
         for (GameObject o : game_objects){
             o.render();
         }
