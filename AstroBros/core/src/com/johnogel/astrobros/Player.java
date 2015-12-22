@@ -35,17 +35,19 @@ private int max_vel, max_force;
         
         FixtureDef circle_fixture = new FixtureDef();
         circle_fixture.shape = circle_shape;
-        circle_fixture.density = .5f;
+        circle_fixture.density = .8f;
         circle_fixture.friction = 1.0f;
         circle_fixture.restitution = .0f;
         
         astro_body.createFixture(circle_fixture);
-
+        
         max_vel = 50;
         max_force = 400;
         
         
     }
+    
+    
     
     @Override
     public void update(){
