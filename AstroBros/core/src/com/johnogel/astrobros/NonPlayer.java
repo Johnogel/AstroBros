@@ -32,7 +32,7 @@ public class NonPlayer extends AstroBro{
         FixtureDef circle_fixture = new FixtureDef();
         circle_fixture.shape = circle_shape;
         circle_fixture.density = .5f;
-        circle_fixture.friction = .8f;
+        circle_fixture.friction = 1.0f;
         circle_fixture.restitution = .0f;
         
         astro_body.createFixture(circle_fixture);

@@ -36,13 +36,13 @@ private int max_vel, max_force;
         FixtureDef circle_fixture = new FixtureDef();
         circle_fixture.shape = circle_shape;
         circle_fixture.density = .5f;
-        circle_fixture.friction = .8f;
+        circle_fixture.friction = 1.0f;
         circle_fixture.restitution = .0f;
         
         astro_body.createFixture(circle_fixture);
 
-        max_vel = 100;
-        max_force = 100;
+        max_vel = 50;
+        max_force = 400;
         
         
     }
@@ -60,7 +60,7 @@ private int max_vel, max_force;
         
         //apply force down
         if(Gdx.input.isKeyPressed(Keys.S)){
-            if(this.astro_body.getLinearVelocity().x > -max_vel){
+            if(this.astro_body.getLinearVelocity().y > -max_vel){
                 this.astro_body.applyForceToCenter(0, -max_force, true);
             }
             
@@ -68,15 +68,14 @@ private int max_vel, max_force;
         
         //apply force right
         if(Gdx.input.isKeyPressed(Keys.D)){
-            if(this.astro_body.getLinearVelocity().x > -max_vel){
+            if(this.astro_body.getLinearVelocity().x < max_vel){
                 this.astro_body.applyForceToCenter(max_force, 0, true);
-            }
-            
+            } 
         }
         
         //apply force up
         if(Gdx.input.isKeyPressed(Keys.W)){
-            if(this.astro_body.getLinearVelocity().x > -max_vel){
+            if(this.astro_body.getLinearVelocity().y < max_vel){
                 this.astro_body.applyForceToCenter(0, max_force, true);
             }
             

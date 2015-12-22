@@ -36,7 +36,7 @@ public class AstroBros extends ApplicationAdapter {
             handler.setCombinedMatrix(camera);
             manager = new SuperManager(world, camera, handler);
 
-            new PointLight(handler, 800, Color.YELLOW, 150, width/2, height/2);
+            new PointLight(handler, 800, Color.YELLOW, 350, width/2, height/2);
 	}
 
 	@Override
