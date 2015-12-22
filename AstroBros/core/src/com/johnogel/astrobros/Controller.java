@@ -13,6 +13,7 @@ public interface Controller {
     
     public void update();
     public void render();
+    public void updateLights();
     public void dispose();
     
 }

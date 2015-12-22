@@ -24,7 +24,7 @@ public static final int
     public SuperManager(World world, OrthographicCamera camera, RayHandler handler){
         managers = new Array();
         managers.add(new GameManager(world, camera, handler));
-        managers.add(new MenuManager());
+        managers.add(new MenuManager(camera, handler));
         
         manager = managers.get(SuperManager.MENU_MANAGER);
         
@@ -46,11 +46,18 @@ public static final int
     }
     public static void setController(int INDEX){
         manager = managers.get(INDEX);
+        manager.updateLights();
+        
     }
     
     @Override
     public void dispose() {
         manager.dispose();
+    }
+
+    @Override
+    public void updateLights() {
+        manager.updateLights();
     }
     
 }

@@ -7,6 +7,7 @@ package com.johnogel.astrobros;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
@@ -72,7 +73,7 @@ private Player player;
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-       
+        
         handler.updateAndRender();
         
         renderer.render(world, camera.combined);
@@ -106,6 +107,12 @@ private Player player;
     @Override
     public void dispose() {
         world.dispose();
+    }
+
+    @Override
+    public void updateLights() {
+        AstroBros.createPointLight(800, Color.YELLOW, 350, width/2, height/2 );
+        handler.setCombinedMatrix(camera);
     }
     
 }
