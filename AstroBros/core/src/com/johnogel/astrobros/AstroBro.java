@@ -69,13 +69,13 @@ protected Body astro_body;
     public void update(SpriteBatch batch) {
         //System.out.println("Angle: "+astro_body.getAngle());
         batch.setProjectionMatrix(camera.combined);
+        batch.enableBlending();
         
     }
 
     @Override
     public void render(SpriteBatch batch) {
         batch.begin();
-        
         batch.draw(texture, astro_body.getPosition().x - 3, astro_body.getPosition().y - 3, 6, 6);
         batch.end();
     }
