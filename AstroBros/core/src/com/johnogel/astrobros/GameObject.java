@@ -5,13 +5,15 @@
  */
 package com.johnogel.astrobros;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 /**
  *
  * @author johno-gel
  */
 public interface GameObject {
     
-    public void update();
-    public void render();
+    public void update(SpriteBatch batch);
+    public void render(SpriteBatch batch);
     
 }

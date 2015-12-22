@@ -11,6 +11,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -36,6 +37,7 @@ private SuperManager mngr;
 private float fps;
 private Array<Light> lights;
 private boolean started;
+private SpriteBatch sprite;
 
 //player obviously
 private Player player;
@@ -43,6 +45,8 @@ private Player player;
         this.mngr = mngr;
         this.fps = 1/60f;
         max_count = 15;
+        
+        sprite = new SpriteBatch();
         
         started = false;
         
@@ -75,6 +79,9 @@ private Player player;
         
         ray_handler.setCombinedMatrix(camera);
         
+        ray_handler.setCulling(true);
+        ray_handler.setBlur(true);
+        
         this.addLight(800, Color.YELLOW, 350, width/2, height/2 );
         
     }
@@ -86,9 +93,16 @@ private Player player;
         
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
+        renderer.render(world, camera.combined);
+        
+        this.renderGameObjects();
+        
+        
+        
         ray_handler.updateAndRender();
         
-        renderer.render(world, camera.combined);
+        
+        
         
     }
 
@@ -105,13 +119,14 @@ private Player player;
     
     private void renderGameObjects(){
         for (GameObject o : game_objects){
-            o.render();
+            o.render(sprite);
         }
       
     }
+    
     private void updateGameObjects(){
         for (GameObject o : game_objects){
-            o.update();
+            o.update(sprite);
         }
       
     }

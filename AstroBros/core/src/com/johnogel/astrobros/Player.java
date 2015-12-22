@@ -7,8 +7,8 @@ package com.johnogel.astrobros;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -50,7 +50,7 @@ private int max_vel, max_force;
     
     
     @Override
-    public void update(){
+    public void update(SpriteBatch batch){
         System.out.println("Angle: "+astro_body.getAngle());
         
         //apply force left
