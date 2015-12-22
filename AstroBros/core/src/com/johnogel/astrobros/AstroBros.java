@@ -24,7 +24,7 @@ public class AstroBros extends ApplicationAdapter {
         
         SuperManager manager;
 	
-        static RayHandler ray_handler;
+        RayHandler ray_handler;
         
 	@Override
 	public void create () {
@@ -52,7 +52,4 @@ public class AstroBros extends ApplicationAdapter {
             manager.dispose();
         }
         
-        public static void createPointLight(int NUM_RAYS, Color color, int reach, int x, int y){
-            new PointLight(ray_handler, NUM_RAYS, color, 350, x, y);
-        }
 }
