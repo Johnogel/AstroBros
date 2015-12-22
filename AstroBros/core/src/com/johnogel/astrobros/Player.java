@@ -42,7 +42,7 @@ private int max_vel, max_force;
         astro_body.createFixture(circle_fixture);
 
         max_vel = 100;
-        max_force = 75;
+        max_force = 100;
         
         
     }
