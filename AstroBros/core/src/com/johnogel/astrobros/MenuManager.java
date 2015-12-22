@@ -79,6 +79,7 @@ public class MenuManager implements Controller{
         ray_handler.updateAndRender(); 
 
         batch.begin();
+        
         batch.draw(press_space, Gdx.graphics.getWidth()/2 - press_space.getWidth()/2, Gdx.graphics.getHeight()/2 - press_space.getHeight()/2);
         batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, Gdx.graphics.getHeight()/2+100);
         

@@ -97,7 +97,7 @@ private Player player;
         
         ray_handler.setCombinedMatrix(camera);
         
-        player.update();
+        this.updateGameObjects();
         
         world.step(this.fps, 6, 2);
         
@@ -111,7 +111,7 @@ private Player player;
     }
     private void updateGameObjects(){
         for (GameObject o : game_objects){
-            o.render();
+            o.update();
         }
       
     }

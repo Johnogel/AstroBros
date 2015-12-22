@@ -51,6 +51,7 @@ private int max_vel, max_force;
     
     @Override
     public void update(){
+        System.out.println("Angle: "+astro_body.getAngle());
         
         //apply force left
         if(Gdx.input.isKeyPressed(Keys.A)){

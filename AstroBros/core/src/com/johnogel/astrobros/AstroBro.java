@@ -48,10 +48,13 @@ protected Body astro_body;
         
         astro_body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
+        
+        
     }
     
     @Override
     public void update() {
+        //System.out.println("Angle: "+astro_body.getAngle());
     }
 
     @Override
