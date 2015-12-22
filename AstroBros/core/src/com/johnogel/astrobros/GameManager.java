@@ -5,56 +5,67 @@
  */
 package com.johnogel.astrobros;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import java.util.ArrayList;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
  * @author johno-gel
  */
-public class GameManager implements Controller{
+public class GameManager extends AstroBros implements Controller{
 World world; 
 private Box2DDebugRenderer renderer;
 private FPSLogger logger;
 private int width, height;
 private OrthographicCamera camera;
-private ArrayList<GameObject> game_objects;
-
+private Array<GameObject> game_objects;
+private Array<Body> bodies;
+private int max_count;
+private RayHandler handler;
 private float fps;
-    public GameManager(){
+    public GameManager(World world, OrthographicCamera camera, RayHandler handler){
         this.fps = 1/60f;
+        max_count = 15;
         width = Gdx.graphics.getWidth()/5;
         height = Gdx.graphics.getHeight()/5;
+       
+        bodies = new Array();
         
-        world = new World(new Vector2(0,0), false);
+        this.handler = handler;
+        this.world = world;
         renderer = new Box2DDebugRenderer();
         
+        this.world.getBodies(bodies);
+        
         logger = new FPSLogger();
-        camera = new OrthographicCamera(width, height);
-        camera.position.set(width * .5f, height * .5f, 0);
-        camera.update();
-        game_objects = new ArrayList();
-        for (int i = 0; i < 15; i++){
+        this.camera = camera;
+        this.camera.position.set(width * .5f, height * .5f, 0);
+        this.camera.update();
+        game_objects = new Array();
+        
+        for (int i = 0; i < max_count; i++){
             game_objects.add(new AstroBro(world, camera));
         }
-        
-        
+ 
         
     }
     
     @Override
     public void render(){
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-    
+        Gdx.gl20.glClearColor(0, 0, 0, 1);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
+        
+        handler.updateAndRender();
         renderer.render(world, camera.combined);
         
         
@@ -62,6 +73,7 @@ private float fps;
 
     @Override
     public void update() {
+        handler.setCombinedMatrix(camera);
         world.step(this.fps, 6, 2);
         
     }
@@ -70,6 +82,12 @@ private float fps;
         for (GameObject o : game_objects){
             o.render();
         }
+      
+    }
+
+    @Override
+    public void dispose() {
+        world.dispose();
     }
     
 }

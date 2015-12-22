@@ -5,14 +5,18 @@
  */
 package com.johnogel.astrobros;
 
+import box2dLight.RayHandler;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.World;
+
 /**
  *
  * @author johno-gel
  */
-public class SuperManager implements Controller{
+public class SuperManager extends AstroBros implements Controller{
 Controller manager;
-    public SuperManager(){
-        manager = new GameManager();
+    public SuperManager(World world, OrthographicCamera camera, RayHandler handler){
+        manager = new GameManager(world, camera, handler);
     }
 
     @Override
@@ -23,6 +27,11 @@ Controller manager;
     @Override
     public void render() {
         manager.render();
+    }
+
+    @Override
+    public void dispose() {
+        manager.dispose();
     }
     
 }

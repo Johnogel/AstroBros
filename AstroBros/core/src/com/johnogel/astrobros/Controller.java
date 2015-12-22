@@ -13,5 +13,6 @@ public interface Controller {
     
     public void update();
     public void render();
+    public void dispose();
     
 }
