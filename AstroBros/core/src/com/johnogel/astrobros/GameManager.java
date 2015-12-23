@@ -79,13 +79,13 @@ private Player player;
         
         ray_handler.setCombinedMatrix(camera);
         
-        ray_handler.setCulling(true);
+        //ray_handler.setCulling(true);
         ray_handler.setBlur(true);
         
         //ray_handler.setLightMapRendering(false);
         ray_handler.setShadows(true);
         
-        ray_handler.setAmbientLight(0, 0, 1, .15f);
+        ray_handler.setAmbientLight(0, 0, 0, .1f);
         
         
         //Sun

@@ -9,9 +9,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -76,7 +76,9 @@ protected Body astro_body;
     @Override
     public void render(SpriteBatch batch) {
         batch.begin();
-        batch.draw(texture, astro_body.getPosition().x - 3, astro_body.getPosition().y - 3, 6, 6);
+   
+        batch.draw(texture, astro_body.getPosition().x, astro_body.getPosition().y, 0, 0, 6f, 6f, 1f, 1f, astro_body.getAngle() * MathUtils.radiansToDegrees, 0, 0 ,0, 0, false, false);
+        //batch.draw(texture, astro_body.getPosition().x - 3, astro_body.getPosition().y - 3, 6, 6);
         batch.end();
     }
     
