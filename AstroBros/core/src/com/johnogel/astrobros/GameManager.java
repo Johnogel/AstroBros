@@ -44,7 +44,7 @@ private Player player;
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
         this.fps = 1/60f;
-        max_count = 5;
+        max_count = 50;
         
         batch = new SpriteBatch();
         
