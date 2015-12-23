@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 /**
  *
@@ -29,6 +30,7 @@ private SpriteBatch batch;
 private Texture texture;
 protected OrthographicCamera camera;
 private Sound[] sound;
+private Box2DSprite sprite;
 protected Body astro_body;
     public AstroBro(World world, OrthographicCamera camera){
         this.world = world;
@@ -55,13 +57,17 @@ protected Body astro_body;
         circle_fixture.friction = .8f;
         circle_fixture.restitution = .0f;
         
+        astro_body.createFixture(circle_fixture);
         
+        sprite = new Box2DSprite(texture);
+        
+        astro_body.setUserData(sprite);
         
         astro_body.createFixture(circle_fixture);
         
         astro_body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
-        
+        circle_shape.dispose();
         
     }
     
@@ -76,8 +82,9 @@ protected Body astro_body;
     @Override
     public void render(SpriteBatch batch) {
         batch.begin();
-   
-        batch.draw(texture, astro_body.getPosition().x, astro_body.getPosition().y, 0, 0, 6f, 6f, 1f, 1f, astro_body.getAngle() * MathUtils.radiansToDegrees, 0, 0 ,0, 0, false, false);
+        
+        sprite.draw(batch, astro_body);
+        //batch.draw(texture, astro_body.getPosition().x, astro_body.getPosition().y, 0, 0, 6f, 6f, 1f, 1f, astro_body.getAngle() * MathUtils.radiansToDegrees, 0, 0 ,0, 0, false, false);
         //batch.draw(texture, astro_body.getPosition().x - 3, astro_body.getPosition().y - 3, 6, 6);
         batch.end();
     }
