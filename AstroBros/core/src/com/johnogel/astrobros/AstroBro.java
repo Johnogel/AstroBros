@@ -24,15 +24,15 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  *
  * @author johno-gel
  */
-public class AstroBro implements GameObject{
+public abstract class AstroBro implements GameObject{
 protected World world;
-private SpriteBatch batch;
-private Texture texture;
+protected SpriteBatch batch;
+protected Texture texture;
 protected OrthographicCamera camera;
-private Sound[] sound;
-private Box2DSprite sprite;
+protected Sound[] sound;
+protected Box2DSprite sprite;
 protected Body astro_body;
-    public AstroBro(World world, OrthographicCamera camera){
+    /*public AstroBro(World world, OrthographicCamera camera){
         this.world = world;
         this.camera = camera;
         sound = new Sound[20];
@@ -70,7 +70,7 @@ protected Body astro_body;
         circle_shape.dispose();
         
     }
-    
+    */
     @Override
     public void update(SpriteBatch batch) {
         //System.out.println("Angle: "+astro_body.getAngle());

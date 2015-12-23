@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.Array;
  *
  * @author johno-gel
  */
-public class GameManager extends AstroBros implements Controller{
+public class GameManager implements Controller{
 World world; 
 private Box2DDebugRenderer renderer;
 private FPSLogger logger;
@@ -37,16 +37,16 @@ private SuperManager mngr;
 private float fps;
 private Array<Light> lights;
 private boolean started;
-private SpriteBatch sprite;
+private SpriteBatch batch;
 
 //player obviously
 private Player player;
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
         this.fps = 1/60f;
-        max_count = 15;
+        max_count = 5;
         
-        sprite = new SpriteBatch();
+        batch = new SpriteBatch();
         
         started = false;
         
@@ -129,14 +129,14 @@ private Player player;
     
     private void renderGameObjects(){
         for (GameObject o : game_objects){
-            o.render(sprite);
+            o.render(batch);
         }
       
     }
     
     private void updateGameObjects(){
         for (GameObject o : game_objects){
-            o.update(sprite);
+            o.update(batch);
         }
       
     }
