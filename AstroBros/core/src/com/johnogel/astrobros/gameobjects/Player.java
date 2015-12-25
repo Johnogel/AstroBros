@@ -22,6 +22,7 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  */
 public class Player extends AstroBro{
 private int max_vel, max_force;
+private boolean space_pressed;
     public Player(World world, OrthographicCamera camera) {
         //super(world, camera);
         this.camera = camera;
@@ -65,6 +66,9 @@ private int max_vel, max_force;
         
     }
     
+    public boolean isGrabbing(){
+        return space_pressed;
+    }
     
     
     @Override
@@ -100,6 +104,17 @@ private int max_vel, max_force;
                 this.astro_body.applyForceToCenter(0, max_force, true);
             }
             
+        }
+        
+        //checks if player is attempting to grab
+        if(Gdx.input.isKeyPressed(Keys.SPACE)){
+            if(!space_pressed){
+                space_pressed = true;
+            }
+            
+        }
+        else{
+            space_pressed = false;
         }
         this.camera.position.set(this.astro_body.getPosition(), 0);
         this.camera.update();
