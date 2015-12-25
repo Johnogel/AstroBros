@@ -1,5 +1,6 @@
 package com.johnogel.astrobros;
 
+import com.johnogel.astrobros.managers.SuperManager;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.ApplicationAdapter;

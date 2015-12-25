@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.johnogel.astrobros;
+package com.johnogel.astrobros.gameobjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -24,15 +21,9 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  *
  * @author johno-gel
  */
-public abstract class AstroBro implements GameObject{
-protected World world;
-protected SpriteBatch batch;
-protected Texture texture;
-protected OrthographicCamera camera;
-protected Sound[] sound;
-protected Box2DSprite sprite;
-protected Body astro_body;
-    /*public AstroBro(World world, OrthographicCamera camera){
+public class NonPlayer extends AstroBro{
+
+    public NonPlayer(World world, OrthographicCamera camera) {
         this.world = world;
         this.camera = camera;
         sound = new Sound[20];
@@ -68,29 +59,6 @@ protected Body astro_body;
         astro_body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
         circle_shape.dispose();
-        
-    }
-    */
-    @Override
-    public void update(SpriteBatch batch) {
-        //System.out.println("Angle: "+astro_body.getAngle());
-        batch.setProjectionMatrix(camera.combined);
-        //batch.enableBlending();
-        
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
-        batch.begin();
-        
-        sprite.draw(batch, astro_body);
-        //batch.draw(texture, astro_body.getPosition().x, astro_body.getPosition().y, 0, 0, 6f, 6f, 1f, 1f, astro_body.getAngle() * MathUtils.radiansToDegrees, 0, 0 ,0, 0, false, false);
-        //batch.draw(texture, astro_body.getPosition().x - 3, astro_body.getPosition().y - 3, 6, 6);
-        batch.end();
-    }
-    
-    public Body getBody(){
-        return astro_body;
     }
     
 }

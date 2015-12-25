@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.johnogel.astrobros;
+package com.johnogel.astrobros.managers;
 
+import com.johnogel.astrobros.interfaces.GameObject;
+import com.johnogel.astrobros.interfaces.Controller;
+import com.johnogel.astrobros.gameobjects.NonPlayer;
+import com.johnogel.astrobros.gameobjects.Player;
 import box2dLight.Light;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;

@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.johnogel.astrobros;
+package com.johnogel.astrobros.levels;
 
+import com.johnogel.astrobros.managers.GameManager;
+import com.johnogel.astrobros.gameobjects.AstroBro;
+import com.johnogel.astrobros.gameobjects.Sun;
+import com.johnogel.astrobros.gameobjects.Player;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -38,6 +42,8 @@ private Player player;
         
         world.getBodies(bodies);
         
+       
+        
     }
     
     //should be overriden in child class
@@ -52,7 +58,8 @@ private Player player;
         
         //sets force on each body towards each sun
         for (Sun s : suns){
-            for (Body b : bodies){
+            for (AstroBro b : bros){
+                Body body = b.getBody();
                 //Do math stuff here
             }
         }
