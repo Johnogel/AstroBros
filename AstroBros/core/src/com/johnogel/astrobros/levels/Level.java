@@ -5,6 +5,9 @@
  */
 package com.johnogel.astrobros.levels;
 
+import box2dLight.Light;
+import box2dLight.RayHandler;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.johnogel.astrobros.managers.GameManager;
 import com.johnogel.astrobros.gameobjects.AstroBro;
 import com.johnogel.astrobros.gameobjects.Sun;
@@ -23,25 +26,33 @@ import com.badlogic.gdx.utils.Array;
  */
 public abstract class Level {
 private GameManager mngr;    
-private Array<Sun> suns;
-private Array<Body> bodies;
-private Array<AstroBro> bros;
-private Array<AstroBro> controlled_bros;
-private Array<AstroBro> free_bros;
-private Array<Body> controlled_bodies;
-private Array<Body> free_bodies;
-private World world;
-private Player player;
+protected Array<Sun> suns;
+protected Array<Body> bodies;
+protected Array<Body> bro_bodies;
+protected Array<AstroBro> controlled_bros;
+protected Array<AstroBro> free_bros;
+protected Array<Body> controlled_bodies;
+protected Array<Body> free_bodies;
+protected World world;
+protected Player player;
+protected RayHandler ray_handler;
+protected Array<Light> lights;
+protected int width, height;
+
+protected OrthographicCamera camera;
 
     public Level(GameManager mngr){
         
+        
         bodies = new Array();
         suns = new Array();
-        bros = new Array();
+        
         controlled_bros = new Array();
         free_bros = new Array();
+        
+        bro_bodies = new Array();
         controlled_bodies = new Array();
-        free_bros = new Array();
+        free_bodies = new Array();
         
         this.player = mngr.getPlayer();
         this.mngr = mngr;
@@ -50,7 +61,15 @@ private Player player;
         
         
         
+        this.lights = mngr.getLightsArray();
+        
+        this.ray_handler = mngr.getRayHandler();
+        
+        width = mngr.getWidth();
+        height = mngr.getHeight();
+        
         world.getBodies(bodies);
+        camera = mngr.getCamera();
         
        
         
@@ -67,6 +86,7 @@ private Player player;
         }
     }
     
+    //should also be called in initialize method
     protected void initializeContactListener(){
         world.setContactListener(new ContactListener(){
 
@@ -77,27 +97,36 @@ private Player player;
                 //array used for checking if controlled bros are contacting each other
                 Array<AstroBro> contacted_bros = new Array(2);
                 Body other;
+                
                 //check if an aleady controlled astro bro is contacting another body
-                for(AstroBro bro : controlled_bros){
-                    if(!contacted_bros.contains(bro, true)){
-                        
-                        if(bro.getBody().equals(contact.getFixtureA().getBody())){
-                            contacted_bros.add(bro);
+                if(bro_bodies.contains(contact.getFixtureA().getBody(), true) && bro_bodies.contains(contact.getFixtureB().getBody(), true)){
+                    
+                    //if contact A is free and B is trying to grab
+                    if(free_bodies.contains(contact.getFixtureA().getBody(), true) && controlled_bodies.contains(contact.getFixtureB().getBody(), true))
+                    {
+                        for(AstroBro bro : controlled_bros){
+
+                            if(bro.getBody().equals(contact.getFixtureA().getBody())){
+                                bro.getBody().setActive(false);
+                                
+                            }
+   
                         }
-                        
-                        else if(bro.getBody().equals(contact.getFixtureB().getBody())){
-                            contacted_bros.add(bro);
+                
+                    }
+                    
+                    //if contact B is free and A is trying to grab
+                    else if(free_bodies.contains(contact.getFixtureB().getBody(), true) && controlled_bodies.contains(contact.getFixtureA().getBody(), true)){
+                        for(AstroBro bro : controlled_bros){
+
+                            if(bro.getBody().equals(contact.getFixtureB().getBody())){
+                                bro.getBody().setActive(false);
+                            }
+   
                         }
-                        
                     }
                 }
                 
-                if(contacted_bros.size == 1){
-                    if (contacted_bros.get(0).getBody().equals(contact.getFixtureA().getBody())){
-                        
-                    }
-                    
-                }
                 
                 
                 
@@ -131,8 +160,8 @@ private Player player;
         
         //sets force on each body towards each sun
         for (Sun s : suns){
-            for (AstroBro b : bros){
-                Body body = b.getBody();
+            for (Body b : bro_bodies){
+                
                 
                 //Do math stuff here
             }

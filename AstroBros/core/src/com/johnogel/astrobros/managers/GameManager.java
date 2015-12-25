@@ -183,8 +183,28 @@ private Player player;
         }
     }
     
+    public OrthographicCamera getCamera(){
+        return camera;
+    }
+    
+    public int getWidth(){
+        return width;
+    }
+    
+    public int getHeight(){
+        return height;
+    }
+    
     public World getWorld(){
         return world;
+    }
+    
+    public RayHandler getRayHandler(){
+        return ray_handler;
+    }
+    
+    public Array<Light> getLightsArray(){
+        return lights;
     }
     
 }
