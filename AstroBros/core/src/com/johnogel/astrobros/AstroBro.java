@@ -89,4 +89,8 @@ protected Body astro_body;
         batch.end();
     }
     
+    public Body getBody(){
+        return astro_body;
+    }
+    
 }

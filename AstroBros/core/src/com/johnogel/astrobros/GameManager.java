@@ -24,7 +24,7 @@ import com.badlogic.gdx.utils.Array;
  * @author johno-gel
  */
 public class GameManager implements Controller{
-World world; 
+private World world; 
 private Box2DDebugRenderer renderer;
 private FPSLogger logger;
 private int width, height;
@@ -64,9 +64,11 @@ private Player player;
         this.world.getBodies(bodies);
         
         logger = new FPSLogger();
+        
         this.camera = mngr.getCamera();
         this.camera.position.set(width * .5f, height * .5f, 0);
         this.camera.update();
+        
         game_objects = new Array();
         
         player = new Player(world, camera);
@@ -105,15 +107,7 @@ private Player player;
         //update();
         this.renderGameObjects();
         ray_handler.updateAndRender();
-        
-        
-        
-        
-        
-        
-        
-        
-        
+   
     }
 
     @Override
@@ -141,6 +135,9 @@ private Player player;
       
     }
     
+    public Player getPlayer(){
+        return player;
+    }
     
     public void toggleLights(){
         for (Light l : lights){
@@ -180,6 +177,10 @@ private Player player;
         for (Light l : lights){
             l.setActive(true);
         }
+    }
+    
+    public World getWorld(){
+        return world;
     }
     
 }
