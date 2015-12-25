@@ -35,8 +35,7 @@ public class NonPlayer extends AstroBro{
         circle_def.position.set(x,y);
         
         texture = new Texture(Gdx.files.internal("test.png"));
-        
-        batch = new SpriteBatch();
+
         
         astro_body = world.createBody(circle_def);
         CircleShape circle_shape = new CircleShape();
@@ -70,8 +69,6 @@ public class NonPlayer extends AstroBro{
         circle_def.position.set(x,y);
         
         texture = new Texture(Gdx.files.internal("test.png"));
-        
-        batch = new SpriteBatch();
         
         astro_body = world.createBody(circle_def);
         CircleShape circle_shape = new CircleShape();

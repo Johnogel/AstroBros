@@ -30,12 +30,7 @@ public class AstroBros extends ApplicationAdapter {
 	@Override
 	public void create () {
             
-            world = new World(new Vector2(0,0), false);
-            width = Gdx.graphics.getWidth()/5;
-            height = Gdx.graphics.getHeight()/5;
-            camera = new OrthographicCamera(width, height);
-            ray_handler = new RayHandler(world);
-            ray_handler.setCombinedMatrix(camera);
+
             manager = new SuperManager(world, camera, ray_handler);
 
 	}

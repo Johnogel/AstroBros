@@ -36,8 +36,6 @@ private boolean space_pressed;
         
         texture = new Texture(Gdx.files.internal("test.png"));
         
-        batch = new SpriteBatch();
-        
         astro_body = world.createBody(circle_def);
         CircleShape circle_shape = new CircleShape();
         circle_shape.setRadius(3f);
@@ -61,7 +59,7 @@ private boolean space_pressed;
         circle_shape.dispose();
         
         max_vel = 50;
-        max_force = 400;
+        max_force = 800;
         
         
     }

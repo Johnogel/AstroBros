@@ -19,6 +19,7 @@ public interface Controller {
     public void turnOffLights();
     public void turnOnLights();
     public void updateLights();
+    public void initializeWorld();
     public void dispose();
     
 }

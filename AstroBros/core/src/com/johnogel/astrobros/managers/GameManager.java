@@ -61,41 +61,6 @@ private Player player;
        
         bodies = new Array();
         
-        this.ray_handler = mngr.getRayHandler();
-        this.world = mngr.getWorld();
-        renderer = new Box2DDebugRenderer();
-        
-        this.world.getBodies(bodies);
-        
-        logger = new FPSLogger();
-        
-        this.camera = mngr.getCamera();
-        this.camera.position.set(width * .5f, height * .5f, 0);
-        this.camera.update();
-        
-        game_objects = new Array();
-        
-        player = new Player(world, camera);
-        
-        for (int i = 0; i < max_count; i++){
-            game_objects.add(new NonPlayer(world, camera));
-        }
-        
-        game_objects.add(player);
-        
-        ray_handler.setCombinedMatrix(camera);
-        
-        //ray_handler.setCulling(true);
-        ray_handler.setBlur(true);
-        
-        //ray_handler.setLightMapRendering(false);
-        ray_handler.setShadows(true);
-        
-        ray_handler.setAmbientLight(0, 0, 0, .1f);
-        
-        
-        //Sun
-        this.addLight(8000, Color.YELLOW, 600, width/2, height/2 );
         
     }
     
@@ -207,4 +172,45 @@ private Player player;
         return lights;
     }
     
+@Override
+    public void initializeWorld(){
+        mngr.initializeWorld();
+        this.ray_handler = mngr.getRayHandler();
+        this.world = mngr.getWorld();
+        renderer = new Box2DDebugRenderer();
+        
+        this.world.getBodies(bodies);
+        
+        logger = new FPSLogger();
+        
+        this.camera = mngr.getCamera();
+        this.camera.position.set(width * .5f, height * .5f, 0);
+        this.camera.update();
+        
+        game_objects = new Array();
+        
+        player = new Player(world, camera);
+        
+        for (int i = 0; i < max_count; i++){
+            game_objects.add(new NonPlayer(world, camera));
+        }
+        
+        game_objects.add(player);
+        
+        ray_handler.setCombinedMatrix(camera);
+        
+        //ray_handler.setCulling(true);
+        ray_handler.setBlur(true);
+        
+        //ray_handler.setLightMapRendering(false);
+        ray_handler.setShadows(true);
+        
+        ray_handler.setAmbientLight(0, 0, 0, .1f);
+        
+        
+        //Sun
+        this.addLight(8000, Color.YELLOW, 600, width/2, height/2 );
+        
+        
+    }
 }

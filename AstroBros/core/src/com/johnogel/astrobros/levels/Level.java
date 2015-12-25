@@ -5,7 +5,6 @@
  */
 package com.johnogel.astrobros.levels;
 
-import box2dLight.Light;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.johnogel.astrobros.managers.GameManager;
@@ -36,14 +35,12 @@ protected Array<Body> free_bodies;
 protected World world;
 protected Player player;
 protected RayHandler ray_handler;
-protected Array<Light> lights;
 protected int width, height;
 
 protected OrthographicCamera camera;
 
     public Level(GameManager mngr){
-        
-        
+
         bodies = new Array();
         suns = new Array();
         
@@ -61,7 +58,7 @@ protected OrthographicCamera camera;
         
         
         
-        this.lights = mngr.getLightsArray();
+        this.suns = new Array();
         
         this.ray_handler = mngr.getRayHandler();
         
@@ -148,6 +145,18 @@ protected OrthographicCamera camera;
         });
     }
     
+    public OrthographicCamera getCamera(){
+        return camera;
+    }
+    
+    public RayHandler getRayHandler(){
+        return ray_handler;
+    }
+    
+    public World getWorld(){
+        return world;
+    }
+    
     //should be overriden in child class
     public abstract void initialize();
     
@@ -167,6 +176,10 @@ protected OrthographicCamera camera;
             }
         }
         
+    }
+    
+    private void reset(){
+        mngr.initializeWorld();
     }
     
 }

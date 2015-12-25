@@ -27,7 +27,6 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  */
 public abstract class AstroBro implements GameObject{
 protected World world;
-protected SpriteBatch batch;
 protected Texture texture;
 protected OrthographicCamera camera;
 protected Sound[] sound;
