@@ -99,6 +99,7 @@ private Player player;
 
     @Override
     public void update() {
+        System.out.println("Game Objects: "+game_objects.size);
         if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
             this.setLevel(this.LEVEL_ONE);
         }
@@ -248,9 +249,18 @@ private Player player;
     }
     
     public void disposeGameObjectTextures(){
-        for(GameObject o : game_objects){
-            o.dispose();
+        for (int i = 0; i < game_objects.size; i++){
+            game_objects.get(i).dispose();
+            
         }
+
+    }
+    
+    public void resetGameObjectArray(){
+        disposeGameObjectTextures();
+        //game_objects.clear();
+        game_objects.removeAll(game_objects, false);
+        this.game_objects = new Array();
     }
     
     public void setLevel(int level){

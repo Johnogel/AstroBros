@@ -30,6 +30,7 @@ public class LevelOne extends Level{
         height = mngr.getHeight();
         
         //this.ray_handler.dispose();
+        
         this.ray_handler = mngr.getRayHandler();
         this.world = mngr.getWorld();
         this.camera = mngr.getCamera();

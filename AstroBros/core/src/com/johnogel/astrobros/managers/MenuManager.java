@@ -111,6 +111,7 @@ public class MenuManager implements Controller{
     
     @Override
     public void initializeWorld(){
+        
         mngr.initializeWorld();
         this.ray_handler = mngr.getRayHandler();
         this.camera = mngr.getCamera();

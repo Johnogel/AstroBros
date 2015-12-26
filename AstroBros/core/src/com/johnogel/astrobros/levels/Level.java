@@ -222,9 +222,7 @@ protected OrthographicCamera camera;
 
     @Override
     public void dispose() {
-        for (GameObject o : mngr.getGameObjects()){
-            o.dispose();
-        }
+        mngr.resetGameObjectArray();
     }
     
 }

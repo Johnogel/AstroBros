@@ -108,5 +108,6 @@ private Box2DSprite sprite;
     public void dispose(){
         sun_body.destroyFixture(null);
         texture.dispose();
+        sprite.getTexture().dispose();
     }
 }
