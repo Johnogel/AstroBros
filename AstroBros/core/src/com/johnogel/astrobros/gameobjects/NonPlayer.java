@@ -63,6 +63,8 @@ public class NonPlayer extends AstroBro{
         circle_shape.dispose();
     }
     public NonPlayer(World world, OrthographicCamera camera, float x, float y) {
+        this.radius = 3f;
+        
         this.world = world;
         this.camera = camera;
         sounds = new Array(20);
@@ -75,7 +77,7 @@ public class NonPlayer extends AstroBro{
         
         body = world.createBody(circle_def);
         CircleShape circle_shape = new CircleShape();
-        circle_shape.setRadius(3f);
+        circle_shape.setRadius(radius);
         
         FixtureDef circle_fixture = new FixtureDef();
         circle_fixture.shape = circle_shape;
