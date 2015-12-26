@@ -103,12 +103,16 @@ protected OrthographicCamera camera;
                     //if contact A is free and B is trying to grab
                     if(free_bodies.contains(contact.getFixtureA().getBody(), false) && controlled_bodies.contains(contact.getFixtureB().getBody(), false))
                     {
-                        for(Body body : free_bodies){
+                        for(int i = 0; i < free_bros.size; i++){
 
-                            if(body.equals(contact.getFixtureA().getBody())){
-                                //body.setActive(false);
-                                //body.setType(BodyDef.BodyType.StaticBody);
-                                System.out.println("CONATACT!!!!");
+                            if(free_bros.get(i).getBody().equals(contact.getFixtureA().getBody())){
+                                //bro.getBody().setActive(false);
+                                //bro.getBody().setType(BodyDef.BodyType.StaticBody);
+                                free_bros.get(i).setTexture("badlogic.jpg");
+                                controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
+                                controlled_bros.add(free_bros.removeIndex(i));
+                                
+                                System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY");
                                 
                             }
    
@@ -118,12 +122,16 @@ protected OrthographicCamera camera;
                     
                     //if contact B is free and A is trying to grab
                     else if(free_bodies.contains(contact.getFixtureB().getBody(), false) && controlled_bodies.contains(contact.getFixtureA().getBody(), false)){
-                        for(Body body : free_bodies){
+                        
+                        for(int i = 0; i < free_bros.size; i++){
 
-                            if(body.equals(contact.getFixtureB().getBody())){
-                                //body.setActive(false);
-                                //body.setType(BodyDef.BodyType.StaticBody);
-                                System.out.println("CONATACT!!!!");
+                            if(free_bros.get(i).getBody().equals(contact.getFixtureB().getBody())){
+                                //bro.getBody().setActive(false);
+                                //bro.getBody().setType(BodyDef.BodyType.StaticBody);
+                                free_bros.get(i).setTexture("badlogic.jpg");
+                                controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
+                                controlled_bros.add(free_bros.removeIndex(i));
+                                System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY");
                                 
                             }
    

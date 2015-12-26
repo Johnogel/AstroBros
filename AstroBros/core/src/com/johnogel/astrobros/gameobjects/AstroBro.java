@@ -93,6 +93,14 @@ protected Body astro_body;
         return astro_body;
     }
     
+    public void setTexture(String image_name){
+        texture.dispose();
+        texture = new Texture(Gdx.files.internal(image_name));
+        sprite = new Box2DSprite(texture);
+        astro_body.setUserData(sprite);
+        
+    }
+    
     @Override
     public void dispose(){
      
