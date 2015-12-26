@@ -95,7 +95,8 @@ protected Body astro_body;
     
     @Override
     public void dispose(){
-        astro_body.destroyFixture(null);
+     
+        //astro_body.destroyFixture(null);
         sprite.getTexture().dispose();
         texture.dispose();
     }

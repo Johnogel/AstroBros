@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.levels.LevelOne;
 import com.johnogel.astrobros.levels.LevelTwo;
+import java.util.ArrayList;
 
 /**
  *
@@ -35,10 +36,10 @@ private Box2DDebugRenderer renderer;
 private FPSLogger logger;
 private int width, height;
 private OrthographicCamera camera;
-private Array<GameObject> game_objects;
+protected Array<GameObject> game_objects, disposables;
 private int max_count;
 private RayHandler ray_handler;
-private SuperManager mngr;
+private final SuperManager mngr;
 private float fps;
 private Array<Light> lights;
 private Array<Level> levels;
@@ -99,7 +100,7 @@ private Player player;
 
     @Override
     public void update() {
-        System.out.println("Game Objects: "+game_objects.size);
+        System.out.println("Game Objects: "+this.game_objects.size);
         if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
             this.setLevel(this.LEVEL_ONE);
         }
@@ -152,6 +153,7 @@ private Player player;
     
     @Override
     public void dispose() {
+        batch.dispose();
         world.dispose();
     }
 
@@ -254,13 +256,6 @@ private Player player;
             
         }
 
-    }
-    
-    public void resetGameObjectArray(){
-        disposeGameObjectTextures();
-        //game_objects.clear();
-        game_objects.removeAll(game_objects, false);
-        this.game_objects = new Array();
     }
     
     public void setLevel(int level){

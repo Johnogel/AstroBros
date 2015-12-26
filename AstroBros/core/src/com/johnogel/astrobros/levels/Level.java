@@ -64,11 +64,7 @@ protected OrthographicCamera camera;
         
         
         this.suns = new Array();
-        
-
-        
-       
-        
+  
     }
     
     //should be called in child initialize method
@@ -198,7 +194,19 @@ protected OrthographicCamera camera;
             mngr.addGameObject(o);
         }
     }
-
+    
+    public void clearArrays(){
+        bodies.clear();
+        suns.clear();
+        
+        controlled_bros.clear();
+        free_bros.clear();
+        
+        bro_bodies.clear(); 
+        controlled_bodies.clear(); 
+        free_bodies.clear();
+    }
+    
     @Override
     public void render() {
     }
@@ -222,7 +230,9 @@ protected OrthographicCamera camera;
 
     @Override
     public void dispose() {
-        mngr.resetGameObjectArray();
+        //mngr.resetGameObjectArray();
+        clearArrays();
+        mngr.disposeGameObjectTextures();
     }
     
 }

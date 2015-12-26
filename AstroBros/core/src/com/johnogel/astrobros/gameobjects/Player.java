@@ -119,9 +119,5 @@ private boolean space_pressed;
         
         
     }
-
-    @Override
-    public void dispose() {
-    }
     
 }
