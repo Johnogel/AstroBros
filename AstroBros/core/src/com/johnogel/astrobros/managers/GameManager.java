@@ -91,10 +91,13 @@ private Player player;
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         
-        //renderer.render(world, camera.combined);
+        renderer.render(world, camera.combined);
         //update();
+        
         this.renderGameObjects();
         ray_handler.updateAndRender();
+
+        
    
     }
 
@@ -114,8 +117,10 @@ private Player player;
             ray_handler.setCombinedMatrix(camera);
 
             this.updateGameObjects();
+            
+            levels.get(level).update();
 
-            world.step(this.fps, 6, 2);
+            world.step(this.fps, 6, 2); 
         }
     }
     

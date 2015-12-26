@@ -7,19 +7,23 @@ package com.johnogel.astrobros.levels;
 
 import box2dLight.Light;
 import box2dLight.RayHandler;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.johnogel.astrobros.managers.GameManager;
 import com.johnogel.astrobros.gameobjects.AstroBro;
 import com.johnogel.astrobros.gameobjects.Sun;
 import com.johnogel.astrobros.gameobjects.Player;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
+import com.johnogel.astrobros.gameobjects.BoundaryCircle;
 import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.interfaces.GameObject;
 
@@ -31,6 +35,7 @@ public abstract class Level implements Controller{
 protected final GameManager mngr;    
 
 protected Array<Sun> suns;
+protected Array<Body> sun_bodies;
 protected Array<Body> bodies;
 protected Array<Body> bro_bodies;
 protected Array<AstroBro> controlled_bros;
@@ -43,12 +48,20 @@ protected Player player;
 protected RayHandler ray_handler;
 protected int width, height;
 
+protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
+
+protected RevoluteJointDef joint_def;
+protected boolean joint_def_created;
+
 protected OrthographicCamera camera;
 
     public Level(GameManager mngr){
 
         bodies = new Array();
+        
         suns = new Array();
+        sun_bodies = new Array();
+        
         
         controlled_bros = new Array();
         free_bros = new Array();
@@ -83,6 +96,10 @@ protected OrthographicCamera camera;
             free_bodies.add(b.getBody());
             bro_bodies.add(b.getBody());
         }
+        
+        for (Sun s : suns){
+            sun_bodies.add(s.getBody());
+        }
     }
     
     //should also be called in initialize method
@@ -108,11 +125,26 @@ protected OrthographicCamera camera;
                             if(free_bros.get(i).getBody().equals(contact.getFixtureA().getBody())){
                                 //bro.getBody().setActive(false);
                                 //bro.getBody().setType(BodyDef.BodyType.StaticBody);
-                                free_bros.get(i).setTexture("badlogic.jpg");
+                                joint_def = new RevoluteJointDef();
+                                joint_def.bodyA = free_bros.get(i).getBody();
+                                joint_def.bodyB = contact.getFixtureB().getBody();
+                                joint_def.collideConnected = true;
+                                joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
+                                
+                                System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
+                                
+                                joint_def_created = true;
+                                
+                                
+                                
+                                //world.createJoint(joint_def);
+                                
+                                //joint_def.initialize(joint_def.bodyA, joint_def.bodyB, new Vector2(contact.getFixtureB().getBody().getPosition().x+3, contact.getFixtureB().getBody().getPosition().y+3));
+                                //free_bros.get(i).setTexture("badlogic.jpg");
                                 controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
                                 controlled_bros.add(free_bros.removeIndex(i));
                                 
-                                System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY");
+                                System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 1111");
                                 
                             }
    
@@ -128,15 +160,33 @@ protected OrthographicCamera camera;
                             if(free_bros.get(i).getBody().equals(contact.getFixtureB().getBody())){
                                 //bro.getBody().setActive(false);
                                 //bro.getBody().setType(BodyDef.BodyType.StaticBody);
-                                free_bros.get(i).setTexture("badlogic.jpg");
+                                //free_bros.get(i).setTexture("badlogic.jpg");
+                                joint_def = new RevoluteJointDef();
+                                joint_def.bodyA = free_bros.get(i).getBody();
+                                joint_def.bodyB = contact.getFixtureA().getBody();
+                                joint_def.collideConnected = true;
+                                //joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
+                                joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
+                                
+                                System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
+                                
+                                joint_def_created = true;
+
+                                //world.createJoint(joint_def);
+
+                                //joint_def.initialize(joint_def.bodyA, joint_def.bodyB, new Vector2(contact.getFixtureA().getBody().getPosition().x+3, contact.getFixtureA().getBody().getPosition().y+3));
+                                
                                 controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
                                 controlled_bros.add(free_bros.removeIndex(i));
-                                System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY");
+                                System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 2222");
                                 
                             }
    
                         }
                     }
+                    
+                    
+                    
                 }
                 
                 
@@ -179,6 +229,20 @@ protected OrthographicCamera camera;
     @Override
     public void update(){
         
+        if(Gdx.input.isKeyJustPressed(Keys.R)){
+            Array<Joint> joints = new Array(); 
+            world.getJoints(joints);
+            for(Joint j : joints){
+                if(j.getBodyA().equals(player.getBody()) || j.getBodyB().equals(player.getBody())){
+                    world.destroyJoint(j);
+                }
+            }
+        }
+        
+        if (joint_def_created){
+            world.createJoint(joint_def);
+            joint_def_created = false;
+        }
     }
     
     private void gravitate(){
@@ -199,6 +263,7 @@ protected OrthographicCamera camera;
         mngr.initializeWorld();
         
         this.player = mngr.getPlayer();
+        //this.world = mngr.getWorld();
         
         //don't change this...?
 

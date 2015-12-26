@@ -13,7 +13,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 /**
@@ -23,10 +25,15 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 public class Player extends AstroBro{
 private int max_vel, max_force;
 private boolean space_pressed;
+
     public Player(World world, OrthographicCamera camera) {
         //super(world, camera);
         this.camera = camera;
         this.world = world;
+        
+        this.radius = 3f;
+        
+        joints = new Array();
         
         BodyDef circle_def = new BodyDef();
         circle_def.type = BodyDef.BodyType.DynamicBody;
@@ -36,9 +43,9 @@ private boolean space_pressed;
         
         texture = new Texture(Gdx.files.internal("test.png"));
         
-        astro_body = world.createBody(circle_def);
+        body = world.createBody(circle_def);
         CircleShape circle_shape = new CircleShape();
-        circle_shape.setRadius(3f);
+        circle_shape.setRadius(radius);
         
         FixtureDef circle_fixture = new FixtureDef();
         circle_fixture.shape = circle_shape;
@@ -46,15 +53,15 @@ private boolean space_pressed;
         circle_fixture.friction = .8f;
         circle_fixture.restitution = .0f;
         
-        astro_body.createFixture(circle_fixture);
+        body.createFixture(circle_fixture);
         
         sprite = new Box2DSprite(texture);
         
-        astro_body.setUserData(sprite);
+        body.setUserData(sprite);
         
-        astro_body.createFixture(circle_fixture);
+        body.createFixture(circle_fixture);
         
-        astro_body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
+        body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
         circle_shape.dispose();
         
@@ -71,35 +78,35 @@ private boolean space_pressed;
     
     @Override
     public void update(SpriteBatch batch){
-        System.out.println("Angle: "+astro_body.getAngle());
+        System.out.println("Angle: "+body.getAngle());
         
         //apply force left
         if(Gdx.input.isKeyPressed(Keys.A)){
-            if(this.astro_body.getLinearVelocity().x > -max_vel){
-                this.astro_body.applyForceToCenter(-max_force, 0, true);
+            if(this.body.getLinearVelocity().x > -max_vel){
+                this.body.applyForceToCenter(-max_force, 0, true);
             }
             
         }
         
         //apply force down
         if(Gdx.input.isKeyPressed(Keys.S)){
-            if(this.astro_body.getLinearVelocity().y > -max_vel){
-                this.astro_body.applyForceToCenter(0, -max_force, true);
+            if(this.body.getLinearVelocity().y > -max_vel){
+                this.body.applyForceToCenter(0, -max_force, true);
             }
             
         }
         
         //apply force right
         if(Gdx.input.isKeyPressed(Keys.D)){
-            if(this.astro_body.getLinearVelocity().x < max_vel){
-                this.astro_body.applyForceToCenter(max_force, 0, true);
+            if(this.body.getLinearVelocity().x < max_vel){
+                this.body.applyForceToCenter(max_force, 0, true);
             } 
         }
         
         //apply force up
         if(Gdx.input.isKeyPressed(Keys.W)){
-            if(this.astro_body.getLinearVelocity().y < max_vel){
-                this.astro_body.applyForceToCenter(0, max_force, true);
+            if(this.body.getLinearVelocity().y < max_vel){
+                this.body.applyForceToCenter(0, max_force, true);
             }
             
         }
@@ -114,7 +121,7 @@ private boolean space_pressed;
         else{
             space_pressed = false;
         }
-        this.camera.position.set(this.astro_body.getPosition(), 0);
+        this.camera.position.set(this.body.getPosition(), 0);
         this.camera.update();
         
         

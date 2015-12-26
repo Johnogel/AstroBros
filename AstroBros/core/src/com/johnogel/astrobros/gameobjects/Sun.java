@@ -25,9 +25,8 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  *
  * @author johno-gel
  */
-public class Sun implements GameObject{
-private float mass, radius;
-private Body sun_body;
+public class Sun extends CircleObject{
+private float mass;
 private RayHandler ray_handler;
 private PointLight light;
 private OrthographicCamera camera;
@@ -55,7 +54,7 @@ private Box2DSprite sprite;
         texture = new Texture(Gdx.files.internal("SunOutline.png"));
         
         
-        sun_body = level.getWorld().createBody(circle_def);
+        body = level.getWorld().createBody(circle_def);
         CircleShape circle_shape = new CircleShape();
         circle_shape.setRadius(radius);
         
@@ -66,15 +65,15 @@ private Box2DSprite sprite;
         circle_fixture.friction = .8f;
         circle_fixture.restitution = .0f;
         
-        sun_body.createFixture(circle_fixture);
+        body.createFixture(circle_fixture);
         
         sprite = new Box2DSprite(texture);
         
-        sun_body.setUserData(sprite);
+        body.setUserData(sprite);
         
-        sun_body.createFixture(circle_fixture);
+        body.createFixture(circle_fixture);
         
-        sun_body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
+        body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
         circle_shape.dispose();
         
@@ -97,7 +96,7 @@ private Box2DSprite sprite;
     public void render(SpriteBatch batch) {
         batch.begin();
         
-        sprite.draw(batch, sun_body);
+        sprite.draw(batch, body);
         //batch.draw(texture, astro_body.getPosition().x, astro_body.getPosition().y, 0, 0, 6f, 6f, 1f, 1f, astro_body.getAngle() * MathUtils.radiansToDegrees, 0, 0 ,0, 0, false, false);
         //batch.draw(texture, astro_body.getPosition().x - 3, astro_body.getPosition().y - 3, 6, 6);
         batch.end();
@@ -106,8 +105,13 @@ private Box2DSprite sprite;
 
     @Override
     public void dispose(){
-        sun_body.destroyFixture(null);
+        body.destroyFixture(null);
         texture.dispose();
         sprite.getTexture().dispose();
+    }
+
+    @Override
+    public Body getBody() {
+        return body;
     }
 }
