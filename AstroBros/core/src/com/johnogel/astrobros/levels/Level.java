@@ -13,6 +13,7 @@ import com.johnogel.astrobros.gameobjects.AstroBro;
 import com.johnogel.astrobros.gameobjects.Sun;
 import com.johnogel.astrobros.gameobjects.Player;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -69,12 +70,18 @@ protected OrthographicCamera camera;
     
     //should be called in child initialize method
     protected void updateBodyArrays(){
+        
+        bro_bodies.add(mngr.getPlayer().getBody());
+        controlled_bodies.add(mngr.getPlayer().getBody());
+        
         for (AstroBro b : controlled_bros){
             controlled_bodies.add(b.getBody());
+            bro_bodies.add(b.getBody());
         }
         
         for (AstroBro b : free_bros){
             free_bodies.add(b.getBody());
+            bro_bodies.add(b.getBody());
         }
     }
     
@@ -90,16 +97,18 @@ protected OrthographicCamera camera;
                 Array<AstroBro> contacted_bros = new Array(2);
                 Body other;
                 
-                //check if an aleady controlled astro bro is contacting another body
-                if(bro_bodies.contains(contact.getFixtureA().getBody(), true) && bro_bodies.contains(contact.getFixtureB().getBody(), true)){
-                    
+                //check if both contacts are bros
+                if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
+                    System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
-                    if(free_bodies.contains(contact.getFixtureA().getBody(), true) && controlled_bodies.contains(contact.getFixtureB().getBody(), true))
+                    if(free_bodies.contains(contact.getFixtureA().getBody(), false) && controlled_bodies.contains(contact.getFixtureB().getBody(), false))
                     {
-                        for(AstroBro bro : controlled_bros){
+                        for(Body body : free_bodies){
 
-                            if(bro.getBody().equals(contact.getFixtureA().getBody())){
-                                bro.getBody().setActive(false);
+                            if(body.equals(contact.getFixtureA().getBody())){
+                                //body.setActive(false);
+                                //body.setType(BodyDef.BodyType.StaticBody);
+                                System.out.println("CONATACT!!!!");
                                 
                             }
    
@@ -108,11 +117,14 @@ protected OrthographicCamera camera;
                     }
                     
                     //if contact B is free and A is trying to grab
-                    else if(free_bodies.contains(contact.getFixtureB().getBody(), true) && controlled_bodies.contains(contact.getFixtureA().getBody(), true)){
-                        for(AstroBro bro : controlled_bros){
+                    else if(free_bodies.contains(contact.getFixtureB().getBody(), false) && controlled_bodies.contains(contact.getFixtureA().getBody(), false)){
+                        for(Body body : free_bodies){
 
-                            if(bro.getBody().equals(contact.getFixtureB().getBody())){
-                                bro.getBody().setActive(false);
+                            if(body.equals(contact.getFixtureB().getBody())){
+                                //body.setActive(false);
+                                //body.setType(BodyDef.BodyType.StaticBody);
+                                System.out.println("CONATACT!!!!");
+                                
                             }
    
                         }

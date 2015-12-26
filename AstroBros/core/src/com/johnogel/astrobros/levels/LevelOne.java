@@ -41,6 +41,7 @@ public class LevelOne extends Level{
         this.free_bros.add(new NonPlayer(world, camera, 56,200));
 
         
+        
         updateBodyArrays();
         initializeContactListener();
         
