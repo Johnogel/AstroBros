@@ -10,6 +10,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.johnogel.astrobros.managers.GameManager;
 import com.johnogel.astrobros.gameobjects.AstroBro;
 import com.johnogel.astrobros.gameobjects.Sun;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.gameobjects.BoundaryCircle;
+import com.johnogel.astrobros.gameobjects.CircleObject;
 import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.interfaces.GameObject;
 
@@ -37,6 +39,7 @@ protected final GameManager mngr;
 protected Array<Sun> suns;
 protected Array<Body> sun_bodies;
 protected Array<Body> bodies;
+protected Array<AstroBro> bros;
 protected Array<Body> bro_bodies;
 protected Array<AstroBro> controlled_bros;
 protected Array<AstroBro> free_bros;
@@ -58,6 +61,7 @@ protected OrthographicCamera camera;
     public Level(GameManager mngr){
 
         bodies = new Array();
+        bros = new Array();
         
         suns = new Array();
         sun_bodies = new Array();
@@ -82,7 +86,7 @@ protected OrthographicCamera camera;
     }
     
     //should be called in child initialize method
-    protected void updateBodyArrays(){
+    protected void initializeArrays(){
         
         bro_bodies.add(mngr.getPlayer().getBody());
         controlled_bodies.add(mngr.getPlayer().getBody());
@@ -90,17 +94,40 @@ protected OrthographicCamera camera;
         for (AstroBro b : controlled_bros){
             controlled_bodies.add(b.getBody());
             bro_bodies.add(b.getBody());
+            bros.add(b);
         }
         
         for (AstroBro b : free_bros){
             free_bodies.add(b.getBody());
             bro_bodies.add(b.getBody());
+            bros.add(b);
         }
         
         for (Sun s : suns){
             sun_bodies.add(s.getBody());
         }
     }
+    
+    public void updateArrays(){
+        for (AstroBro b : controlled_bros){
+            controlled_bodies.add(b.getBody());
+            bro_bodies.add(b.getBody());
+            //bros.add(b);
+        }
+        
+        for (AstroBro b : free_bros){
+            free_bodies.add(b.getBody());
+            bro_bodies.add(b.getBody());
+            //bros.add(b);
+        }
+        
+        for (Sun s : suns){
+            sun_bodies.add(s.getBody());
+        }
+        
+    }
+    
+
     
     //should also be called in initialize method
     protected void initializeContactListener(){
@@ -185,6 +212,24 @@ protected OrthographicCamera camera;
                         }
                     }
                     
+                    if(contact.getFixtureA().getBody().equals(outer_orbit.getBody()) || contact.getFixtureB().getBody().equals(outer_orbit.getBody())){
+                        Body outer;
+                        if(contact.getFixtureA().getBody().equals(outer_orbit.getBody())){
+                            outer = contact.getFixtureA().getBody();
+                        }
+                        else if (contact.getFixtureB().getBody().equals(outer_orbit.getBody())){
+                            outer = contact.getFixtureB().getBody();
+                        }
+                        
+                        if(Vector2.dst(inner_orbit.getPosition().x, inner_orbit.getPosition().y, player.getPosition().x, player.getPosition().y) > inner_orbit.getRadius()){
+                            System.out.println("GOLDILOCKS!!");
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    
                     
                     
                 }
@@ -242,6 +287,12 @@ protected OrthographicCamera camera;
         if (joint_def_created){
             world.createJoint(joint_def);
             joint_def_created = false;
+        }
+        
+        for(AstroBro b : bros){
+            if(CircleObject.distance(b, inner_orbit) > inner_orbit.getRadius() && CircleObject.distance(b, outer_orbit) < outer_orbit.getRadius()){
+                System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            }
         }
     }
     

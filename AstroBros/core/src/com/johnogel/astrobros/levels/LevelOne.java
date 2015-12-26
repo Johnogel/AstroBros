@@ -45,7 +45,7 @@ public class LevelOne extends Level{
         //world.createJoint(joint_def);
         
         
-        updateBodyArrays();
+        initializeArrays();
         initializeContactListener();
         
         
@@ -54,6 +54,7 @@ public class LevelOne extends Level{
         new Sun(this, suns, 8000, Color.YELLOW, 600, width/2, height/2 );
         
         inner_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.INNER_ORBIT, world, camera);
+        outer_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.OUTER_ORBIT, world, camera);
         
         
     }

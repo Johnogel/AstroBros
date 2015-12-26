@@ -47,7 +47,7 @@ public class LevelTwo extends Level{
         
         //world.createJoint(joint_def);
         
-        updateBodyArrays();
+        initializeArrays();
         initializeContactListener();
         
         

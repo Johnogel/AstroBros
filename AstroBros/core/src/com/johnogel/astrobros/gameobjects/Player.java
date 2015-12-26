@@ -78,7 +78,7 @@ private boolean space_pressed;
     
     @Override
     public void update(SpriteBatch batch){
-        System.out.println("Angle: "+body.getAngle());
+        //System.out.println("Angle: "+body.getAngle());
         
         //apply force left
         if(Gdx.input.isKeyPressed(Keys.A)){

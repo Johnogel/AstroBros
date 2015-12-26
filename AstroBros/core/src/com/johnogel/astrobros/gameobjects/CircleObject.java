@@ -49,6 +49,10 @@ protected Array<Sound> sounds;
         return body.getPosition();
     }
     
+    public static float distance(CircleObject obj_1, CircleObject obj_2){
+        return Vector2.dst(obj_1.getPosition().x, obj_1.getPosition().y, obj_2.getPosition().x, obj_2.getPosition().y);
+    }
+    
     
     
 }

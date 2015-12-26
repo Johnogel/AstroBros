@@ -41,6 +41,7 @@ private Body bounding_body;
         circle_def.type = BodyDef.BodyType.StaticBody;
         circle_def.active = false;
         
+        
         circle_def.position.set(sun.getPosition());
         
         texture = new Texture(Gdx.files.internal("test.png"));
@@ -65,6 +66,7 @@ private Body bounding_body;
         body.createFixture(circle_fixture);
         
         body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
+        
         
         circle_shape.dispose();
     }

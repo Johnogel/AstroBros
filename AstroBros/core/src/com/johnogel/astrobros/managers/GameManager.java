@@ -103,7 +103,7 @@ private Player player;
 
     @Override
     public void update() {
-        System.out.println("Game Objects: "+this.game_objects.size);
+        //System.out.println("Game Objects: "+this.game_objects.size);
         if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
             this.setLevel(this.LEVEL_ONE);
         }
