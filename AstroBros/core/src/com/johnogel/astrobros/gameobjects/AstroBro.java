@@ -93,4 +93,11 @@ protected Body astro_body;
         return astro_body;
     }
     
+    @Override
+    public void dispose(){
+        astro_body.destroyFixture(null);
+        
+        texture.dispose();
+    }
+    
 }

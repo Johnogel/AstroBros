@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,9 +15,9 @@ import com.johnogel.astrobros.managers.GameManager;
  *
  * @author johno-gel
  */
-public class LevelOne extends Level{
+public class LevelTwo extends Level{
     
-    public LevelOne(GameManager mngr){
+    public LevelTwo(GameManager mngr){
         super(mngr);
         
     }
@@ -38,6 +39,8 @@ public class LevelOne extends Level{
         this.free_bros.add(new NonPlayer(world, camera, 96,200));
         this.free_bros.add(new NonPlayer(world, camera, 10,200));
         this.free_bros.add(new NonPlayer(world, camera, 56,200));
+        this.free_bros.add(new NonPlayer(world, camera, 250,200));
+        this.free_bros.add(new NonPlayer(world, camera, 5,20));
 
         
         updateBodyArrays();
@@ -46,10 +49,11 @@ public class LevelOne extends Level{
         
         
         //adds sun to suns array without storing locally
-        new Sun(this, suns, 8000, Color.YELLOW, 600, width/2, height/2 );
+        new Sun(this, suns, 8000, Color.BLUE, 600, width/2, height/2 );
         
         
     }
     
     
 }
+

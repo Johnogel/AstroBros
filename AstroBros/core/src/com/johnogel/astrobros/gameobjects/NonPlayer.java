@@ -92,5 +92,9 @@ public class NonPlayer extends AstroBro{
         
         circle_shape.dispose();
     }
+
+    @Override
+    public void dispose() {
+    }
     
 }

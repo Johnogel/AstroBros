@@ -15,5 +15,6 @@ public interface GameObject {
     
     public void update(SpriteBatch batch);
     public void render(SpriteBatch batch);
+    public void dispose();
     
 }

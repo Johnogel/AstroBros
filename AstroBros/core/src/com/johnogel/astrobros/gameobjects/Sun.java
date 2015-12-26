@@ -44,7 +44,7 @@ private Box2DSprite sprite;
         
         mass = intensity*10;
         
-        radius = intensity/100;
+        radius = intensity/10;
         
         suns.add(this);
         
@@ -52,7 +52,7 @@ private Box2DSprite sprite;
         circle_def.type = BodyDef.BodyType.StaticBody;
         circle_def.position.set(x,y);
         
-        texture = new Texture(Gdx.files.internal("test.png"));
+        texture = new Texture(Gdx.files.internal("SunOutline.png"));
         
         
         sun_body = level.getWorld().createBody(circle_def);
@@ -103,5 +103,10 @@ private Box2DSprite sprite;
         batch.end();
         
     }
-    
+
+    @Override
+    public void dispose(){
+        sun_body.destroyFixture(null);
+        texture.dispose();
+    }
 }

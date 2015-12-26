@@ -5,6 +5,7 @@
  */
 package com.johnogel.astrobros.levels;
 
+import box2dLight.Light;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.johnogel.astrobros.managers.GameManager;
@@ -18,13 +19,16 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.johnogel.astrobros.interfaces.Controller;
+import com.johnogel.astrobros.interfaces.GameObject;
 
 /**
  *
  * @author johno-gel
  */
-public abstract class Level {
-private GameManager mngr;    
+public abstract class Level implements Controller{
+protected final GameManager mngr;    
+
 protected Array<Sun> suns;
 protected Array<Body> bodies;
 protected Array<Body> bro_bodies;
@@ -32,6 +36,7 @@ protected Array<AstroBro> controlled_bros;
 protected Array<AstroBro> free_bros;
 protected Array<Body> controlled_bodies;
 protected Array<Body> free_bodies;
+
 protected World world;
 protected Player player;
 protected RayHandler ray_handler;
@@ -51,7 +56,7 @@ protected OrthographicCamera camera;
         controlled_bodies = new Array();
         free_bodies = new Array();
         
-        this.player = mngr.getPlayer();
+
         this.mngr = mngr;
         
         this.world = mngr.getWorld();
@@ -60,13 +65,7 @@ protected OrthographicCamera camera;
         
         this.suns = new Array();
         
-        this.ray_handler = mngr.getRayHandler();
-        
-        width = mngr.getWidth();
-        height = mngr.getHeight();
-        
-        world.getBodies(bodies);
-        camera = mngr.getCamera();
+
         
        
         
@@ -161,6 +160,7 @@ protected OrthographicCamera camera;
     public abstract void initialize();
     
     //should call gravitate helper method
+    @Override
     public void update(){
         
     }
@@ -178,8 +178,53 @@ protected OrthographicCamera camera;
         
     }
     
-    private void reset(){
+    @Override
+    public void initializeWorld(){
         mngr.initializeWorld();
+        
+        this.player = mngr.getPlayer();
+        
+        //don't change this...?
+
+        //world.getBodies(bodies);
+        
+        
+
+    }
+    
+    public void initializeGameObjects(){
+        for (AstroBro g : free_bros){
+            GameObject o = (GameObject) g;
+            mngr.addGameObject(o);
+        }
+    }
+
+    @Override
+    public void render() {
+    }
+
+    @Override
+    public void addLight(Light light) {
+    }
+
+    @Override
+    public void turnOffLights() {
+    }
+
+    @Override
+    public void turnOnLights() {
+    }
+
+    @Override
+    public void updateLights() {
+    }
+
+
+    @Override
+    public void dispose() {
+        for (GameObject o : mngr.getGameObjects()){
+            o.dispose();
+        }
     }
     
 }

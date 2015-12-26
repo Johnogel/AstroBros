@@ -120,6 +120,8 @@ public class MenuManager implements Controller{
         
         ray_handler.setCombinedMatrix(camera);
         
+        
+        
         addLight(new PointLight(ray_handler, 800, Color.BLUE, 200, 0, 0));
     }
     

@@ -44,7 +44,7 @@ public class AstroBros extends ApplicationAdapter {
         
         @Override
         public void dispose(){
-            ray_handler.dispose();
+            
             manager.dispose();
         }
         
