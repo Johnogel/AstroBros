@@ -66,7 +66,7 @@ private boolean space_pressed;
         circle_shape.dispose();
         
         max_vel = 50;
-        max_force = 800;
+        max_force = 3000;
         
         
     }

@@ -143,6 +143,7 @@ protected OrthographicCamera camera;
                 Body other;
                 
                 //check if both contacts are bros
+                
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
                     System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
@@ -158,27 +159,28 @@ protected OrthographicCamera camera;
                                 joint_def.bodyB = contact.getFixtureB().getBody();
                                 joint_def.collideConnected = true;
                                 joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
-                                
+
                                 System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
-                                
+
                                 joint_def_created = true;
-                                
-                                
-                                
+
+
+
                                 //world.createJoint(joint_def);
-                                
+
                                 //joint_def.initialize(joint_def.bodyA, joint_def.bodyB, new Vector2(contact.getFixtureB().getBody().getPosition().x+3, contact.getFixtureB().getBody().getPosition().y+3));
                                 //free_bros.get(i).setTexture("badlogic.jpg");
                                 controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
                                 controlled_bros.add(free_bros.removeIndex(i));
-                                
+
                                 System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 1111");
-                                
+
                             }
-   
+
                         }
-                
+
                     }
+                    
                     
                     //if contact B is free and A is trying to grab
                     else if(free_bodies.contains(contact.getFixtureB().getBody(), false) && controlled_bodies.contains(contact.getFixtureA().getBody(), false)){
@@ -283,10 +285,22 @@ protected OrthographicCamera camera;
                     world.destroyJoint(j);
                 }
             }
+            
+            for(int i = 0; i < controlled_bros.size; i++){
+                if(!controlled_bros.get(i).equals(player)){
+                    free_bodies.add(controlled_bodies.removeIndex(controlled_bodies.indexOf(controlled_bros.get(i).getBody(), false)));
+                    free_bros.add(controlled_bros.removeIndex(i));
+                    
+                }
+                
+            }
         }
         
+        //need to figure out way to remove bodies from arrays outside of contact listener
         if (joint_def_created){
-            world.createJoint(joint_def);
+            if(Gdx.input.isKeyPressed(Keys.SPACE)){
+                world.createJoint(joint_def);
+            }
             joint_def_created = false;
         }
         

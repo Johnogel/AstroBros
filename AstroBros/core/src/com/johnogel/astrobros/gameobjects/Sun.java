@@ -41,7 +41,7 @@ private Box2DSprite sprite;
         
         light = new PointLight(ray_handler, num_rays, color, intensity, x, y );
         
-        mass = intensity*5000;
+        mass = intensity*15000;
         
         radius = intensity/10;
         
