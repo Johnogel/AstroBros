@@ -94,8 +94,7 @@ protected OrthographicCamera camera;
     //should be called in child initialize method
     protected void initializeArrays(){
         
-        bro_bodies.add(mngr.getPlayer().getBody());
-        controlled_bodies.add(mngr.getPlayer().getBody());
+        controlled_bros.add(mngr.getPlayer());
         
         for (AstroBro b : controlled_bros){
             controlled_bodies.add(b.getBody());
@@ -143,7 +142,7 @@ protected OrthographicCamera camera;
 
                 //check if both contacts are bros
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
-                    System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
+                    //System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
                     if(free_bodies.contains(contact.getFixtureA().getBody(), false) && controlled_bodies.contains(contact.getFixtureB().getBody(), false))
                     {
@@ -168,7 +167,7 @@ protected OrthographicCamera camera;
                                 /*controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
                                 controlled_bros.add(free_bros.removeIndex(i));*/
 
-                                System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 1111");
+                                //System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 1111");
 
                             }
 
@@ -197,7 +196,7 @@ protected OrthographicCamera camera;
                                 
                                 /*controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
                                 controlled_bros.add(free_bros.removeIndex(i));*/
-                                System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 2222");
+                                //System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 2222");
                                 
                             }
    
@@ -251,6 +250,9 @@ protected OrthographicCamera camera;
     }
     
     private void attachBodies(){
+        System.out.println("CONTROLLED BROS SIZE: "+controlled_bros.size+"\nCONTROLLED BODIES SIZE: "+controlled_bodies.size);
+        System.out.println("FREE BROS SIZE: "+free_bros.size+"\nFREE BODIES SIZE: "+free_bodies.size);
+        System.out.println("BROS SIZE: "+bros.size);
         if(to_be_attached.size == to_be_attached_to.size && to_be_attached.size > 0){
             for(int i = 0; i < to_be_attached.size; i++){
                 RevoluteJointDef joint_def = new RevoluteJointDef();
@@ -274,9 +276,11 @@ protected OrthographicCamera camera;
                 
                 world.createJoint(joint_def);
                 //System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
+                //controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(to_be_attached.get(i), false)));
+                //controlled_bros.add(free_bros.removeIndex(i));
                 
                 if(!controlled_bodies.contains(to_be_attached.get(i), false)){
-                    controlled_bodies.add(to_be_attached.get(i));
+                    controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(to_be_attached.get(i), false)));
                     for(AstroBro b : free_bros){
                         if(b.getBody().equals(joint_def.bodyB)){
                             controlled_bros.add(free_bros.removeIndex(free_bros.indexOf(b, false)));
@@ -307,15 +311,26 @@ protected OrthographicCamera camera;
                     world.destroyJoint(j);
                 }
             }
-            
-            for(int i = 0; i < controlled_bros.size; i++){
-                if(!controlled_bros.get(i).equals(player)){
-                    free_bodies.add(controlled_bodies.removeIndex(controlled_bodies.indexOf(controlled_bros.get(i).getBody(), false)));
-                    free_bros.add(controlled_bros.removeIndex(i));
+            int size = controlled_bros.size;
+            for(int i = 0; i < size; i++){
+                
+                
+  
+                System.out.println("---------------------------------------ADD DEM FREE BODIES");
+                free_bodies.add(controlled_bodies.pop());
+                free_bros.add(controlled_bros.pop());
                     
-                }
+                
+                
+                
                 
             }
+            controlled_bros.clear();
+            controlled_bodies.clear();
+            free_bros.removeValue(player, false);
+            free_bodies.removeValue(player.getBody(), false);
+            controlled_bodies.add(player.getBody());
+            controlled_bros.add(player);
         }
         
         //need to figure out way to remove bodies from arrays outside of contact listener
@@ -327,7 +342,7 @@ protected OrthographicCamera camera;
         
         for(AstroBro b : bros){
             if(CircleObject.distance(b, inner_orbit) > inner_orbit.getRadius() && CircleObject.distance(b, outer_orbit) < outer_orbit.getRadius()){
-                System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                //System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
         }
     }
@@ -350,7 +365,7 @@ protected OrthographicCamera camera;
                 float angle = MathUtils.atan2(bro_y - sun_y, bro_x - sun_x)*MathUtils.radiansToDegrees + 180;
                 
                 if(b.getBody().equals(player.getBody())){
-                    System.out.println("ANGLE BEING USED: "+angle);
+                    //System.out.println("ANGLE BEING USED: "+angle);
                 }
                 
                 float force_x = force * MathUtils.cosDeg(angle);
@@ -365,32 +380,14 @@ protected OrthographicCamera camera;
         
     }
     
-    protected void resetArrays(){
-        bodies = new Array();
-        bros = new Array();
-        
-        suns = new Array();
-        sun_bodies = new Array();
-        
-        
-        controlled_bros = new Array();
-        free_bros = new Array();
-        
-        bro_bodies = new Array(30);
-        controlled_bodies = new Array();
-        free_bodies = new Array();
-        
-        to_be_attached = new Array(5);
-        to_be_attached_to = new Array(5);
-    }
-    
     @Override
     public void initializeWorld(){
-        resetArrays();
+        clearArrays();
         mngr.initializeWorld();
         
         this.player = mngr.getPlayer();
-        bros.add(player);
+        
+        //bros.add(player);
         //this.world = mngr.getWorld();
         
         //don't change this...?
@@ -418,6 +415,8 @@ protected OrthographicCamera camera;
         bro_bodies.clear(); 
         controlled_bodies.clear(); 
         free_bodies.clear();
+        
+        bros.clear();
     }
     
     @Override

@@ -24,8 +24,8 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  */
 public class BoundaryCircle extends CircleObject{
 public final static float 
-        INNER_ORBIT = 1.5f,
-        OUTER_ORBIT = 2.2f,
+        INNER_ORBIT = 1.8f,
+        OUTER_ORBIT = 2.4f,
         OUTER_BOUND = 8f;
 
 private Body bounding_body;

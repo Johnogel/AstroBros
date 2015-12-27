@@ -91,7 +91,7 @@ private Player player;
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         
-        renderer.render(world, camera.combined);
+        //renderer.render(world, camera.combined);
         //update();
         
         this.renderGameObjects();
@@ -112,16 +112,19 @@ private Player player;
             this.setLevel(this.LEVEL_TWO);
         }
         
-        else{
+        else if(Gdx.input.isKeyPressed(Keys.ENTER)){
         
             ray_handler.setCombinedMatrix(camera);
 
             this.updateGameObjects();
             
             levels.get(level).update();
-
+            
             world.step(this.fps, 6, 2); 
         }
+        
+            
+            
     }
     
     private void renderGameObjects(){
