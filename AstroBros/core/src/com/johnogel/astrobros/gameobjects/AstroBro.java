@@ -22,7 +22,7 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  * @author johno-gel
  */
 public abstract class AstroBro extends CircleObject{
-
+;
 protected Array<JointDef> joints;
 
     @Override

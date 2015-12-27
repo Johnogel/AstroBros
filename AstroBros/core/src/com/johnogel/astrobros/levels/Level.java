@@ -27,6 +27,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.gameobjects.BoundaryCircle;
 import com.johnogel.astrobros.gameobjects.CircleObject;
+import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.interfaces.GameObject;
 
@@ -47,6 +48,9 @@ protected Array<AstroBro> free_bros;
 protected Array<Body> controlled_bodies;
 protected Array<Body> free_bodies;
 
+protected Array<Body> to_be_attached;
+protected Array<Body> to_be_attached_to;
+
 protected World world;
 protected Player player;
 protected RayHandler ray_handler;
@@ -54,7 +58,6 @@ protected int width, height;
 
 protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 
-protected RevoluteJointDef joint_def;
 protected boolean joint_def_created;
 
 protected OrthographicCamera camera;
@@ -71,11 +74,13 @@ protected OrthographicCamera camera;
         controlled_bros = new Array();
         free_bros = new Array();
         
-        bro_bodies = new Array();
+        bro_bodies = new Array(30);
         controlled_bodies = new Array();
         free_bodies = new Array();
         
-
+        to_be_attached = new Array(5);
+        to_be_attached_to = new Array(5);
+        
         this.mngr = mngr;
         
         this.world = mngr.getWorld();
@@ -127,9 +132,7 @@ protected OrthographicCamera camera;
         }
         
     }
-    
 
-    
     //should also be called in initialize method
     protected void initializeContactListener(){
         world.setContactListener(new ContactListener(){
@@ -137,41 +140,33 @@ protected OrthographicCamera camera;
             @Override
             public void beginContact(Contact contact) {
                 boolean is_bro;
-                
-                //array used for checking if controlled bros are contacting each other
-                Array<AstroBro> contacted_bros = new Array(2);
-                Body other;
-                
+
                 //check if both contacts are bros
-                
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
                     System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
                     if(free_bodies.contains(contact.getFixtureA().getBody(), false) && controlled_bodies.contains(contact.getFixtureB().getBody(), false))
                     {
+                        to_be_attached_to.add(contact.getFixtureB().getBody());
+                        //finds which free bro exactly is being contacted
                         for(int i = 0; i < free_bros.size; i++){
 
                             if(free_bros.get(i).getBody().equals(contact.getFixtureA().getBody())){
                                 //bro.getBody().setActive(false);
                                 //bro.getBody().setType(BodyDef.BodyType.StaticBody);
-                                joint_def = new RevoluteJointDef();
-                                joint_def.bodyA = free_bros.get(i).getBody();
-                                joint_def.bodyB = contact.getFixtureB().getBody();
-                                joint_def.collideConnected = true;
-                                joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
-
+                                
+                                to_be_attached.add(free_bros.get(i).getBody());
+                                
                                 System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
 
                                 joint_def_created = true;
-
-
 
                                 //world.createJoint(joint_def);
 
                                 //joint_def.initialize(joint_def.bodyA, joint_def.bodyB, new Vector2(contact.getFixtureB().getBody().getPosition().x+3, contact.getFixtureB().getBody().getPosition().y+3));
                                 //free_bros.get(i).setTexture("badlogic.jpg");
-                                controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
-                                controlled_bros.add(free_bros.removeIndex(i));
+                                /*controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
+                                controlled_bros.add(free_bros.removeIndex(i));*/
 
                                 System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 1111");
 
@@ -180,10 +175,11 @@ protected OrthographicCamera camera;
                         }
 
                     }
-                    
-                    
+
                     //if contact B is free and A is trying to grab
                     else if(free_bodies.contains(contact.getFixtureB().getBody(), false) && controlled_bodies.contains(contact.getFixtureA().getBody(), false)){
+                        
+                        to_be_attached_to.add(contact.getFixtureA().getBody());
                         
                         for(int i = 0; i < free_bros.size; i++){
 
@@ -191,14 +187,7 @@ protected OrthographicCamera camera;
                                 //bro.getBody().setActive(false);
                                 //bro.getBody().setType(BodyDef.BodyType.StaticBody);
                                 //free_bros.get(i).setTexture("badlogic.jpg");
-                                joint_def = new RevoluteJointDef();
-                                joint_def.bodyA = free_bros.get(i).getBody();
-                                joint_def.bodyB = contact.getFixtureA().getBody();
-                                joint_def.collideConnected = true;
-                                //joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
-                                joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
-                                
-                                System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
+                                to_be_attached.add(free_bros.get(i).getBody());
                                 
                                 joint_def_created = true;
 
@@ -206,8 +195,8 @@ protected OrthographicCamera camera;
 
                                 //joint_def.initialize(joint_def.bodyA, joint_def.bodyB, new Vector2(contact.getFixtureA().getBody().getPosition().x+3, contact.getFixtureA().getBody().getPosition().y+3));
                                 
-                                controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
-                                controlled_bros.add(free_bros.removeIndex(i));
+                                /*controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(free_bros.get(i).getBody(), false)));
+                                controlled_bros.add(free_bros.removeIndex(i));*/
                                 System.out.println("CONATACT!!!! BRO SHOULD HAVE BEEN ADDED TO OTHER ARRAY 2222");
                                 
                             }
@@ -227,20 +216,11 @@ protected OrthographicCamera camera;
                         if(Vector2.dst(inner_orbit.getPosition().x, inner_orbit.getPosition().y, player.getPosition().x, player.getPosition().y) > inner_orbit.getRadius()){
                             System.out.println("GOLDILOCKS!!");
                         }
-                        
-                        
-                        
-                        
+                  
                     }
-                    
-                    
-                    
+                
                 }
-                
-                
-                
-                
-                
+     
             }
 
             @Override
@@ -270,6 +250,48 @@ protected OrthographicCamera camera;
         return world;
     }
     
+    private void attachBodies(){
+        if(to_be_attached.size == to_be_attached_to.size && to_be_attached.size > 0){
+            for(int i = 0; i < to_be_attached.size; i++){
+                RevoluteJointDef joint_def = new RevoluteJointDef();
+                joint_def.bodyA = to_be_attached_to.get(i);
+                joint_def.bodyB = to_be_attached.get(i);
+                joint_def.collideConnected = true;
+                //joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
+                float distance = NonPlayer.PUBLIC_RADIUS*2;
+                
+                float a_x = joint_def.bodyA.getPosition().x;
+                float a_y = joint_def.bodyA.getPosition().y;
+                float b_x = joint_def.bodyB.getPosition().x;
+                float b_y = joint_def.bodyB.getPosition().y;
+                
+                float angle = MathUtils.atan2(a_y - b_y, a_x - b_x)*MathUtils.radiansToDegrees + 180;
+                
+                float x = distance*MathUtils.cosDeg(angle);
+                float y = distance*MathUtils.sinDeg(angle);
+                
+                joint_def.localAnchorA.set(x, y);
+                
+                world.createJoint(joint_def);
+                //System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
+                
+                if(!controlled_bodies.contains(to_be_attached.get(i), false)){
+                    controlled_bodies.add(to_be_attached.get(i));
+                    for(AstroBro b : free_bros){
+                        if(b.getBody().equals(joint_def.bodyB)){
+                            controlled_bros.add(free_bros.removeIndex(free_bros.indexOf(b, false)));
+                        }
+                    }
+                }
+            }
+            to_be_attached.clear();
+            to_be_attached_to.clear();
+        }
+     
+        
+
+    }
+    
     //should be overriden in child class
     public abstract void initialize();
     
@@ -297,10 +319,9 @@ protected OrthographicCamera camera;
         }
         
         //need to figure out way to remove bodies from arrays outside of contact listener
+        attachBodies();
         if (joint_def_created){
-            if(Gdx.input.isKeyPressed(Keys.SPACE)){
-                world.createJoint(joint_def);
-            }
+            
             joint_def_created = false;
         }
         
@@ -344,8 +365,28 @@ protected OrthographicCamera camera;
         
     }
     
+    protected void resetArrays(){
+        bodies = new Array();
+        bros = new Array();
+        
+        suns = new Array();
+        sun_bodies = new Array();
+        
+        
+        controlled_bros = new Array();
+        free_bros = new Array();
+        
+        bro_bodies = new Array(30);
+        controlled_bodies = new Array();
+        free_bodies = new Array();
+        
+        to_be_attached = new Array(5);
+        to_be_attached_to = new Array(5);
+    }
+    
     @Override
     public void initializeWorld(){
+        resetArrays();
         mngr.initializeWorld();
         
         this.player = mngr.getPlayer();
