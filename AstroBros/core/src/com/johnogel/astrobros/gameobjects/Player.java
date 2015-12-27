@@ -37,7 +37,7 @@ private boolean space_pressed;
         
         BodyDef circle_def = new BodyDef();
         circle_def.type = BodyDef.BodyType.DynamicBody;
-        float x = (float) (camera.viewportWidth/2);
+        float x = (float) (0);
         float y = (float) (camera.viewportHeight/2);
         circle_def.position.set(x,y);
         

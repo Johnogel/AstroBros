@@ -41,7 +41,7 @@ private Box2DSprite sprite;
         
         light = new PointLight(ray_handler, num_rays, color, intensity, x, y );
         
-        mass = intensity*10;
+        mass = intensity*5000;
         
         radius = intensity/10;
         
@@ -110,6 +110,10 @@ private Box2DSprite sprite;
         sprite.getTexture().dispose();
     }
 
+    public float getMass(){
+        return mass;
+    }
+    
     @Override
     public Body getBody() {
         return body;

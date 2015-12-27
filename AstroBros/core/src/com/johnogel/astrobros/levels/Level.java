@@ -10,6 +10,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.johnogel.astrobros.managers.GameManager;
 import com.johnogel.astrobros.gameobjects.AstroBro;
@@ -273,7 +274,7 @@ protected OrthographicCamera camera;
     //should call gravitate helper method
     @Override
     public void update(){
-        
+        gravitate();
         if(Gdx.input.isKeyJustPressed(Keys.R)){
             Array<Joint> joints = new Array(); 
             world.getJoints(joints);
@@ -300,9 +301,29 @@ protected OrthographicCamera camera;
         
         //sets force on each body towards each sun
         for (Sun s : suns){
-            for (Body b : bro_bodies){
+            for (AstroBro b : bros){
+                float distance_squared = CircleObject.distance(s, b)*CircleObject.distance(s, b);
+                float mass = s.getMass();
+                float force = mass/distance_squared;
+
+                
+                float bro_x = b.getPosition().x;
+                float bro_y = b.getPosition().y;
+                float sun_x = s.getPosition().x;
+                float sun_y = s.getPosition().y;
+                
+                float angle = MathUtils.atan2(bro_y - sun_y, bro_x - sun_x)*MathUtils.radiansToDegrees + 180;
+                
+                if(b.getBody().equals(player.getBody())){
+                    System.out.println("ANGLE BEING USED: "+angle);
+                }
+                
+                float force_x = force * MathUtils.cosDeg(angle);
+                float force_y = force * MathUtils.sinDeg(angle);
                 
                 
+                
+                b.getBody().applyForceToCenter(force_x, force_y, true);
                 //Do math stuff here
             }
         }
@@ -314,6 +335,7 @@ protected OrthographicCamera camera;
         mngr.initializeWorld();
         
         this.player = mngr.getPlayer();
+        bros.add(player);
         //this.world = mngr.getWorld();
         
         //don't change this...?

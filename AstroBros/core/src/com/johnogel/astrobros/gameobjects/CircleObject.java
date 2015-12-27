@@ -21,7 +21,7 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  * @author johno-gel
  */
 public abstract class CircleObject implements GameObject{
-protected float radius;
+protected float radius, mass;
 protected World world;
 protected Texture texture;
 protected OrthographicCamera camera;
