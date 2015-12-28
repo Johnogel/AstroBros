@@ -7,7 +7,6 @@ package com.johnogel.astrobros.managers;
 
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.interfaces.Controller;
-import com.johnogel.astrobros.gameobjects.Player;
 import box2dLight.Light;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
@@ -23,8 +22,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.levels.LevelOne;
+import com.johnogel.astrobros.levels.LevelThree;
 import com.johnogel.astrobros.levels.LevelTwo;
-import java.util.ArrayList;
 
 /**
  *
@@ -67,6 +66,7 @@ public final int
         
         levels.add(new LevelOne(this));
         levels.add(new LevelTwo(this));
+        levels.add(new LevelThree(this));
         
         batch = new SpriteBatch();
         
@@ -110,6 +110,10 @@ public final int
             this.setLevel(this.LEVEL_TWO);
         }
         
+        else if(Gdx.input.isKeyJustPressed(Keys.NUM_3)){
+            this.setLevel(this.LEVEL_THREE);
+        }
+        
         else /*if(Gdx.input.isKeyPressed(Keys.ENTER))*/{
         
             ray_handler.setCombinedMatrix(camera);
@@ -126,10 +130,13 @@ public final int
     }
     
     private void renderGameObjects(){
+        
+        
         for (GameObject o : game_objects){
             o.render(batch);
         }
-      
+        
+        levels.get(level).writeScore(batch);
     }
     
     private void updateGameObjects(){

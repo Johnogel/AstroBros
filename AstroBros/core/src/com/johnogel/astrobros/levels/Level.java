@@ -9,8 +9,10 @@ import box2dLight.Light;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.johnogel.astrobros.managers.GameManager;
@@ -57,6 +59,8 @@ protected RayHandler ray_handler;
 protected int width, height, player_index;
 
 protected BitmapFont score;
+protected CharSequence score_chars;
+protected int safe_bros;
 
 protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 
@@ -66,7 +70,10 @@ protected boolean joint_def_created, goldilocks, is_red;
 protected OrthographicCamera camera;
 
     public Level(GameManager mngr){
-        
+        score_chars = "SAFE: 0";
+        score = new BitmapFont(Gdx.files.internal("data/score.fnt"));
+        CharSequence glyphs = "0123456789";
+        score.setFixedWidthGlyphs(glyphs);
         
         bodies = new Array();
         bros = new Array();
@@ -358,11 +365,12 @@ protected OrthographicCamera camera;
         }
         
         //checks if any bro is in goldilocks zone. I'm not sure if I'm spelling that correctly
+        int i = 0;
         goldilocks = false;
         for(AstroBro b : bros){
             if(CircleObject.distance(b, inner_orbit) > inner_orbit.getRadius() && CircleObject.distance(b, outer_orbit) < outer_orbit.getRadius()){
                 //System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                
+                i++;
                 goldilocks = true;
                 
                 if(is_red){
@@ -374,6 +382,10 @@ protected OrthographicCamera camera;
                 }
             }
         }
+
+        safe_bros = i;
+        score_chars = "SAFE: "+i;
+        
         
         if(!goldilocks && !is_red){
             inner_orbit.setTexture(BoundaryCircle.RED);
@@ -417,6 +429,14 @@ protected OrthographicCamera camera;
         
     }
     
+    public void writeScore(SpriteBatch batch){
+        batch.begin();
+        score.setColor(Color.WHITE);
+      
+        score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
+        batch.end();
+    }
+    
     //must call after suns are created in initialize method
     protected void setOrbits(){
         for(Player p : bros){
@@ -442,7 +462,7 @@ protected OrthographicCamera camera;
     public void initializeWorld(){
         clearArrays();
         mngr.initializeWorld();
-
+        safe_bros = 0;
         
         
         
