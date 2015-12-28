@@ -60,7 +60,7 @@ public class LevelOne extends Level{
         
         inner_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.INNER_ORBIT, world, camera);
         outer_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.OUTER_ORBIT, world, camera);
-        
+        this.initializeBoundaries();
         
     }
     

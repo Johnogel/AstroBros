@@ -24,9 +24,12 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  */
 public class BoundaryCircle extends CircleObject{
 public final static float 
-        INNER_ORBIT = 1.8f,
-        OUTER_ORBIT = 2.4f,
+        INNER_ORBIT = 2.6f,
+        OUTER_ORBIT = 3.8f,
         OUTER_BOUND = 8f;
+public final static String
+        BLUE = "boundary-blue.png",
+        RED = "boundary-red.png";
 
 private Body bounding_body;
     public BoundaryCircle(Sun sun, float type, World world, OrthographicCamera camera){
@@ -79,9 +82,16 @@ private Body bounding_body;
     @Override
     public void update(SpriteBatch batch) {
     }
+    
+    public Texture getTexture(){
+        return texture;
+    }
 
     @Override
     public void render(SpriteBatch batch) {
+        batch.begin();
+        sprite.draw(batch, body);
+        batch.end();
     }
 
     @Override

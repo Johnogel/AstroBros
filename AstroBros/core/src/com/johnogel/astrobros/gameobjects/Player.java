@@ -34,7 +34,7 @@ private boolean active_player;
         super(world, camera, distance);
         
         max_vel = 50;
-        max_force = 3000;
+        max_force = 3500;
     }
     
     
@@ -112,8 +112,7 @@ private boolean active_player;
     
     public void setOrbit(Sun sun){
         float distance = body.getPosition().dst(sun.getPosition());
-        
-        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass()/38)/distance));
+        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass()/28)/distance));
         System.out.println("\nMASS OF SUN: "+sun.getMass()+"\nVELOCITY: "+body.getLinearVelocity().y);
     }
     

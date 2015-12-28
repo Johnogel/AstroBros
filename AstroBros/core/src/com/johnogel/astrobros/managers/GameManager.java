@@ -110,7 +110,7 @@ public final int
             this.setLevel(this.LEVEL_TWO);
         }
         
-        else if(Gdx.input.isKeyPressed(Keys.ENTER)){
+        else /*if(Gdx.input.isKeyPressed(Keys.ENTER))*/{
         
             ray_handler.setCombinedMatrix(camera);
 

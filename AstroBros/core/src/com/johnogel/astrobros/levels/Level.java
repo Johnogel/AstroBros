@@ -10,6 +10,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.johnogel.astrobros.managers.GameManager;
@@ -29,7 +30,6 @@ import com.johnogel.astrobros.gameobjects.BoundaryCircle;
 import com.johnogel.astrobros.gameobjects.CircleObject;
 import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
-import com.johnogel.astrobros.interfaces.GameObject;
 
 /**
  *
@@ -56,9 +56,12 @@ protected Player player;
 protected RayHandler ray_handler;
 protected int width, height, player_index;
 
+protected BitmapFont score;
+
 protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 
-protected boolean joint_def_created;
+protected boolean joint_def_created, goldilocks, is_red;
+
 
 protected OrthographicCamera camera;
 
@@ -86,7 +89,8 @@ protected OrthographicCamera camera;
         
         this.world = mngr.getWorld();
         
-        
+        is_red = true;
+        goldilocks = false;
         
         this.suns = new Array();
   
@@ -295,9 +299,6 @@ protected OrthographicCamera camera;
 
     }
     
-    //should be overriden in child class
-    public abstract void initialize();
-    
     //should call gravitate helper method
     @Override
     public void update(){
@@ -356,10 +357,28 @@ protected OrthographicCamera camera;
             joint_def_created = false;
         }
         
+        //checks if any bro is in goldilocks zone. I'm not sure if I'm spelling that correctly
+        goldilocks = false;
         for(AstroBro b : bros){
             if(CircleObject.distance(b, inner_orbit) > inner_orbit.getRadius() && CircleObject.distance(b, outer_orbit) < outer_orbit.getRadius()){
                 //System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                
+                goldilocks = true;
+                
+                if(is_red){
+                    inner_orbit.setTexture(BoundaryCircle.BLUE);
+                    outer_orbit.setTexture(BoundaryCircle.BLUE);
+                    
+                    is_red = false;
+                    
+                }
             }
+        }
+        
+        if(!goldilocks && !is_red){
+            inner_orbit.setTexture(BoundaryCircle.RED);
+            outer_orbit.setTexture(BoundaryCircle.RED);
+            is_red = true;
         }
         
 
@@ -405,6 +424,11 @@ protected OrthographicCamera camera;
         }
     }
     
+    protected void initializeBoundaries(){
+        inner_orbit.setTexture(BoundaryCircle.RED);
+        outer_orbit.setTexture(BoundaryCircle.RED);
+    }
+    
     //call in initialize method
     protected void initializePlayer(){
         player_index = 0;
@@ -418,6 +442,7 @@ protected OrthographicCamera camera;
     public void initializeWorld(){
         clearArrays();
         mngr.initializeWorld();
+
         
         
         
@@ -437,7 +462,8 @@ protected OrthographicCamera camera;
 //        for (AstroBro g : free_bros){
 //            mngr.addGameObject(g);
 //        }
-        
+        mngr.addGameObject(inner_orbit);
+        mngr.addGameObject(outer_orbit);
         for(Player p : bros){
             mngr.addGameObject(p);
         }
@@ -445,6 +471,8 @@ protected OrthographicCamera camera;
         for(Sun s : suns){
             mngr.addGameObject(s);
         }
+        
+
     }
     
     public void clearArrays(){
