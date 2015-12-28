@@ -15,6 +15,7 @@ public interface Controller {
     
     public void update();
     public void render();
+    public void resize(int width, int height);
     public void addLight(Light light);
     public void turnOffLights();
     public void turnOnLights();

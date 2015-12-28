@@ -33,6 +33,7 @@ public class MenuManager implements Controller{
     OrthographicCamera camera;
     private SuperManager mngr;
     private Array<Light> lights;
+    private int title_width, title_height, space_width, space_height;
     
     public MenuManager(SuperManager mngr){
         
@@ -42,6 +43,11 @@ public class MenuManager implements Controller{
         
         font = new BitmapFont();
         batch = new SpriteBatch();
+        
+        this.title_width = 160;
+        this.title_height = 50;
+        this.space_width = 120;
+        this.space_height = 35;
         
         
         
@@ -63,6 +69,8 @@ public class MenuManager implements Controller{
     @Override
     public void render() {
         
+        batch.setProjectionMatrix(camera.projection);   
+        
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -72,9 +80,13 @@ public class MenuManager implements Controller{
         ray_handler.updateAndRender(); 
 
         batch.begin();
+
         
-        batch.draw(press_space, Gdx.graphics.getWidth()/2 - press_space.getWidth()/2, Gdx.graphics.getHeight()/2 - press_space.getHeight()/2);
-        batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, Gdx.graphics.getHeight()/2+100);
+        //batch.draw(press_space, Gdx.graphics.getWidth()/2 - press_space.getWidth()/2, Gdx.graphics.getHeight()/2 - press_space.getHeight()/2);
+        //batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, Gdx.graphics.getHeight()/2+100);
+        batch.draw(title, 0 - this.title_width*0.5f, 20, this.title_width, this.title_height);
+        batch.draw(press_space, 0 - this.space_width*0.5f, -40, this.space_width,this.space_height);
+        
         
         batch.end();
         
@@ -140,6 +152,11 @@ public class MenuManager implements Controller{
         
         
         addLight(new PointLight(ray_handler, 800, Color.BLUE, 200, 0, 0));
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        this.camera = mngr.getCamera();
     }
     
 }

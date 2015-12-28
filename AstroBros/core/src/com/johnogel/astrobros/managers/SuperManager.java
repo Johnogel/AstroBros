@@ -130,5 +130,10 @@ public static final int
     @Override
     public void initialize() {
     }
+
+    @Override
+    public void resize(int width, int height) {
+        manager.resize(width, height);
+    }
     
 }

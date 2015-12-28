@@ -430,10 +430,13 @@ protected OrthographicCamera camera;
     }
     
     public void writeScore(SpriteBatch batch){
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         score.setColor(Color.WHITE);
       
-        score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
+        //score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
+        score.draw(batch, score_chars, 0,0);
+        score.draw(batch, score_chars, 0, 0, 20, 10, true);
         batch.end();
     }
     
@@ -535,6 +538,11 @@ protected OrthographicCamera camera;
         //mngr.resetGameObjectArray();
         clearArrays();
         mngr.disposeGameObjectTextures();
+    }
+    
+@Override
+    public void resize(int width, int height){
+        
     }
     
 }

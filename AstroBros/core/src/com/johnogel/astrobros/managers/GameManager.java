@@ -313,4 +313,9 @@ public final int
         
         
     }
+
+    @Override
+    public void resize(int width, int height) {
+        this.camera = mngr.getCamera();
+    }
 }
