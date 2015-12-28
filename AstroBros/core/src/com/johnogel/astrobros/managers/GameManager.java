@@ -64,9 +64,9 @@ public final int
         
         level = this.LEVEL_ONE;
         
-        levels.add(new LevelOne(this));
-        levels.add(new LevelTwo(this));
-        levels.add(new LevelThree(this));
+        levels.add(new LevelOne(this, 60));
+        levels.add(new LevelTwo(this, 60));
+        levels.add(new LevelThree(this, 60));
         
         batch = new SpriteBatch();
         
@@ -125,6 +125,15 @@ public final int
             world.step(this.fps, 6, 2); 
         }
         
+        if(levels.get(level).getTime()<1){
+            if(levels.get(level).win()){
+                level++;
+                
+            }
+            this.setLevel(level);
+
+        }
+        
             
             
     }
@@ -136,7 +145,7 @@ public final int
             o.render(batch);
         }
         
-        levels.get(level).writeScore(batch);
+        levels.get(level).writeBitmapFonts(batch);
     }
     
     private void updateGameObjects(){

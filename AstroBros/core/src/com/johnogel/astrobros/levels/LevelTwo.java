@@ -18,8 +18,8 @@ import com.johnogel.astrobros.managers.GameManager;
  */
 public class LevelTwo extends Level{
     
-    public LevelTwo(GameManager mngr){
-        super(mngr);
+    public LevelTwo(GameManager mngr, int start_time){
+        super(mngr, start_time);
         
     }
     @Override

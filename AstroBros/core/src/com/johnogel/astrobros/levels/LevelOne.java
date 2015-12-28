@@ -17,8 +17,8 @@ import com.johnogel.astrobros.managers.GameManager;
  */
 public class LevelOne extends Level{
     
-    public LevelOne(GameManager mngr){
-        super(mngr);
+    public LevelOne(GameManager mngr, int start_time){
+        super(mngr, start_time);
         
     }
     @Override

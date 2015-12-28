@@ -59,8 +59,11 @@ protected RayHandler ray_handler;
 protected int width, height, player_index;
 
 protected BitmapFont score;
-protected CharSequence score_chars;
-protected int safe_bros;
+protected CharSequence score_chars, timer_chars;
+protected int safe_bros, timer, ticker;
+
+protected final int START_TIME;
+
 
 protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 
@@ -69,8 +72,11 @@ protected boolean joint_def_created, goldilocks, is_red;
 
 protected OrthographicCamera camera;
 
-    public Level(GameManager mngr){
+    public Level(GameManager mngr, int start_time){
+        
+        this.START_TIME = start_time;
         score_chars = "SAFE: 0/0";
+        timer_chars = ""+start_time;
         score = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         score.getData().setScale(0.3f, 0.3f);
         CharSequence glyphs = "0123456789";
@@ -394,6 +400,11 @@ protected OrthographicCamera camera;
             is_red = true;
         }
         
+        ticker++;
+        if(ticker%60 == 0){
+            timer--;
+            timer_chars = ""+timer;
+        }
 
     }
     
@@ -430,7 +441,8 @@ protected OrthographicCamera camera;
         
     }
     
-    public void writeScore(SpriteBatch batch){
+    
+    public void writeBitmapFonts(SpriteBatch batch){
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
         score.setColor(Color.WHITE);
@@ -438,6 +450,7 @@ protected OrthographicCamera camera;
         //score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
         //score.draw(batch, score_chars, 0-camera.viewportWidth*0.4f,camera.viewportHeight*0.4f);
         score.draw(batch, score_chars, 0-camera.viewportHeight*0.28f,camera.viewportHeight*0.47f, 2, 0, false);
+        score.draw(batch, timer_chars, camera.viewportHeight*0.70f,camera.viewportHeight*0.47f, 2, 0, false);
         //score.draw(batch, score_chars, 0,0);
         
         //score.draw(batch, score_chars, 0, 0, 20, 10, true);
@@ -465,11 +478,17 @@ protected OrthographicCamera camera;
         
     }
     
+    
+    
     @Override
     public void initializeWorld(){
         clearArrays();
         mngr.initializeWorld();
         safe_bros = 0;
+        timer = this.START_TIME;
+        ticker = 0;
+        score_chars = "SAFE: 0/"+bros.size;
+        timer_chars = ""+timer;
         
         
         
@@ -547,6 +566,14 @@ protected OrthographicCamera camera;
 @Override
     public void resize(int width, int height){
         
+    }
+    
+    public int getTime(){
+        return timer;
+    }
+    
+    public boolean win(){
+        return safe_bros == bros.size;
     }
     
 }
