@@ -76,19 +76,18 @@ public final int
         
         width = Gdx.graphics.getWidth()/5;
         height = Gdx.graphics.getHeight()/5;
-       
 
-        
+        level = this.LEVEL_ONE;
+
     }
     
     @Override
     public void render(){
-              
+    
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        
+
         //renderer.render(world, camera.combined);
         //update();
         
@@ -224,7 +223,7 @@ public final int
 @Override
     public void initializeWorld(){
         
-        mngr.initializeWorld();
+        mngr.initializeWorld(); 
         this.ray_handler = mngr.getRayHandler();
         this.world = mngr.getWorld();
         renderer = new Box2DDebugRenderer();
@@ -272,5 +271,39 @@ public final int
         levels.get(level).initialize();
         levels.get(level).initializeGameObjects();
         //this.initializeWorld();
+    }
+
+    @Override
+    public void initialize() {
+        this.setLevel(level);
+        this.ray_handler = mngr.getRayHandler();
+        this.world = mngr.getWorld();
+        renderer = new Box2DDebugRenderer();
+        
+        logger = new FPSLogger();
+        
+        this.camera = mngr.getCamera();
+        this.camera.position.set(width * .5f, height * .5f, 0);
+        this.camera.update();
+        
+        this.clearGameObjects();
+        
+        
+        
+        //game_objects.add(player);
+        
+        ray_handler.setCombinedMatrix(camera);
+        
+        //ray_handler.setCulling(true);
+        ray_handler.setBlur(true);
+        
+        //ray_handler.setLightMapRendering(false);
+        ray_handler.setShadows(true);
+        
+        ray_handler.setAmbientLight(0, 0, 0, .1f);
+        
+        this.setLevel(level);
+        
+        
     }
 }

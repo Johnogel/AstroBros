@@ -26,7 +26,6 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  * @author johno-gel
  */
 public class Sun extends CircleObject{
-private float mass;
 private RayHandler ray_handler;
 private PointLight light;
 private OrthographicCamera camera;
@@ -105,7 +104,7 @@ private Box2DSprite sprite;
 
     @Override
     public void dispose(){
-        body.destroyFixture(null);
+        //body.destroyFixture(null);
         texture.dispose();
         sprite.getTexture().dispose();
     }

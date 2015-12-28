@@ -125,5 +125,21 @@ public class MenuManager implements Controller{
         
         addLight(new PointLight(ray_handler, 800, Color.BLUE, 200, 0, 0));
     }
+
+    @Override
+    public void initialize() {
+        mngr.initializeWorld();
+        this.ray_handler = mngr.getRayHandler();
+        this.camera = mngr.getCamera();
+               
+        press_space = new Texture(Gdx.files.internal("PressSpace.png"));
+        title = new Texture(Gdx.files.internal("AstroBros.png"));
+        
+        ray_handler.setCombinedMatrix(camera);
+        
+        
+        
+        addLight(new PointLight(ray_handler, 800, Color.BLUE, 200, 0, 0));
+    }
     
 }

@@ -71,7 +71,7 @@ public static final int
         
         //manager.turnOffLights();
         manager = managers.get(INDEX);
-        manager.initializeWorld();
+        manager.initialize();
         
     }
     
@@ -125,6 +125,10 @@ public static final int
         ray_handler = new RayHandler(world);
         ray_handler.setCombinedMatrix(camera);
         
+    }
+
+    @Override
+    public void initialize() {
     }
     
 }

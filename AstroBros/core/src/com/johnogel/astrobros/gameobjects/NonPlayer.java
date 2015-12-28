@@ -40,8 +40,7 @@ public static float PUBLIC_RADIUS = 3f;
         float x = (float) (0);
         float y = (float) (camera.viewportHeight/2);
         circle_def.position.set(x,y);
-        
-        
+
         texture = new Texture(Gdx.files.internal("test.png"));
         
         body = world.createBody(circle_def);
@@ -69,7 +68,7 @@ public static float PUBLIC_RADIUS = 3f;
         circle_shape.dispose();
         
     }
-    public NonPlayer(World world, OrthographicCamera camera, float x, float y) {
+    public NonPlayer(World world, OrthographicCamera camera, float distance) {
         this.radius = 3f;
         
         this.world = world;
@@ -78,7 +77,7 @@ public static float PUBLIC_RADIUS = 3f;
         
         BodyDef circle_def = new BodyDef();
         circle_def.type = BodyType.DynamicBody;
-        circle_def.position.set(x,y);
+        circle_def.position.set(-distance,camera.position.y);
         
         texture = new Texture(Gdx.files.internal("test.png"));
         
@@ -100,7 +99,7 @@ public static float PUBLIC_RADIUS = 3f;
         
         body.createFixture(circle_fixture);
         
-        body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
+        //body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
         circle_shape.dispose();
     }

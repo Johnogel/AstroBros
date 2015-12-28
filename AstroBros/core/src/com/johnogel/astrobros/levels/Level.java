@@ -398,10 +398,17 @@ protected OrthographicCamera camera;
         
     }
     
+    //must call after suns are created in initialize method
+    protected void setOrbits(){
+        for(Player p : bros){
+            p.setOrbit(suns.get(0));
+        }
+    }
+    
     //call in initialize method
     protected void initializePlayer(){
         player_index = 0;
-        controlled_bros.add(new Player(world, camera));
+        controlled_bros.add(new Player(world, camera, 1));
         player = (Player)controlled_bros.get(player_index);
         player.enablePlayer();
         
@@ -411,6 +418,7 @@ protected OrthographicCamera camera;
     public void initializeWorld(){
         clearArrays();
         mngr.initializeWorld();
+        
         
         
         

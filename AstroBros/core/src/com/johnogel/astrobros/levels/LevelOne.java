@@ -38,11 +38,11 @@ public class LevelOne extends Level{
         //this.ray_handler.dispose();
         
 
-        
-        this.free_bros.add(new Player(world, camera, 23,200));
-        this.free_bros.add(new Player(world, camera, 96,200));
-        this.free_bros.add(new Player(world, camera, 10,200));
-        this.free_bros.add(new Player(world, camera, 56,200));
+        this.free_bros.add(new Player(world, camera, 1));
+        this.free_bros.add(new Player(world, camera, 120));
+        this.free_bros.add(new Player(world, camera, 100));
+        this.free_bros.add(new Player(world, camera, 50));
+        this.free_bros.add(new Player(world, camera, 20));
                                 
         //world.createJoint(joint_def);
         
@@ -55,6 +55,8 @@ public class LevelOne extends Level{
         
         //adds sun to suns array without storing locally
         new Sun(this, suns, 8000, Color.YELLOW, 600, width/2, height/2 );
+        
+        this.setOrbits();
         
         inner_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.INNER_ORBIT, world, camera);
         outer_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.OUTER_ORBIT, world, camera);

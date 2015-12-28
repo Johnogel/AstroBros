@@ -36,12 +36,12 @@ public class LevelTwo extends Level{
         this.world = mngr.getWorld();
         this.camera = mngr.getCamera();
         
-        this.free_bros.add(new Player(world, camera, 23,200));
-        this.free_bros.add(new Player(world, camera, 96,200));
-        this.free_bros.add(new Player(world, camera, 10,200));
-        this.free_bros.add(new Player(world, camera, 56,200));
-        this.free_bros.add(new Player(world, camera, 250,200));
-        this.free_bros.add(new Player(world, camera, 5,20));
+        this.free_bros.add(new Player(world, camera, 80));
+        this.free_bros.add(new Player(world, camera, 70));
+        this.free_bros.add(new Player(world, camera, 60));
+        this.free_bros.add(new Player(world, camera, 50));
+        this.free_bros.add(new Player(world, camera, 40));
+        this.free_bros.add(new Player(world, camera, 20));
 
         //world.createJoint(joint_def);
         initializePlayer();
@@ -54,6 +54,8 @@ public class LevelTwo extends Level{
         
         //adds sun to suns array without storing locally
         new Sun(this, suns, 8000, Color.BLUE, 1000, width/2, height/2 );
+        
+        this.setOrbits();
         
         inner_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.INNER_ORBIT, world, camera);
         outer_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.OUTER_ORBIT, world, camera);
