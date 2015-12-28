@@ -70,8 +70,9 @@ protected boolean joint_def_created, goldilocks, is_red;
 protected OrthographicCamera camera;
 
     public Level(GameManager mngr){
-        score_chars = "SAFE: 0";
+        score_chars = "SAFE: 0/0";
         score = new BitmapFont(Gdx.files.internal("data/score.fnt"));
+        score.getData().setScale(0.3f, 0.3f);
         CharSequence glyphs = "0123456789";
         score.setFixedWidthGlyphs(glyphs);
         
@@ -384,7 +385,7 @@ protected OrthographicCamera camera;
         }
 
         safe_bros = i;
-        score_chars = "SAFE: "+i;
+        score_chars = "SAFE: "+i+"/"+bros.size;
         
         
         if(!goldilocks && !is_red){
@@ -430,13 +431,16 @@ protected OrthographicCamera camera;
     }
     
     public void writeScore(SpriteBatch batch){
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.projection);
         batch.begin();
         score.setColor(Color.WHITE);
       
         //score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
-        score.draw(batch, score_chars, 0,0);
-        score.draw(batch, score_chars, 0, 0, 20, 10, true);
+        //score.draw(batch, score_chars, 0-camera.viewportWidth*0.4f,camera.viewportHeight*0.4f);
+        score.draw(batch, score_chars, 0-camera.viewportHeight*0.28f,camera.viewportHeight*0.47f, 2, 0, false);
+        //score.draw(batch, score_chars, 0,0);
+        
+        //score.draw(batch, score_chars, 0, 0, 20, 10, true);
         batch.end();
     }
     
