@@ -53,8 +53,6 @@ public final int
         LEVEL_TWO = 1,
         LEVEL_THREE = 2;
 
-//player obviously
-private Player player;
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
         this.fps = 1/60f;
@@ -103,6 +101,7 @@ private Player player;
 
     @Override
     public void update() {
+        
         //System.out.println("Game Objects: "+this.game_objects.size);
         if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
             this.setLevel(this.LEVEL_ONE);
@@ -149,9 +148,6 @@ private Player player;
         game_objects.clear();
     }
     
-    public Player getPlayer(){
-        return player;
-    }
     
     public void toggleLights(){
         for (Light l : lights){
@@ -179,7 +175,11 @@ private Player player;
     public void addLight(Light light) {
         lights.add(light);
     }
-
+    
+    public SpriteBatch getSpriteBatch(){
+        return batch;
+    }
+    
     @Override
     public void turnOffLights() {
         for (Light l : lights){
@@ -237,9 +237,9 @@ private Player player;
         
         this.clearGameObjects();
         
-        player = new Player(world, camera);
         
-        game_objects.add(player);
+        
+        //game_objects.add(player);
         
         ray_handler.setCombinedMatrix(camera);
         

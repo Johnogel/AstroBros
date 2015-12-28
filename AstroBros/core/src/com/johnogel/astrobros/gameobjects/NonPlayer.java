@@ -9,6 +9,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -26,21 +28,25 @@ public static float PUBLIC_RADIUS = 3f;
     public NonPlayer(World world, OrthographicCamera camera) {
         this.radius = PUBLIC_RADIUS;
         
-        this.world = world;
         this.camera = camera;
+        this.world = world;
         
-        sounds = new Array(20);
+        this.radius = 3f;
+        
+        joints = new Array();
         
         BodyDef circle_def = new BodyDef();
-        circle_def.type = BodyType.DynamicBody;
-        float x = (float) (camera.viewportWidth*Math.random());
-        float y = (float) (camera.viewportHeight*Math.random());
+        circle_def.type = BodyDef.BodyType.DynamicBody;
+        float x = (float) (0);
+        float y = (float) (camera.viewportHeight/2);
         circle_def.position.set(x,y);
         
+        
         texture = new Texture(Gdx.files.internal("test.png"));
-
         
         body = world.createBody(circle_def);
+        
+        body.applyForceToCenter(new Vector2(0,-3), true);
         CircleShape circle_shape = new CircleShape();
         circle_shape.setRadius(radius);
         
@@ -61,6 +67,7 @@ public static float PUBLIC_RADIUS = 3f;
         body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
         circle_shape.dispose();
+        
     }
     public NonPlayer(World world, OrthographicCamera camera, float x, float y) {
         this.radius = 3f;
@@ -96,6 +103,11 @@ public static float PUBLIC_RADIUS = 3f;
         body.setLinearVelocity((float)Math.random()*20-10,(float) Math.random()*20-10);
         
         circle_shape.dispose();
+    }
+    
+    @Override
+    public void update(SpriteBatch batch){
+        batch.setProjectionMatrix(camera.combined);
     }
 
     @Override

@@ -41,7 +41,7 @@ protected final GameManager mngr;
 protected Array<Sun> suns;
 protected Array<Body> sun_bodies;
 protected Array<Body> bodies;
-protected Array<AstroBro> bros;
+protected Array<Player> bros;
 protected Array<Body> bro_bodies;
 protected Array<AstroBro> controlled_bros;
 protected Array<AstroBro> free_bros;
@@ -54,7 +54,7 @@ protected Array<Body> to_be_attached_to;
 protected World world;
 protected Player player;
 protected RayHandler ray_handler;
-protected int width, height;
+protected int width, height, player_index;
 
 protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 
@@ -63,7 +63,8 @@ protected boolean joint_def_created;
 protected OrthographicCamera camera;
 
     public Level(GameManager mngr){
-
+        
+        
         bodies = new Array();
         bros = new Array();
         
@@ -94,18 +95,16 @@ protected OrthographicCamera camera;
     //should be called in child initialize method
     protected void initializeArrays(){
         
-        controlled_bros.add(mngr.getPlayer());
-        
         for (AstroBro b : controlled_bros){
             controlled_bodies.add(b.getBody());
             bro_bodies.add(b.getBody());
-            bros.add(b);
+            bros.add((Player)b);
         }
         
         for (AstroBro b : free_bros){
             free_bodies.add(b.getBody());
             bro_bodies.add(b.getBody());
-            bros.add(b);
+            bros.add((Player)b);
         }
         
         for (Sun s : suns){
@@ -302,6 +301,28 @@ protected OrthographicCamera camera;
     //should call gravitate helper method
     @Override
     public void update(){
+        //player.update(mngr.getSpriteBatch());
+        if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
+            
+            player_index++;
+            if(player_index > controlled_bros.size - 1){
+                player_index = 0;
+            }
+            player.disablePlayer();
+            player = (Player)controlled_bros.get(player_index);
+            player.enablePlayer();
+        }
+        if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
+            
+            player_index--;
+            if(player_index == -1 || player_index > controlled_bros.size - 1){
+                player_index = controlled_bros.size - 1;
+            }
+            player.disablePlayer();
+            player = (Player)controlled_bros.get(player_index);
+            player.enablePlayer();
+        }
+        
         gravitate();
         if(Gdx.input.isKeyJustPressed(Keys.R)){
             Array<Joint> joints = new Array(); 
@@ -313,17 +334,12 @@ protected OrthographicCamera camera;
             }
             int size = controlled_bros.size;
             for(int i = 0; i < size; i++){
-                
-                
-  
+
                 System.out.println("---------------------------------------ADD DEM FREE BODIES");
                 free_bodies.add(controlled_bodies.pop());
                 free_bros.add(controlled_bros.pop());
                     
-                
-                
-                
-                
+
             }
             controlled_bros.clear();
             controlled_bodies.clear();
@@ -345,6 +361,8 @@ protected OrthographicCamera camera;
                 //System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
         }
+        
+
     }
     
     private void gravitate(){
@@ -380,12 +398,21 @@ protected OrthographicCamera camera;
         
     }
     
+    //call in initialize method
+    protected void initializePlayer(){
+        player_index = 0;
+        controlled_bros.add(new Player(world, camera));
+        player = (Player)controlled_bros.get(player_index);
+        player.enablePlayer();
+        
+    }
+    
     @Override
     public void initializeWorld(){
         clearArrays();
         mngr.initializeWorld();
         
-        this.player = mngr.getPlayer();
+        
         
         //bros.add(player);
         //this.world = mngr.getWorld();
@@ -399,9 +426,16 @@ protected OrthographicCamera camera;
     }
     
     public void initializeGameObjects(){
-        for (AstroBro g : free_bros){
-            GameObject o = (GameObject) g;
-            mngr.addGameObject(o);
+//        for (AstroBro g : free_bros){
+//            mngr.addGameObject(g);
+//        }
+        
+        for(Player p : bros){
+            mngr.addGameObject(p);
+        }
+        
+        for(Sun s : suns){
+            mngr.addGameObject(s);
         }
     }
     

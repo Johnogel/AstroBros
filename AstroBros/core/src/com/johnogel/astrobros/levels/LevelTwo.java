@@ -7,9 +7,8 @@
 package com.johnogel.astrobros.levels;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.johnogel.astrobros.gameobjects.BoundaryCircle;
-import com.johnogel.astrobros.gameobjects.NonPlayer;
+import com.johnogel.astrobros.gameobjects.Player;
 import com.johnogel.astrobros.gameobjects.Sun;
 import com.johnogel.astrobros.managers.GameManager;
 
@@ -37,17 +36,19 @@ public class LevelTwo extends Level{
         this.world = mngr.getWorld();
         this.camera = mngr.getCamera();
         
-        this.free_bros.add(new NonPlayer(world, camera, 23,200));
-        this.free_bros.add(new NonPlayer(world, camera, 96,200));
-        this.free_bros.add(new NonPlayer(world, camera, 10,200));
-        this.free_bros.add(new NonPlayer(world, camera, 56,200));
-        this.free_bros.add(new NonPlayer(world, camera, 250,200));
-        this.free_bros.add(new NonPlayer(world, camera, 5,20));
+        this.free_bros.add(new Player(world, camera, 23,200));
+        this.free_bros.add(new Player(world, camera, 96,200));
+        this.free_bros.add(new Player(world, camera, 10,200));
+        this.free_bros.add(new Player(world, camera, 56,200));
+        this.free_bros.add(new Player(world, camera, 250,200));
+        this.free_bros.add(new Player(world, camera, 5,20));
 
         //world.createJoint(joint_def);
-        
+        initializePlayer();
         initializeArrays();
         initializeContactListener();
+        
+
         
         
         
