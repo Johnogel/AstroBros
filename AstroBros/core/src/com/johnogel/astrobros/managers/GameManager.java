@@ -42,6 +42,7 @@ private final SuperManager mngr;
 private float fps;
 private Array<Light> lights;
 private Array<Level> levels;
+private Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
 
@@ -64,7 +65,7 @@ public final int
         
         level = this.LEVEL_ONE;
         
-        levels.add(new LevelOne(this, 60));
+        levels.add(new LevelOne(this, 10));
         levels.add(new LevelTwo(this, 60));
         levels.add(new LevelThree(this, 60));
         

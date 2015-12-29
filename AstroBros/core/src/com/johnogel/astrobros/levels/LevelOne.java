@@ -38,10 +38,10 @@ public class LevelOne extends Level{
         //this.ray_handler.dispose();
         
 
-        this.free_bros.add(new Player(world, camera, 1));
-        this.free_bros.add(new Player(world, camera, 120));
-        this.free_bros.add(new Player(world, camera, 100));
-        this.free_bros.add(new Player(world, camera, 50));
+        //this.free_bros.add(new Player(world, camera, 1));
+        //this.free_bros.add(new Player(world, camera, 120));
+        //this.free_bros.add(new Player(world, camera, 100));
+        //this.free_bros.add(new Player(world, camera, 50));
         this.free_bros.add(new Player(world, camera, 20));
                                 
         //world.createJoint(joint_def);

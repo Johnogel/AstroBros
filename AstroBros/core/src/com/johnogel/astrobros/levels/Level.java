@@ -271,36 +271,38 @@ protected OrthographicCamera camera;
         System.out.println("FREE BROS SIZE: "+free_bros.size+"\nFREE BODIES SIZE: "+free_bodies.size);
         System.out.println("BROS SIZE: "+bros.size);
         if(to_be_attached.size == to_be_attached_to.size && to_be_attached.size > 0){
-            for(int i = 0; i < to_be_attached.size; i++){
-                RevoluteJointDef joint_def = new RevoluteJointDef();
-                joint_def.bodyA = to_be_attached_to.get(i);
-                joint_def.bodyB = to_be_attached.get(i);
-                joint_def.collideConnected = true;
-                //joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
-                float distance = NonPlayer.PUBLIC_RADIUS*2;
-                
-                float a_x = joint_def.bodyA.getPosition().x;
-                float a_y = joint_def.bodyA.getPosition().y;
-                float b_x = joint_def.bodyB.getPosition().x;
-                float b_y = joint_def.bodyB.getPosition().y;
-                
-                float angle = MathUtils.atan2(a_y - b_y, a_x - b_x)*MathUtils.radiansToDegrees + 180;
-                
-                float x = distance*MathUtils.cosDeg(angle);
-                float y = distance*MathUtils.sinDeg(angle);
-                
-                joint_def.localAnchorA.set(x, y);
-                
-                world.createJoint(joint_def);
-                //System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
-                //controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(to_be_attached.get(i), false)));
-                //controlled_bros.add(free_bros.removeIndex(i));
-                
-                if(!controlled_bodies.contains(to_be_attached.get(i), false)){
-                    controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(to_be_attached.get(i), false)));
-                    for(AstroBro b : free_bros){
-                        if(b.getBody().equals(joint_def.bodyB)){
-                            controlled_bros.add(free_bros.removeIndex(free_bros.indexOf(b, false)));
+            if(Gdx.input.isKeyPressed(Keys.SPACE)){
+                for(int i = 0; i < to_be_attached.size; i++){
+                    RevoluteJointDef joint_def = new RevoluteJointDef();
+                    joint_def.bodyA = to_be_attached_to.get(i);
+                    joint_def.bodyB = to_be_attached.get(i);
+                    joint_def.collideConnected = true;
+                    //joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
+                    float distance = NonPlayer.PUBLIC_RADIUS*2;
+
+                    float a_x = joint_def.bodyA.getPosition().x;
+                    float a_y = joint_def.bodyA.getPosition().y;
+                    float b_x = joint_def.bodyB.getPosition().x;
+                    float b_y = joint_def.bodyB.getPosition().y;
+
+                    float angle = MathUtils.atan2(a_y - b_y, a_x - b_x)*MathUtils.radiansToDegrees + 180;
+
+                    float x = distance*MathUtils.cosDeg(angle);
+                    float y = distance*MathUtils.sinDeg(angle);
+
+                    joint_def.localAnchorA.set(x, y);
+
+                    world.createJoint(joint_def);
+                    //System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
+                    //controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(to_be_attached.get(i), false)));
+                    //controlled_bros.add(free_bros.removeIndex(i));
+
+                    if(!controlled_bodies.contains(to_be_attached.get(i), false)){
+                        controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(to_be_attached.get(i), false)));
+                        for(AstroBro b : free_bros){
+                            if(b.getBody().equals(joint_def.bodyB)){
+                                controlled_bros.add(free_bros.removeIndex(free_bros.indexOf(b, false)));
+                            }
                         }
                     }
                 }
