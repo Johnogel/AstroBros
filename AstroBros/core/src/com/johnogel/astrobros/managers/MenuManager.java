@@ -96,30 +96,7 @@ public class MenuManager implements Controller{
     public void dispose() {
     }
 
-    @Override
-    public void updateLights() {       
-        
-        
-    }
 
-    @Override
-    public void addLight(Light light) {
-        lights.add(light);
-    }
-
-    @Override
-    public void turnOffLights() {
-        for (Light l : lights){
-            l.setActive(false);
-        }
-    }
-
-    @Override
-    public void turnOnLights() {
-        for (Light l : lights){
-            l.setActive(true);
-        }
-    }
     
     @Override
     public void initializeWorld(){
@@ -135,7 +112,7 @@ public class MenuManager implements Controller{
         
         
         
-        addLight(new PointLight(ray_handler, 800, Color.BLUE, 200, 0, 0));
+        
     }
 
     @Override
@@ -147,11 +124,13 @@ public class MenuManager implements Controller{
         press_space = new Texture(Gdx.files.internal("PressSpace.png"));
         title = new Texture(Gdx.files.internal("AstroBros.png"));
         
+        
+        
+        
+        
+        PointLight pointLight = new PointLight(ray_handler, 800, Color.BLUE, 200, 0, 0);
         ray_handler.setCombinedMatrix(camera);
         
-        
-        
-        addLight(new PointLight(ray_handler, 800, Color.BLUE, 200, 0, 0));
     }
 
     @Override

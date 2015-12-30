@@ -43,11 +43,6 @@ public static final int
         
         managers.add(new MenuManager(this));
         managers.add(new GameManager(this));
-
-        
-        for (Controller m : managers){
-            m.turnOffLights();
-        }
         
         manager = managers.get(SuperManager.MENU_MANAGER);
         manager.initializeWorld();
@@ -96,25 +91,7 @@ public static final int
         manager.dispose();
     }
 
-    @Override
-    public void updateLights() {
-        manager.updateLights();
-    }
 
-    @Override
-    public void addLight(Light light) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void turnOffLights() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void turnOnLights() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 @Override
     public void initializeWorld(){

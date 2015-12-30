@@ -40,8 +40,7 @@ private int max_count;
 private RayHandler ray_handler;
 private final SuperManager mngr;
 private float fps;
-private Array<Light> lights;
-private Array<Level> levels;
+private final Array<Level> levels;
 private Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
@@ -59,7 +58,7 @@ public final int
         this.fps = 1/60f;
         max_count = 50;
         
-        game_objects = new Array(20);
+        game_objects = new Array();
         
         levels = new Array(6);
         controllers = new Array(10);
@@ -80,8 +79,6 @@ public final int
         batch = new SpriteBatch();
         
         started = false;
-        
-        lights = new Array();
         
         width = Gdx.graphics.getWidth()/5;
         height = Gdx.graphics.getHeight()/5;
@@ -178,51 +175,17 @@ public final int
         game_objects.clear();
     }
     
-    
-    public void toggleLights(){
-        for (Light l : lights){
-            l.setActive(!l.isActive());
-        }
-    }
-    
     @Override
     public void dispose() {
         batch.dispose();
         world.dispose();
-    }
-
-    public void addLight(int num_rays, Color color, int reach, int x, int y){
-        lights.add(new PointLight(ray_handler, num_rays, color, reach, x, y));
-    }
-    
-    @Override
-    public void updateLights() {
-        
-        ray_handler.setCombinedMatrix(camera);
-    }
-
-    @Override
-    public void addLight(Light light) {
-        lights.add(light);
     }
     
     public SpriteBatch getSpriteBatch(){
         return batch;
     }
     
-    @Override
-    public void turnOffLights() {
-        for (Light l : lights){
-            l.setActive(false);
-        }
-    }
 
-    @Override
-    public void turnOnLights() {
-        for (Light l : lights){
-            l.setActive(true);
-        }
-    }
     public void addGameObject(GameObject o){
         game_objects.add(o);
     }
@@ -247,10 +210,6 @@ public final int
         return ray_handler;
     }
     
-    public Array<Light> getLightsArray(){
-        return lights;
-    }
-    
 @Override
     public void initializeWorld(){
         
@@ -271,7 +230,7 @@ public final int
         
         //game_objects.add(player);
         
-        ray_handler.setCombinedMatrix(camera);
+        //ray_handler.setCombinedMatrix(camera);
         
         //ray_handler.setCulling(true);
         ray_handler.setBlur(true);
@@ -299,6 +258,7 @@ public final int
     public void setLevel(int level){
         levels.get(level).dispose();
         this.level = level;
+        this.controller = level;
         levels.get(level).initialize();
         levels.get(level).initializeGameObjects();
         //this.initializeWorld();
@@ -341,5 +301,6 @@ public final int
     @Override
     public void resize(int width, int height) {
         this.camera = mngr.getCamera();
+        ray_handler.setCombinedMatrix(camera);
     }
 }

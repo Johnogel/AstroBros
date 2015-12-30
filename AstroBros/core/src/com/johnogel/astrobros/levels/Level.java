@@ -63,7 +63,7 @@ protected CharSequence score_chars, timer_chars;
 protected int safe_bros, timer, ticker;
 
 protected final int START_TIME;
-
+private final int MAX_BROS = 12;
 
 protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 
@@ -82,22 +82,21 @@ protected OrthographicCamera camera;
         CharSequence glyphs = "0123456789";
         score.setFixedWidthGlyphs(glyphs);
         
-        bodies = new Array();
-        bros = new Array();
+        bodies = new Array(MAX_BROS);
+        bros = new Array(MAX_BROS);
         
-        suns = new Array();
-        sun_bodies = new Array();
+
         
         
-        controlled_bros = new Array();
-        free_bros = new Array();
+        controlled_bros = new Array(MAX_BROS);
+        free_bros = new Array(MAX_BROS);
         
-        bro_bodies = new Array(30);
-        controlled_bodies = new Array();
-        free_bodies = new Array();
+        bro_bodies = new Array(MAX_BROS);
+        controlled_bodies = new Array(MAX_BROS);
+        free_bodies = new Array(MAX_BROS);
         
-        to_be_attached = new Array(5);
-        to_be_attached_to = new Array(5);
+        to_be_attached = new Array(MAX_BROS);
+        to_be_attached_to = new Array(MAX_BROS);
         
         this.mngr = mngr;
         
@@ -106,7 +105,8 @@ protected OrthographicCamera camera;
         is_red = true;
         goldilocks = false;
         
-        this.suns = new Array();
+        suns = new Array(2);
+        sun_bodies = new Array(2);
   
     }
     
@@ -410,12 +410,17 @@ protected OrthographicCamera camera;
             timer_chars = ""+timer;
         }
         
-        if(timer < 1 && this.safe_bros == this.bros.size){
-            notifyWin();
+        //check if level is over
+        if(timer < 1){
+            if(this.safe_bros == this.bros.size){
+                notifyWin();
+            }
+            else{
+                notifyLoss();
+            }
+            
         }
-        else if(timer < 1 && this.safe_bros != this.bros.size){
-            notifyLoss();
-        }
+
         
 
     }
@@ -487,6 +492,7 @@ protected OrthographicCamera camera;
     }
     
     protected void initializeBoundaries(){
+        is_red = true;
         inner_orbit.setTexture(BoundaryCircle.RED);
         outer_orbit.setTexture(BoundaryCircle.RED);
     }
@@ -560,22 +566,6 @@ protected OrthographicCamera camera;
     @Override
     public void render() {
         mngr.renderGameObjects();
-    }
-
-    @Override
-    public void addLight(Light light) {
-    }
-
-    @Override
-    public void turnOffLights() {
-    }
-
-    @Override
-    public void turnOnLights() {
-    }
-
-    @Override
-    public void updateLights() {
     }
 
 

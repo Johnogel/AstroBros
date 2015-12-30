@@ -60,21 +60,7 @@ public class GameOverScreen implements Controller{
     public void resize(int width, int height) {
     }
 
-    @Override
-    public void addLight(Light light) {
-    }
-
-    @Override
-    public void turnOffLights() {
-    }
-
-    @Override
-    public void turnOnLights() {
-    }
-
-    @Override
-    public void updateLights() {
-    }
+ 
 
     @Override
     public void initializeWorld() {
