@@ -271,8 +271,9 @@ protected OrthographicCamera camera;
         System.out.println("FREE BROS SIZE: "+free_bros.size+"\nFREE BODIES SIZE: "+free_bodies.size);
         System.out.println("BROS SIZE: "+bros.size);
         if(to_be_attached.size == to_be_attached_to.size && to_be_attached.size > 0){
-            if(Gdx.input.isKeyPressed(Keys.SPACE)){
-                for(int i = 0; i < to_be_attached.size; i++){
+            
+            for(int i = 0; i < to_be_attached.size; i++){
+                if(Gdx.input.isKeyPressed(Keys.SPACE)){
                     RevoluteJointDef joint_def = new RevoluteJointDef();
                     joint_def.bodyA = to_be_attached_to.get(i);
                     joint_def.bodyB = to_be_attached.get(i);

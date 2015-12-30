@@ -46,28 +46,36 @@ private Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
 
-private int level;
+private int level, controller;
 
 public final int 
         LEVEL_ONE = 0,
         LEVEL_TWO = 1,
-        LEVEL_THREE = 2;
+        LEVEL_THREE = 2,
+        GAME_OVER = 3;
 
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
         this.fps = 1/60f;
         max_count = 50;
         
-        game_objects = new Array();
+        game_objects = new Array(20);
         
-        levels = new Array();
+        levels = new Array(6);
+        controllers = new Array(10);
         
         
         level = this.LEVEL_ONE;
+        controller = level;
         
         levels.add(new LevelOne(this, 10));
         levels.add(new LevelTwo(this, 60));
         levels.add(new LevelThree(this, 60));
+        
+        controllers.add(levels.get(0));
+        controllers.add(levels.get(1));
+        controllers.add(levels.get(2));
+        controllers.add(new GameOverScreen(this));
         
         batch = new SpriteBatch();
         
@@ -121,7 +129,7 @@ public final int
 
             this.updateGameObjects();
             
-            levels.get(level).update();
+            controllers.get(controller).update();
             
             world.step(this.fps, 6, 2); 
         }
