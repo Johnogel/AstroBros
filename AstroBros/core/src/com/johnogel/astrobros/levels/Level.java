@@ -320,6 +320,7 @@ protected OrthographicCamera camera;
     @Override
     public void update(){
         //player.update(mngr.getSpriteBatch());
+        mngr.updateGameObjects();
         if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
             
             player_index++;
@@ -558,6 +559,7 @@ protected OrthographicCamera camera;
     
     @Override
     public void render() {
+        mngr.renderGameObjects();
     }
 
     @Override

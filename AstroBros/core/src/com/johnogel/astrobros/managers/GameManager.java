@@ -100,11 +100,19 @@ public final int
         //renderer.render(world, camera.combined);
         //update();
         
-        this.renderGameObjects();
+        controllers.get(controller).render();
         ray_handler.updateAndRender();
 
         
    
+    }
+    
+    public void resolveLevelWin(){
+        
+    }
+    
+    public void resolveLevelLoss(){
+        controller = this.GAME_OVER;
     }
 
     @Override
@@ -126,8 +134,6 @@ public final int
         else /*if(Gdx.input.isKeyPressed(Keys.ENTER))*/{
         
             ray_handler.setCombinedMatrix(camera);
-
-            this.updateGameObjects();
             
             controllers.get(controller).update();
             
@@ -147,7 +153,7 @@ public final int
             
     }
     
-    private void renderGameObjects(){
+    public void renderGameObjects(){
         
         
         for (GameObject o : game_objects){
@@ -157,7 +163,7 @@ public final int
         levels.get(level).writeBitmapFonts(batch);
     }
     
-    private void updateGameObjects(){
+    public void updateGameObjects(){
         for (GameObject o : game_objects){
             o.update(batch);
         }
