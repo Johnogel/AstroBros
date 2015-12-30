@@ -75,5 +75,10 @@ public class GameOverScreen implements Controller{
     @Override
     public void dispose() {
     }
+
+    @Override
+    public void interpolate(float alpha) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

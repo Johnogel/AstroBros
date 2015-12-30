@@ -7,12 +7,9 @@ package com.johnogel.astrobros.managers;
 
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.interfaces.Controller;
-import box2dLight.Light;
-import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
@@ -24,6 +21,9 @@ import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.levels.LevelOne;
 import com.johnogel.astrobros.levels.LevelThree;
 import com.johnogel.astrobros.levels.LevelTwo;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Transform;
+import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  *
@@ -44,7 +44,8 @@ private final Array<Level> levels;
 private Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
-
+private double accumulator;
+private double currentTime;
 private int level, controller;
 
 public final int 
@@ -97,6 +98,8 @@ public final int
         //renderer.render(world, camera.combined);
         //update();
         
+        
+        
         controllers.get(controller).render();
         ray_handler.updateAndRender();
 
@@ -134,7 +137,24 @@ public final int
             
             controllers.get(controller).update();
             
-            world.step(this.fps, 6, 2); 
+            double newTime = TimeUtils.millis() / 1000.0;
+            double frameTime = Math.min(newTime - currentTime, 0.25);
+            float deltaTime = (float)frameTime;
+            
+            accumulator += deltaTime;
+
+            currentTime = newTime;
+
+            while (accumulator >= fps) {
+                world.step(fps, 8, 3);
+                accumulator -= fps;
+                this.updateGameObjects();
+            }
+            
+            if(game_objects.size > 0){
+                interpolate((float)(accumulator / fps));
+            }
+            //world.step(this.fps, 6, 2); 
         }
         
         if(levels.get(level).getTime()<1){
@@ -302,5 +322,20 @@ public final int
     public void resize(int width, int height) {
         this.camera = mngr.getCamera();
         ray_handler.setCombinedMatrix(camera);
+    }
+
+    @Override
+    public void interpolate(float alpha) {
+        for(GameObject entity : game_objects){
+            Transform transform = entity.getBody().getTransform();
+            Vector2 bodyPosition = transform.getPosition();
+            Vector2 position = entity.getPosition();
+            //float angle = entity.getAngle();
+            //float bodyAngle = transform.getRotation();
+
+            position.x = bodyPosition.x * alpha + position.x * (1.0f - alpha);
+            position.y = bodyPosition.y * alpha + position.x * (1.0f - alpha);
+            //entity.setAngle(bodyAngle * alpha + angle * (1.0f - alpha));
+        }
     }
 }

@@ -15,6 +15,7 @@ public interface Controller {
     
     public void update();
     public void render();
+    public void interpolate(float alpha);
     public void resize(int width, int height);
     public void initializeWorld();
     public void initialize();

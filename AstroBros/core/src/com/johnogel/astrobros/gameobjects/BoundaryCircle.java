@@ -31,7 +31,7 @@ public final static String
         BLUE = "boundary-blue.png",
         RED = "boundary-red.png";
 
-private Body bounding_body;
+
     public BoundaryCircle(Sun sun, float type, World world, OrthographicCamera camera){
         this.world = world;
         this.camera = camera;
@@ -76,7 +76,7 @@ private Body bounding_body;
     
     @Override
     public Body getBody() {
-        return bounding_body;
+        return body;
     }
 
     @Override

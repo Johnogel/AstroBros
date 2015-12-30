@@ -589,4 +589,8 @@ protected OrthographicCamera camera;
         return safe_bros == bros.size;
     }
     
+@Override
+    public void interpolate(float alpha){
+        
+    }
 }

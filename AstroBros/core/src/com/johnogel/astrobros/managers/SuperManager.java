@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.johnogel.astrobros.gameobjects.Player;
 
 /**
  *
@@ -111,6 +110,11 @@ public static final int
     @Override
     public void resize(int width, int height) {
         manager.resize(width, height);
+    }
+
+    @Override
+    public void interpolate(float alpha) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

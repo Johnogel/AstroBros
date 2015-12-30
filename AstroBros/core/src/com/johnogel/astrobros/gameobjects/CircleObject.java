@@ -29,8 +29,14 @@ protected Box2DSprite sprite;
 protected Body body;
 protected Array<Sound> sounds;
 
+    @Override
     public Body getBody(){
         return body;
+    }
+    
+    @Override
+    public Vector2 getPosition(){
+        return body.getPosition();
     }
     
     public void setTexture(String image_name){
@@ -43,10 +49,6 @@ protected Array<Sound> sounds;
     
     public float getRadius(){
         return radius;
-    }
-    
-    public Vector2 getPosition(){
-        return body.getPosition();
     }
     
     public static float distance(CircleObject obj_1, CircleObject obj_2){

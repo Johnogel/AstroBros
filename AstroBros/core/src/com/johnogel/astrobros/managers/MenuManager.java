@@ -137,5 +137,10 @@ public class MenuManager implements Controller{
     public void resize(int width, int height) {
         this.camera = mngr.getCamera();
     }
+
+    @Override
+    public void interpolate(float alpha) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
