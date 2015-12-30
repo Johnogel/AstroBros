@@ -408,7 +408,25 @@ protected OrthographicCamera camera;
             timer--;
             timer_chars = ""+timer;
         }
+        
+        if(timer < 1 && this.safe_bros == this.bros.size){
+            notifyWin();
+        }
+        else if(timer < 1 && this.safe_bros != this.bros.size){
+            notifyLoss();
+        }
+        
 
+    }
+    
+    //should call mngr method to handle screen changing
+    private void notifyWin(){
+        
+    }
+    
+    //should call mngr method to handle screen changing
+    private void notifyLoss(){
+        
     }
     
     private void gravitate(){
