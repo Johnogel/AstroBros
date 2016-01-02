@@ -7,12 +7,9 @@ package com.johnogel.astrobros.managers;
 
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.interfaces.Controller;
-import box2dLight.Light;
-import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
@@ -36,12 +33,12 @@ private FPSLogger logger;
 private int width, height;
 private OrthographicCamera camera;
 protected Array<GameObject> game_objects, disposables;
-private int max_count;
+private final int max_count;
 private RayHandler ray_handler;
 private final SuperManager mngr;
-private float fps;
+private final float fps;
 private final Array<Level> levels;
-private Array<Controller> controllers;
+private final Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
 

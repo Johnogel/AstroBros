@@ -100,6 +100,8 @@ protected OrthographicCamera camera;
         to_be_attached = new Array(MAX_BROS);
         to_be_attached_to = new Array(MAX_BROS);
         
+       
+        
         this.mngr = mngr;
         
         this.world = mngr.getWorld();

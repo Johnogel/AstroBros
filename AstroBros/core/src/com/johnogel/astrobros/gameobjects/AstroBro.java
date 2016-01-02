@@ -5,24 +5,19 @@
  */
 package com.johnogel.astrobros.gameobjects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.JointDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
+
 
 /**
  *
  * @author johno-gel
  */
 public abstract class AstroBro extends CircleObject{
-;
+
 protected Array<JointDef> joints;
 
     @Override
