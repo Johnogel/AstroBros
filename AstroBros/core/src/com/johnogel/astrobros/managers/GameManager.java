@@ -65,15 +65,7 @@ public final int
         level = this.LEVEL_ONE;
         controller = level;
         
-        levels.add(new LevelOne(this, 3));
-        levels.add(new LevelTwo(this, 60));
-        levels.add(new LevelThree(this, 60));
-        
-        controllers.add(levels.get(0));
-        controllers.add(levels.get(1));
-        controllers.add(levels.get(2));
-        controllers.add(new GameOverScreen(this));
-        controllers.add(new LevelWinScreen(this));
+
         
         batch = new SpriteBatch();
         
@@ -268,16 +260,28 @@ public final int
 
     @Override
     public void initialize() {
-        this.setLevel(level);
+        mngr.initializeWorld();
+        this.camera = mngr.getCamera();
+        this.camera.position.set(width * .5f, height * .5f, 0);
+        this.camera.update();
         this.ray_handler = mngr.getRayHandler();
         this.world = mngr.getWorld();
+        levels.add(new LevelOne(this, 3));
+        levels.add(new LevelTwo(this, 60));
+        levels.add(new LevelThree(this, 60));
+        
+        controllers.add(levels.get(0));
+        controllers.add(levels.get(1));
+        controllers.add(levels.get(2));
+        controllers.add(new GameOverScreen(this));
+        controllers.add(new LevelWinScreen(this));
+        //this.setLevel(level);
+
         renderer = new Box2DDebugRenderer();
         
         logger = new FPSLogger();
         
-        this.camera = mngr.getCamera();
-        this.camera.position.set(width * .5f, height * .5f, 0);
-        this.camera.update();
+
         
         this.clearGameObjects();
         

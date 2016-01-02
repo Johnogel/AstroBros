@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Array;
  * @author johno-gel
  */
 public abstract class AstroBro extends CircleObject{
-
+protected float health;
 protected Array<JointDef> joints;
 
     @Override

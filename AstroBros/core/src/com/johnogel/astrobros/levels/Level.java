@@ -402,6 +402,10 @@ protected OrthographicCamera camera;
                     
                 }
             }
+            if(CircleObject.distance(b, inner_orbit) > outer_boundary.getRadius() ){
+                this.enforceOutOfBounds(b);
+
+            }
         }
 
         safe_bros = i;
@@ -425,13 +429,12 @@ protected OrthographicCamera camera;
             if(this.safe_bros == this.bros.size){
                 notifyWin();
             }
+            
             else{
                 notifyLoss();
             }
             
         }
-
-        
 
     }
     
@@ -445,6 +448,33 @@ protected OrthographicCamera camera;
         mngr.resolveLevelLoss();
     }
     
+    private void enforceOutOfBounds(AstroBro b){
+        Sun s = suns.get(0);
+        
+        float distance_squared = CircleObject.distance(s, b)*CircleObject.distance(s, b);
+        float mass = s.getMass();
+        float force = 100 * (mass/distance_squared);
+
+        float bro_x = b.getPosition().x;
+        float bro_y = b.getPosition().y;
+        float sun_x = s.getPosition().x;
+        float sun_y = s.getPosition().y;
+
+        float angle = MathUtils.atan2(bro_y - sun_y, bro_x - sun_x)*MathUtils.radiansToDegrees + 180;
+
+        if(b.getBody().equals(player.getBody())){
+            //System.out.println("ANGLE BEING USED: "+angle);
+        }
+
+        float force_x = force * MathUtils.cosDeg(angle);
+        float force_y = force * MathUtils.sinDeg(angle);
+                
+                
+                
+        b.getBody().applyForceToCenter(force_x, force_y, true);
+        
+    }
+    
     private void gravitate(){
         
         //sets force on each body towards each sun
@@ -454,7 +484,6 @@ protected OrthographicCamera camera;
                 float mass = s.getMass();
                 float force = mass/distance_squared;
 
-                
                 float bro_x = b.getPosition().x;
                 float bro_y = b.getPosition().y;
                 float sun_x = s.getPosition().x;
@@ -480,13 +509,15 @@ protected OrthographicCamera camera;
     
     
     public void writeBitmapFonts(SpriteBatch batch){
+        camera.update();
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
-        score.setColor(Color.WHITE);
+        //score.setColor(Color.WHITE);
+        
       
         //score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
         //score.draw(batch, score_chars, 0-camera.viewportWidth*0.4f,camera.viewportHeight*0.4f);
-        score.draw(batch, score_chars, 0-camera.viewportHeight*0.28f,camera.viewportHeight*0.47f, 2, 0, false);
+        score.draw(batch, score_chars, -camera.viewportHeight*0.28f,camera.viewportHeight*0.47f, 2, 0, false);
         score.draw(batch, timer_chars, camera.viewportHeight*0.70f,camera.viewportHeight*0.47f, 2, 0, false);
         //score.draw(batch, score_chars, 0,0);
         
