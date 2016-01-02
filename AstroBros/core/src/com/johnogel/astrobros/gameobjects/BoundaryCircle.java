@@ -25,7 +25,7 @@ public class BoundaryCircle extends CircleObject{
 public final static float 
         INNER_ORBIT = 2.6f,
         OUTER_ORBIT = 3.8f,
-        OUTER_BOUND = 8f;
+        OUTER_BOUND = 8.5f;
 public final static String
         BLUE = "boundary-blue.png",
         RED = "boundary-red.png",
