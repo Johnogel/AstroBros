@@ -6,7 +6,6 @@
 package com.johnogel.astrobros.gameobjects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,7 +28,8 @@ public final static float
         OUTER_BOUND = 8f;
 public final static String
         BLUE = "boundary-blue.png",
-        RED = "boundary-red.png";
+        RED = "boundary-red.png",
+        OUTER = "boundary-outer.png";
 
 private Body bounding_body;
     public BoundaryCircle(Sun sun, float type, World world, OrthographicCamera camera){

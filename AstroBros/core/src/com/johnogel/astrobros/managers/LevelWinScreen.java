@@ -19,8 +19,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 public class LevelWinScreen extends GameScreen{
 
     private final BitmapFont font;
-    private CharSequence game_over, press_space;
-    private GlyphLayout layout_top, layout_bottom;
+    private final CharSequence game_over, press_space;
+    private final GlyphLayout layout_top, layout_bottom;
     final float top_font_x, bottom_font_x;
     final float top_font_y, bottom_font_y;
     private int level;

@@ -5,7 +5,7 @@
  */
 package com.johnogel.astrobros.levels;
 
-import box2dLight.Light;
+
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -492,9 +492,13 @@ protected OrthographicCamera camera;
     }
     
     protected void initializeBoundaries(){
+        inner_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.INNER_ORBIT, world, camera);
+        outer_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.OUTER_ORBIT, world, camera);
+        outer_boundary = new BoundaryCircle(suns.get(0), BoundaryCircle.OUTER_BOUND, world, camera);
         is_red = true;
         inner_orbit.setTexture(BoundaryCircle.RED);
         outer_orbit.setTexture(BoundaryCircle.RED);
+        outer_boundary.setTexture(BoundaryCircle.OUTER);
     }
     
     //call in initialize method
@@ -538,6 +542,7 @@ protected OrthographicCamera camera;
 //        }
         mngr.addGameObject(inner_orbit);
         mngr.addGameObject(outer_orbit);
+        mngr.addGameObject(outer_boundary);
         for(Player p : bros){
             mngr.addGameObject(p);
         }
