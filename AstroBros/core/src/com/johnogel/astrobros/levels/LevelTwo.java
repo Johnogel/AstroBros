@@ -53,12 +53,12 @@ public class LevelTwo extends Level{
         
         
         //adds sun to suns array without storing locally
-        new Sun(this, suns, 8000, Color.BLUE, 1000, width/2, height/2 );
+        new Sun(this, suns, 8000, Color.BLUE, 1200, width/2, height/2 );
         
         this.setOrbits();
         
         this.initializeBoundaries();
-        
+        this.initializeBackground();
         
         
     }

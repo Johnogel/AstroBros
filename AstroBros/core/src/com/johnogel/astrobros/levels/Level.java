@@ -9,7 +9,6 @@ package com.johnogel.astrobros.levels;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -33,6 +32,7 @@ import com.johnogel.astrobros.gameobjects.BoundaryCircle;
 import com.johnogel.astrobros.gameobjects.CircleObject;
 import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
+import com.johnogel.astrobros.support.Background;
 
 /**
  *
@@ -70,7 +70,8 @@ protected Texture red_texture, blue_texture, boundary_texture;
 protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 
 protected boolean joint_def_created, goldilocks, is_red;
-
+protected float camera_last_x, camera_last_y;
+protected Background background;
 
 protected OrthographicCamera camera;
 
@@ -115,7 +116,8 @@ protected OrthographicCamera camera;
         red_texture = new Texture(Gdx.files.internal(BoundaryCircle.RED));
         blue_texture = new Texture(Gdx.files.internal(BoundaryCircle.BLUE));
         boundary_texture = new Texture(Gdx.files.internal(BoundaryCircle.OUTER));
-  
+        
+        
     }
     
     //should be called in child initialize method
@@ -328,7 +330,12 @@ protected OrthographicCamera camera;
     @Override
     public void update(){
         //player.update(mngr.getSpriteBatch());
+        this.camera_last_x = camera.position.x;
+        this.camera_last_y = camera.position.y;
+        
         mngr.updateGameObjects();
+        
+        //switches player if connected
         if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
             
             player_index++;
@@ -339,6 +346,8 @@ protected OrthographicCamera camera;
             player = (Player)controlled_bros.get(player_index);
             player.enablePlayer();
         }
+        
+        //switches player if connected
         if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
             
             player_index--;
@@ -435,6 +444,8 @@ protected OrthographicCamera camera;
             }
             
         }
+        
+        background.update();
 
     }
     
@@ -453,7 +464,7 @@ protected OrthographicCamera camera;
         
         float distance_squared = CircleObject.distance(s, b)*CircleObject.distance(s, b);
         float mass = s.getMass();
-        float force = 100 * (mass/distance_squared);
+        float force = 200 * (mass/distance_squared);
 
         float bro_x = b.getPosition().x;
         float bro_y = b.getPosition().y;
@@ -507,10 +518,15 @@ protected OrthographicCamera camera;
         
     }
     
+    public void drawBackground(SpriteBatch batch){
+        background.drawBackground(batch);
+        
+    }
     
     public void writeBitmapFonts(SpriteBatch batch){
         camera.update();
         batch.setProjectionMatrix(camera.projection);
+
         batch.begin();
         //score.setColor(Color.WHITE);
         
@@ -551,7 +567,18 @@ protected OrthographicCamera camera;
         
     }
     
+    //returns change in camera positions to be used by background
+    public Vector2 getDeltaCameraPosition(){
+        Vector2 delta = 
+                new Vector2(camera.position.x - this.camera_last_x, 
+                            camera.position.y - this.camera_last_y);
+        return delta;
+    }
     
+    //must call in child initialize method
+    protected void initializeBackground(){
+        background = new Background(this);
+    }
     
     @Override
     public void initializeWorld(){
@@ -591,6 +618,7 @@ protected OrthographicCamera camera;
         for(Sun s : suns){
             mngr.addGameObject(s);
         }
+        
         
 
     }

@@ -89,9 +89,7 @@ public final int
         //update();
         
         controllers.get(controller).render();
-        ray_handler.updateAndRender();
-
-        
+        ray_handler.updateAndRender();     
    
     }
     
@@ -152,6 +150,7 @@ public final int
         }
         
         levels.get(level).writeBitmapFonts(batch);
+        levels.get(level).drawBackground(batch);
     }
     
     public void updateGameObjects(){
@@ -266,7 +265,7 @@ public final int
         this.camera.update();
         this.ray_handler = mngr.getRayHandler();
         this.world = mngr.getWorld();
-        levels.add(new LevelOne(this, 3));
+        levels.add(new LevelOne(this, 30));
         levels.add(new LevelTwo(this, 60));
         levels.add(new LevelThree(this, 60));
         

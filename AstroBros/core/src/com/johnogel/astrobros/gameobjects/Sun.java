@@ -42,7 +42,7 @@ private Box2DSprite sprite;
         
         mass = intensity*14000;
         
-        radius = intensity/17.4f;
+        radius = intensity/14.4f;
         
         suns.add(this);
         
