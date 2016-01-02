@@ -40,9 +40,9 @@ private Box2DSprite sprite;
         
         light = new PointLight(ray_handler, num_rays, color, intensity, x, y );
         
-        mass = intensity*14000;
+        mass = intensity*55000;
         
-        radius = intensity/14.4f;
+        radius = intensity/19.4f;
         
         suns.add(this);
         
@@ -93,6 +93,7 @@ private Box2DSprite sprite;
 
     @Override
     public void render(SpriteBatch batch) {
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         
         sprite.draw(batch, body);

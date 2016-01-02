@@ -33,7 +33,7 @@ private boolean active_player;
     public Player(World world, OrthographicCamera camera, float distance) {
         super(world, camera, distance);
         
-        max_vel = 50;
+        max_vel = 100;
         max_force = 3500;
     }
     
@@ -112,7 +112,7 @@ private boolean active_player;
     
     public void setOrbit(Sun sun){
         float distance = body.getPosition().dst(sun.getPosition());
-        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass()/28)/distance));
+        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass()/15)/distance));
         System.out.println("\nMASS OF SUN: "+sun.getMass()+"\nVELOCITY: "+body.getLinearVelocity().y);
     }
     

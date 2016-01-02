@@ -143,14 +143,14 @@ public final int
     }
     
     public void renderGameObjects(){
-        
+        levels.get(level).drawBackground(batch);
         
         for (GameObject o : game_objects){
             o.render(batch);
         }
         
         levels.get(level).writeBitmapFonts(batch);
-        levels.get(level).drawBackground(batch);
+        
     }
     
     public void updateGameObjects(){
@@ -296,7 +296,7 @@ public final int
         //ray_handler.setLightMapRendering(false);
         ray_handler.setShadows(true);
         
-        ray_handler.setAmbientLight(0, 0, 0, .1f);
+        ray_handler.setAmbientLight(1, 1, 1, .6f);
         
         this.setLevel(level);
         

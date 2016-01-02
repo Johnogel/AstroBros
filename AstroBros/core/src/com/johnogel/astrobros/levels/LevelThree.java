@@ -53,7 +53,7 @@ public class LevelThree extends Level{
         
         
         //adds sun to suns array without storing locally
-        new Sun(this, suns, 8000, Color.RED, 800, width/2, height/2 );
+        new Sun(this, suns, 8000, Color.RED, 1500, width/2, height/2 );
         
         this.setOrbits();
         
