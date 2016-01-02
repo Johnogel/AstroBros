@@ -29,10 +29,10 @@ import com.johnogel.astrobros.levels.Level;
  */
 public class GameOverScreen extends GameScreen{
     private final BitmapFont font;
-    private CharSequence game_over, timer_chars;
-    private GlyphLayout layout;
-    final float fontX;
-    final float fontY;
+    private CharSequence game_over, press_space;
+    private GlyphLayout layout_top, layout_bottom;
+    final float top_font_x, bottom_font_x;
+    final float top_font_y, bottom_font_y;
 
     
     public GameOverScreen(GameManager mngr){
@@ -42,10 +42,15 @@ public class GameOverScreen extends GameScreen{
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         font.getData().setScale(0.3f, 0.3f);        
   
-        game_over = "GAME_OVER";
-        layout = new GlyphLayout(font, game_over);
-        fontX =  -layout.width / 2;
-        fontY =  10;
+        game_over = "GAME OVER";
+        press_space = "PRESS SPACE TO RESTART";
+        layout_top = new GlyphLayout(font, game_over);
+        layout_bottom = new GlyphLayout(font, press_space);
+        top_font_x =  -layout_top.width / 2;
+        top_font_y =  20;
+        
+        bottom_font_x = -layout_bottom.width / 2;
+        bottom_font_y = -20;
     }
 
     @Override
@@ -63,7 +68,8 @@ public class GameOverScreen extends GameScreen{
         batch.setProjectionMatrix(camera.projection);
         
         batch.begin();
-        font.draw(batch, layout, fontX, fontY);
+        font.draw(batch, layout_top, top_font_x, top_font_y);
+        font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
         batch.end();
 
         
