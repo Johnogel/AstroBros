@@ -41,6 +41,12 @@ protected Array<Sound> sounds;
         
     }
     
+    public void setTexture(Texture texture){
+        sprite = new Box2DSprite(texture);
+        body.setUserData(sprite);
+        
+    }
+    
     public float getRadius(){
         return radius;
     }

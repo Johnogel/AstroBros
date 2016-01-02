@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -64,6 +65,7 @@ protected int safe_bros, timer, ticker;
 
 protected final int START_TIME;
 private final int MAX_BROS = 12;
+protected Texture red_texture, blue_texture, boundary_texture;
 
 protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 
@@ -107,6 +109,10 @@ protected OrthographicCamera camera;
         
         suns = new Array(2);
         sun_bodies = new Array(2);
+        
+        red_texture = new Texture(Gdx.files.internal(BoundaryCircle.RED));
+        blue_texture = new Texture(Gdx.files.internal(BoundaryCircle.BLUE));
+        boundary_texture = new Texture(Gdx.files.internal(BoundaryCircle.OUTER));
   
     }
     
@@ -385,8 +391,10 @@ protected OrthographicCamera camera;
                 goldilocks = true;
                 
                 if(is_red){
-                    inner_orbit.setTexture(BoundaryCircle.BLUE);
-                    outer_orbit.setTexture(BoundaryCircle.BLUE);
+//                    inner_orbit.setTexture(BoundaryCircle.BLUE);
+//                    outer_orbit.setTexture(BoundaryCircle.BLUE);
+                    inner_orbit.setTexture(blue_texture);
+                    outer_orbit.setTexture(blue_texture);
                     
                     is_red = false;
                     
@@ -399,8 +407,8 @@ protected OrthographicCamera camera;
         
         
         if(!goldilocks && !is_red){
-            inner_orbit.setTexture(BoundaryCircle.RED);
-            outer_orbit.setTexture(BoundaryCircle.RED);
+            inner_orbit.setTexture(red_texture);
+            outer_orbit.setTexture(red_texture);
             is_red = true;
         }
         
@@ -496,9 +504,9 @@ protected OrthographicCamera camera;
         outer_orbit = new BoundaryCircle(suns.get(0), BoundaryCircle.OUTER_ORBIT, world, camera);
         outer_boundary = new BoundaryCircle(suns.get(0), BoundaryCircle.OUTER_BOUND, world, camera);
         is_red = true;
-        inner_orbit.setTexture(BoundaryCircle.RED);
-        outer_orbit.setTexture(BoundaryCircle.RED);
-        outer_boundary.setTexture(BoundaryCircle.OUTER);
+        inner_orbit.setTexture(red_texture);
+        outer_orbit.setTexture(red_texture);
+        outer_boundary.setTexture(boundary_texture);
     }
     
     //call in initialize method
