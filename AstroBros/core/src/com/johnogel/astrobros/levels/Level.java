@@ -427,12 +427,12 @@ protected OrthographicCamera camera;
     
     //should call mngr method to handle screen changing
     private void notifyWin(){
-        
+        mngr.resolveLevelWin();
     }
     
     //should call mngr method to handle screen changing
     private void notifyLoss(){
-        
+        mngr.resolveLevelLoss();
     }
     
     private void gravitate(){

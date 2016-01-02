@@ -67,7 +67,7 @@ public final int
         level = this.LEVEL_ONE;
         controller = level;
         
-        levels.add(new LevelOne(this, 10));
+        levels.add(new LevelOne(this, 3));
         levels.add(new LevelTwo(this, 60));
         levels.add(new LevelThree(this, 60));
         
@@ -110,6 +110,7 @@ public final int
     
     public void resolveLevelLoss(){
         controller = this.GAME_OVER;
+        controllers.get(controller).initialize();
     }
 
     @Override
@@ -137,14 +138,14 @@ public final int
             world.step(this.fps, 6, 2); 
         }
         
-        if(levels.get(level).getTime()<1){
-            if(levels.get(level).win()){
-                level++;
-                
-            }
-            this.setLevel(level);
-
-        }
+//        if(levels.get(level).getTime()<1){
+//            if(levels.get(level).win()){
+//                level++;
+//                
+//            }
+//            this.setLevel(level);
+//
+//        }
         
             
             
