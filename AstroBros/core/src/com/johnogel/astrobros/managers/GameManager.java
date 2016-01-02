@@ -51,7 +51,8 @@ public final int
         LEVEL_ONE = 0,
         LEVEL_TWO = 1,
         LEVEL_THREE = 2,
-        GAME_OVER = 3;
+        GAME_OVER = 3,
+        LEVEL_WIN = 4;
 
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
@@ -75,6 +76,7 @@ public final int
         controllers.add(levels.get(1));
         controllers.add(levels.get(2));
         controllers.add(new GameOverScreen(this));
+        controllers.add(new LevelWinScreen(this));
         
         batch = new SpriteBatch();
         
@@ -105,6 +107,8 @@ public final int
     }
     
     public void resolveLevelWin(){
+        controller = this.LEVEL_WIN;
+        controllers.get(controller).initialize();
         
     }
     
@@ -303,5 +307,21 @@ public final int
     public void resize(int width, int height) {
         this.camera = mngr.getCamera();
         ray_handler.setCombinedMatrix(camera);
+    }
+    
+    public int getCurrentLevel(){
+        return level;
+    }
+    
+    public int getNumberOfLevels(){
+        return levels.size;
+    }
+    
+    public void incrementLevel(){
+        if (level < levels.size - 1){
+            this.setLevel(level + 1);
+        }
+        
+ 
     }
 }
