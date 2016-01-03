@@ -22,7 +22,6 @@ private final String
         BACKGROUND = "background.png",
         BACKGROUND_SMALL = "background-small.png",
         BACKGROUND_BIG = "background-big.png";
-private final Texture layer_1, layer_2, layer_3, layer_4;
 private final Array<Texture> textures;
 private float 
         layer_1_x, 
@@ -47,24 +46,6 @@ private final float
     public Background(Level level){
         this.level = level;
         textures = new Array(4);
-        layer_1 = new Texture(Gdx.files.internal(this.BACKGROUND_BIG));
-        layer_2 = new Texture(Gdx.files.internal(this.BACKGROUND));
-        layer_3 = new Texture(Gdx.files.internal(this.BACKGROUND));
-        layer_4 = new Texture(Gdx.files.internal(this.BACKGROUND_SMALL));
-        
-        this.layer_1_x += -this.SIZE_1*layer_1.getWidth()/2;
-        this.layer_1_y += -500;
-        this.layer_2_x += -this.SIZE_2*layer_2.getWidth()/2;
-        this.layer_2_y += -500;
-        this.layer_3_x += -this.SIZE_3*layer_3.getWidth()/2;
-        this.layer_3_y += -500;
-        this.layer_4_x += -this.SIZE_4*layer_4.getWidth()/2;
-        this.layer_4_y += -100;
-
-        layer_1.dispose();
-        layer_2.dispose();
-        layer_3.dispose();
-        layer_4.dispose();
     }
     
     public void initialize(){
@@ -73,6 +54,14 @@ private final float
         textures.add(new Texture(Gdx.files.internal(this.BACKGROUND)));
         textures.add(new Texture(Gdx.files.internal(this.BACKGROUND_SMALL)));
         
+        this.layer_1_x = -this.SIZE_1*textures.get(0).getWidth()/2;
+        this.layer_1_y = -500;
+        this.layer_2_x = -this.SIZE_2*textures.get(1).getWidth()/2;
+        this.layer_2_y = -500;
+        this.layer_3_x = -this.SIZE_3*textures.get(2).getWidth()/2;
+        this.layer_3_y = -500;
+        this.layer_4_x = -this.SIZE_4*textures.get(3).getWidth()/2;
+        this.layer_4_y = -100;
     }
     
     public void update(){
@@ -97,26 +86,26 @@ private final float
                 textures.get(0), 
                 this.layer_1_x, 
                 this.layer_1_y, 
-                layer_1.getWidth()*this.SIZE_1, 
-                layer_1.getHeight()*this.SIZE_1);
+                textures.get(0).getWidth()*this.SIZE_1, 
+                textures.get(0).getHeight()*this.SIZE_1);
         batch.draw(
                 textures.get(1), 
                 this.layer_2_x, 
                 this.layer_2_y, 
-                layer_2.getWidth()*this.SIZE_2, 
-                layer_2.getHeight()*this.SIZE_2);
+                textures.get(1).getWidth()*this.SIZE_2, 
+                textures.get(1).getHeight()*this.SIZE_2);
         batch.draw(
                 textures.get(2), 
                 this.layer_3_x, 
                 this.layer_3_y, 
-                layer_3.getWidth()*this.SIZE_3, 
-                layer_3.getHeight()*this.SIZE_3);
+                textures.get(2).getWidth()*this.SIZE_3, 
+                textures.get(2).getHeight()*this.SIZE_3);
         batch.draw(
                 textures.get(3), 
                 this.layer_4_x, 
                 this.layer_4_y, 
-                layer_4.getWidth()*this.SIZE_4, 
-                layer_4.getHeight()*this.SIZE_4);
+                textures.get(3).getWidth()*this.SIZE_4, 
+                textures.get(3).getHeight()*this.SIZE_4);
 
         batch.end();
     }
