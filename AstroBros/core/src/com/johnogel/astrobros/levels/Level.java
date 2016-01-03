@@ -561,7 +561,7 @@ protected OrthographicCamera camera;
     //call in initialize method
     protected void initializePlayer(){
         player_index = 0;
-        controlled_bros.add(new Player(world, camera, 1));
+        controlled_bros.add(new Player(world, camera, 20));
         player = (Player)controlled_bros.get(player_index);
         player.enablePlayer();
         

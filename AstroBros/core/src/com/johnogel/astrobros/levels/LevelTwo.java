@@ -37,7 +37,6 @@ public class LevelTwo extends Level{
         this.camera = mngr.getCamera();
         
         this.free_bros.add(new Player(world, camera, 220));
-        this.free_bros.add(new Player(world, camera, 5));
         this.free_bros.add(new Player(world, camera, 200));
         this.free_bros.add(new Player(world, camera, 170));
         this.free_bros.add(new Player(world, camera, 150));
