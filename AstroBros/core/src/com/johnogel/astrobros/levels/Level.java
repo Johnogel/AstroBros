@@ -166,7 +166,13 @@ protected OrthographicCamera camera;
             @Override
             public void beginContact(Contact contact) {
                 boolean is_bro;
-
+                
+                if ((contact.getFixtureA().getBody().equals(suns.get(0).getBody())
+                        || contact.getFixtureB().getBody().equals(suns.get(0).getBody()))
+                        && (contact.getFixtureA().getBody().equals(player.getBody())
+                        || contact.getFixtureB().getBody().equals(player.getBody()))) {
+                    notifyLoss();
+                }
                 //check if both contacts are bros
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
                     //System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
