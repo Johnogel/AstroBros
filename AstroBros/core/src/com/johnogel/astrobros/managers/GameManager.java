@@ -67,7 +67,7 @@ public final int
         
 
         
-        batch = new SpriteBatch();
+        batch = new SpriteBatch(100);
         
         started = false;
         
@@ -89,6 +89,7 @@ public final int
         //update();
         
         controllers.get(controller).render();
+        
         ray_handler.updateAndRender();     
    
     }
@@ -145,12 +146,14 @@ public final int
     public void renderGameObjects(){
         levels.get(level).drawBackground(batch);
         
+        batch.enableBlending();
+        batch.begin();
         for (GameObject o : game_objects){
             o.render(batch);
         }
         
         levels.get(level).writeBitmapFonts(batch);
-        
+        batch.end();
     }
     
     public void updateGameObjects(){

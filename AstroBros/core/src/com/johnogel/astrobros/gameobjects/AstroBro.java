@@ -39,9 +39,9 @@ protected Array<JointDef> joints;
     @Override
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();       
+        //batch.begin();       
         sprite.draw(batch, body);
-        batch.end();
+        //batch.end();
         
     }
     

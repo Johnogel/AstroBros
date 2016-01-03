@@ -94,12 +94,12 @@ private Box2DSprite sprite;
     @Override
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        //batch.begin();
         
         sprite.draw(batch, body);
         //batch.draw(texture, astro_body.getPosition().x, astro_body.getPosition().y, 0, 0, 6f, 6f, 1f, 1f, astro_body.getAngle() * MathUtils.radiansToDegrees, 0, 0 ,0, 0, false, false);
         //batch.draw(texture, astro_body.getPosition().x - 3, astro_body.getPosition().y - 3, 6, 6);
-        batch.end();
+        //batch.end();
         
     }
 

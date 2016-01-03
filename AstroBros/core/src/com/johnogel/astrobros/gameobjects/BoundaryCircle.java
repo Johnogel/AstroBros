@@ -90,9 +90,9 @@ private Body bounding_body;
     @Override
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        //batch.begin();
         sprite.draw(batch, body);
-        batch.end();
+        //batch.end();
     }
 
     @Override

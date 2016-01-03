@@ -9,19 +9,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.levels.Level;
 
 /**
  *
  * @author johno-gel
  */
-public class Background {
-private Level level;
+public class Background{
+private final Level level;
 private final String 
         BACKGROUND = "background.png",
         BACKGROUND_SMALL = "background-small.png",
         BACKGROUND_BIG = "background-big.png";
-private Texture layer_1, layer_2, layer_3, layer_4;
+private final Texture layer_1, layer_2, layer_3, layer_4;
+private final Array<Texture> textures;
 private float 
         layer_1_x, 
         layer_1_y, 
@@ -33,17 +35,18 @@ private float
         layer_4_y;
 
 private final float
-        SCALE_1 = .5f,
+        SCALE_1 = .45f,
         SCALE_2 = .25f,
         SCALE_3 = .05f,
         SCALE_4 = .02f,
-        SIZE_1 = .6f,
+        SIZE_1 = .5f,
         SIZE_2 = .5f,
         SIZE_3 = .3f,
         SIZE_4 = .12f;
 
     public Background(Level level){
         this.level = level;
+        textures = new Array(4);
         layer_1 = new Texture(Gdx.files.internal(this.BACKGROUND_BIG));
         layer_2 = new Texture(Gdx.files.internal(this.BACKGROUND));
         layer_3 = new Texture(Gdx.files.internal(this.BACKGROUND));
@@ -58,6 +61,17 @@ private final float
         this.layer_4_x += -this.SIZE_4*layer_4.getWidth()/2;
         this.layer_4_y += -100;
 
+        layer_1.dispose();
+        layer_2.dispose();
+        layer_3.dispose();
+        layer_4.dispose();
+    }
+    
+    public void initialize(){
+        textures.add(new Texture(Gdx.files.internal(this.BACKGROUND_BIG)));
+        textures.add(new Texture(Gdx.files.internal(this.BACKGROUND)));
+        textures.add(new Texture(Gdx.files.internal(this.BACKGROUND)));
+        textures.add(new Texture(Gdx.files.internal(this.BACKGROUND_SMALL)));
         
     }
     
@@ -74,35 +88,45 @@ private final float
         
     }
     
-    public void drawBackground(SpriteBatch batch){
+
+    public void render(SpriteBatch batch){
         batch.setProjectionMatrix(level.getCamera().projection);
+        //batch.disableBlending();
         batch.begin();
         batch.draw(
-                layer_1, 
+                textures.get(0), 
                 this.layer_1_x, 
                 this.layer_1_y, 
                 layer_1.getWidth()*this.SIZE_1, 
                 layer_1.getHeight()*this.SIZE_1);
         batch.draw(
-                layer_2, 
+                textures.get(1), 
                 this.layer_2_x, 
                 this.layer_2_y, 
                 layer_2.getWidth()*this.SIZE_2, 
                 layer_2.getHeight()*this.SIZE_2);
         batch.draw(
-                layer_3, 
+                textures.get(2), 
                 this.layer_3_x, 
                 this.layer_3_y, 
                 layer_3.getWidth()*this.SIZE_3, 
                 layer_3.getHeight()*this.SIZE_3);
         batch.draw(
-                layer_4, 
+                textures.get(3), 
                 this.layer_4_x, 
                 this.layer_4_y, 
                 layer_4.getWidth()*this.SIZE_4, 
                 layer_4.getHeight()*this.SIZE_4);
 
         batch.end();
+    }
+
+
+    public void dispose() {
+        for(Texture t : textures){
+            t.dispose();
+        }
+        textures.clear();
     }
     
 }

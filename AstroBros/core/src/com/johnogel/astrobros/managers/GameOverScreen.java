@@ -69,7 +69,7 @@ public class GameOverScreen extends GameScreen{
     public void initialize() {
         initializeWorld();
         this.updateReferences();
-        PointLight light = new PointLight(ray_handler, 5000, Color.RED, 700, camera.viewportWidth/2, -300 );
+        PointLight light = new PointLight(ray_handler, 5000, Color.RED, 900, camera.viewportWidth/2, -300 );
 
         
     }

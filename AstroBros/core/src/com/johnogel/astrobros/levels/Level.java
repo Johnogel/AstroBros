@@ -89,7 +89,7 @@ protected OrthographicCamera camera;
         bros = new Array(MAX_BROS);
         
 
-        
+        background = new Background(this);
         
         controlled_bros = new Array(MAX_BROS);
         free_bros = new Array(MAX_BROS);
@@ -519,7 +519,7 @@ protected OrthographicCamera camera;
     }
     
     public void drawBackground(SpriteBatch batch){
-        background.drawBackground(batch);
+        background.render(batch);
         
     }
     
@@ -527,7 +527,7 @@ protected OrthographicCamera camera;
         camera.update();
         batch.setProjectionMatrix(camera.projection);
 
-        batch.begin();
+        //batch.begin();
         //score.setColor(Color.WHITE);
         
       
@@ -538,7 +538,7 @@ protected OrthographicCamera camera;
         //score.draw(batch, score_chars, 0,0);
         
         //score.draw(batch, score_chars, 0, 0, 20, 10, true);
-        batch.end();
+        //batch.end();
     }
     
     //must call after suns are created in initialize method
@@ -577,7 +577,8 @@ protected OrthographicCamera camera;
     
     //must call in child initialize method
     protected void initializeBackground(){
-        background = new Background(this);
+        //background.dispose();
+        background.initialize();
     }
     
     @Override
@@ -648,6 +649,7 @@ protected OrthographicCamera camera;
         //mngr.resetGameObjectArray();
         clearArrays();
         mngr.disposeGameObjectTextures();
+        background.dispose();
     }
     
 @Override
