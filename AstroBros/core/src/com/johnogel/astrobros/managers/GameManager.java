@@ -317,6 +317,9 @@ public final int
     public void resize(int width, int height) {
         this.camera = mngr.getCamera();
         ray_handler.setCombinedMatrix(camera);
+        for(Level l : levels){
+            l.resize(width, height);
+        }
     }
     
     public int getCurrentLevel(){

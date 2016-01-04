@@ -105,6 +105,18 @@ private final float
                 this.layer_4_y, 
                 textures.get(3).getWidth()*this.SIZE_4, 
                 textures.get(3).getHeight()*this.SIZE_4);
+        batch.draw(
+                textures.get(3), 
+                this.layer_4_x - 50, 
+                this.layer_4_y - 50, 
+                textures.get(3).getWidth()*this.SIZE_4, 
+                textures.get(3).getHeight()*this.SIZE_4);
+        batch.draw(
+                textures.get(3), 
+                this.layer_4_x + 100, 
+                this.layer_4_y - 50, 
+                textures.get(3).getWidth()*this.SIZE_4, 
+                textures.get(3).getHeight()*this.SIZE_4);
 
         batch.end();
     }

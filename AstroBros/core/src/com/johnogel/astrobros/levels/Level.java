@@ -677,6 +677,8 @@ protected OrthographicCamera camera;
     
 @Override
     public void resize(int width, int height){
+        this.camera = mngr.getCamera();
+        this.ray_handler = mngr.getRayHandler();
         
     }
     
