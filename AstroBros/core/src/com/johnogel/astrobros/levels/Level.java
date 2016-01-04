@@ -33,6 +33,7 @@ import com.johnogel.astrobros.gameobjects.CircleObject;
 import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.support.Background;
+import com.johnogel.astrobros.support.TextureHandler;
 
 /**
  *
@@ -72,6 +73,7 @@ protected BoundaryCircle inner_orbit, outer_orbit, outer_boundary;
 protected boolean joint_def_created, goldilocks, is_red;
 protected float camera_last_x, camera_last_y;
 protected Background background;
+protected TextureHandler texture_handler;
 
 protected OrthographicCamera camera;
 
@@ -113,10 +115,13 @@ protected OrthographicCamera camera;
         suns = new Array(2);
         sun_bodies = new Array(2);
         
-        red_texture = new Texture(Gdx.files.internal(BoundaryCircle.RED));
-        blue_texture = new Texture(Gdx.files.internal(BoundaryCircle.BLUE));
-        boundary_texture = new Texture(Gdx.files.internal(BoundaryCircle.OUTER));
         
+        
+        this.texture_handler = mngr.getTextureHandler();
+        
+        red_texture = this.texture_handler.getTexture(TextureHandler.BOUNDARY_RED);
+        blue_texture = this.texture_handler.getTexture(TextureHandler.BOUNDARY_BLUE);
+        boundary_texture = this.texture_handler.getTexture(TextureHandler.BOUNDARY_OUTER);
         
     }
     
@@ -138,6 +143,8 @@ protected OrthographicCamera camera;
         for (Sun s : suns){
             sun_bodies.add(s.getBody());
         }
+        
+        setBroTextures();
     }
     
     public void updateArrays(){
@@ -628,6 +635,16 @@ protected OrthographicCamera camera;
         
         
 
+    }
+    
+    public TextureHandler getTextureHandler(){
+        return this.texture_handler;
+    }
+    
+    private void setBroTextures(){
+        for(Player p : bros){
+            p.setTexture(mngr.getTextureHandler().getTexture(TextureHandler.ASTRO_BRO));
+        }
     }
     
     public void clearArrays(){

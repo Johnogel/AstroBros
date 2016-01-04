@@ -67,7 +67,8 @@ public final int
         level = this.LEVEL_ONE;
         controller = level;
         
-
+        texture_handler = new TextureHandler();
+        texture_handler.initialize();
         
         batch = new SpriteBatch(100);
         
@@ -206,6 +207,10 @@ public final int
     
     public RayHandler getRayHandler(){
         return ray_handler;
+    }
+    
+    public TextureHandler getTextureHandler(){
+        return this.texture_handler;
     }
     
 @Override

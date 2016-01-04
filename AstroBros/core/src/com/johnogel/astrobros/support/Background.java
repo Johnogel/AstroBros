@@ -49,10 +49,10 @@ private final float
     }
     
     public void initialize(){
-        textures.add(new Texture(Gdx.files.internal(this.BACKGROUND_BIG)));
-        textures.add(new Texture(Gdx.files.internal(this.BACKGROUND)));
-        textures.add(new Texture(Gdx.files.internal(this.BACKGROUND)));
-        textures.add(new Texture(Gdx.files.internal(this.BACKGROUND_SMALL)));
+        textures.add(level.getTextureHandler().getTexture(TextureHandler.BACKGROUND_BIG));
+        textures.add(level.getTextureHandler().getTexture(TextureHandler.BACKGROUND));
+        textures.add(level.getTextureHandler().getTexture(TextureHandler.BACKGROUND));
+        textures.add(level.getTextureHandler().getTexture(TextureHandler.BACKGROUND_SMALL));
         
         this.layer_1_x = -this.SIZE_1*textures.get(0).getWidth()/2;
         this.layer_1_y = -500;
@@ -73,8 +73,7 @@ private final float
         this.layer_3_x += -this.SCALE_3*delta.x;
         this.layer_3_y += -this.SCALE_3*delta.y;
         this.layer_4_x += -this.SCALE_4*delta.x;
-        this.layer_4_y += -this.SCALE_4*delta.y;
-        
+        this.layer_4_y += -this.SCALE_4*delta.y;  
     }
     
 
@@ -112,10 +111,10 @@ private final float
 
 
     public void dispose() {
-        for(Texture t : textures){
+        /*for(Texture t : textures){
             t.dispose();
         }
-        textures.clear();
+        textures.clear();*/
     }
     
 }

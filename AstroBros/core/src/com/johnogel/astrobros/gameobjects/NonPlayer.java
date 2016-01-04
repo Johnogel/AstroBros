@@ -41,7 +41,7 @@ public static float PUBLIC_RADIUS = 3f;
         float y = (float) (camera.viewportHeight/2);
         circle_def.position.set(x,y);
 
-        texture = new Texture(Gdx.files.internal("test.png"));
+        //texture = new Texture(Gdx.files.internal("test.png"));
         
         body = world.createBody(circle_def);
         
@@ -57,7 +57,7 @@ public static float PUBLIC_RADIUS = 3f;
         
         body.createFixture(circle_fixture);
         
-        sprite = new Box2DSprite(texture);
+        //sprite = new Box2DSprite(texture);
         
         body.setUserData(sprite);
         
