@@ -178,6 +178,7 @@ public final int
     public void dispose() {
         batch.dispose();
         world.dispose();
+        texture_handler.dispose();
     }
     
     public SpriteBatch getSpriteBatch(){

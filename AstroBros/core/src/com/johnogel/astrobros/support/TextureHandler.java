@@ -8,13 +8,14 @@ package com.johnogel.astrobros.support;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  *
  * @author johno-gel
  */
-public class TextureHandler {
-private Array<Texture> textures;
+public class TextureHandler implements Disposable{
+private final Array<Texture> textures;
 public static final int 
         ASTRO_BRO = 0,
         SUN = 1,
@@ -43,6 +44,13 @@ public static final int
     
     public Texture getTexture(int texture){
         return textures.get(texture);
+    }
+
+    @Override
+    public void dispose() {
+        for(Texture t : textures){
+            t.dispose();
+        }
     }
     
     
