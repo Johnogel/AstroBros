@@ -21,6 +21,7 @@ import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.levels.LevelOne;
 import com.johnogel.astrobros.levels.LevelThree;
 import com.johnogel.astrobros.levels.LevelTwo;
+import com.johnogel.astrobros.support.TextureHandler;
 
 /**
  *
@@ -41,6 +42,7 @@ private final Array<Level> levels;
 private final Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
+private TextureHandler texture_handler;
 
 private int level, controller;
 
