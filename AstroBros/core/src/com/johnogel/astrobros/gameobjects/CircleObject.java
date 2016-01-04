@@ -42,6 +42,7 @@ protected Array<Sound> sounds;
     }
     
     public void setTexture(Texture texture){
+        this.texture = texture;
         sprite = new Box2DSprite(texture);
         body.setUserData(sprite);
         
