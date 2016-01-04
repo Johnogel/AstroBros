@@ -26,9 +26,15 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 public class NonPlayer extends AstroBro{
 public static float PUBLIC_RADIUS = 3f;
     public NonPlayer(World world, OrthographicCamera camera) {
+        
+        super();
+        
+        
+        
         this.radius = PUBLIC_RADIUS;
         
         this.camera = camera;
+        
         this.world = world;
         
         this.radius = 3f;

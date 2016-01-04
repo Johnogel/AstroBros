@@ -300,7 +300,7 @@ protected OrthographicCamera camera;
                     RevoluteJointDef joint_def = new RevoluteJointDef();
                     joint_def.bodyA = to_be_attached_to.get(i);
                     joint_def.bodyB = to_be_attached.get(i);
-                    joint_def.collideConnected = true;
+                    joint_def.collideConnected = false;
                     //joint_def.localAnchorA.set(0, free_bros.get(i).getRadius()*2);
                     float distance = NonPlayer.PUBLIC_RADIUS*2;
 
@@ -315,7 +315,17 @@ protected OrthographicCamera camera;
                     float y = distance*MathUtils.sinDeg(angle);
 
                     joint_def.localAnchorA.set(x, y);
+                    
+                    //angle = MathUtils.atan2(b_y - a_y, b_x - a_x)*MathUtils.radiansToDegrees + 180;
 
+                    
+                    
+                    
+                    joint_def.localAnchorB.set(0,0);
+                    
+                    
+                    
+                    
                     world.createJoint(joint_def);
                     //System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
                     //controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(to_be_attached.get(i), false)));
@@ -331,6 +341,7 @@ protected OrthographicCamera camera;
                     }
                 }
             }
+            
             to_be_attached.clear();
             to_be_attached_to.clear();
         }
