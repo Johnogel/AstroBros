@@ -154,12 +154,11 @@ public final int
         for (GameObject o : game_objects){
             o.render(batch);
         }
-           
 
-        
         batch.end();
         ray_handler.updateAndRender();
         levels.get(level).writeBitmapFonts(batch);
+        
     }
     
     public void updateGameObjects(){
@@ -283,7 +282,7 @@ public final int
         this.world = mngr.getWorld();
         levels.add(new LevelOne(this, 30));
         levels.add(new LevelTwo(this, 60));
-        levels.add(new LevelThree(this, 60));
+        levels.add(new LevelThree(this, 5));
         
         controllers.add(levels.get(0));
         controllers.add(levels.get(1));

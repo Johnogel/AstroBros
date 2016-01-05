@@ -58,7 +58,7 @@ public class LevelWinScreen extends GameScreen{
     public void render() {
         
         batch.setProjectionMatrix(camera.projection);
-        
+        super.render();
         batch.begin();
         font.draw(batch, layout_top, top_font_x, top_font_y);
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
@@ -70,7 +70,10 @@ public class LevelWinScreen extends GameScreen{
     public void initialize() {
         initializeWorld();
         updateReferences();
-        PointLight light = new PointLight(ray_handler, 5000, Color.GREEN, 900, camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.GREEN, 400, camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.GREEN, 400, camera.viewportWidth/2, 300 );
+        new PointLight(ray_handler, 5000, Color.GREEN, 400, -camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.GREEN, 400, -camera.viewportWidth/2, 300 );
 
         
     }

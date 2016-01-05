@@ -60,7 +60,13 @@ public abstract class GameScreen implements Controller{
         this.ray_handler = mngr.getRayHandler();
         this.ray_handler.setCulling(false);
     }
+    
 
+    @Override
+    public void render(){
+        ray_handler.updateAndRender();
+    }
+    
     @Override
     public void initializeWorld() {
         //mngr.clearGameObjects();

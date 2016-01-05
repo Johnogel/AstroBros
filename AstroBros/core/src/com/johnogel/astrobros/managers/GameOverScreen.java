@@ -56,7 +56,7 @@ public class GameOverScreen extends GameScreen{
     @Override
     public void render() {
         batch.setProjectionMatrix(camera.projection);
-        
+        super.render();
         batch.begin();
         font.draw(batch, layout_top, top_font_x, top_font_y);
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
@@ -69,7 +69,10 @@ public class GameOverScreen extends GameScreen{
     public void initialize() {
         initializeWorld();
         this.updateReferences();
-        PointLight light = new PointLight(ray_handler, 5000, Color.RED, 900, camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.RED, 500, -camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.RED, 500, camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.RED, 500, -camera.viewportWidth/2, 300 );
+        new PointLight(ray_handler, 5000, Color.RED, 500, camera.viewportWidth/2, 300 );
 
         
     }
