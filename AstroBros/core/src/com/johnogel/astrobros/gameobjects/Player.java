@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author johno-gel
  */
 public class Player extends NonPlayer{
-private int max_vel, max_force;
+private final int max_vel = 500, max_force = 15000;
 private boolean space_pressed;
 private boolean active_player;
 
@@ -24,17 +24,13 @@ private boolean active_player;
         super(world, camera);
         
         
-        
-        max_vel = 300;
-        max_force = 10000;
+
   
     }
     
     public Player(World world, OrthographicCamera camera, float distance) {
         super(world, camera, distance);
-        
-        max_vel = 300;
-        max_force = 10000;
+ 
     }
     
     

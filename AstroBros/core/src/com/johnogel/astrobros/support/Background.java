@@ -6,6 +6,7 @@
 package com.johnogel.astrobros.support;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -80,6 +81,7 @@ private final float
     public void render(SpriteBatch batch){
         batch.setProjectionMatrix(level.getCamera().projection);
         //batch.disableBlending();
+        //batch.setColor(Color.WHITE);
         batch.begin();
         batch.draw(
                 textures.get(0), 
@@ -119,6 +121,7 @@ private final float
                 textures.get(3).getHeight()*this.SIZE_4);
 
         batch.end();
+        
     }
 
 

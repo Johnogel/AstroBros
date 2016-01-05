@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.utils.Array;
 import net.dermetfan.gdx.graphics.g2d.AnimatedBox2DSprite;
@@ -46,7 +47,7 @@ protected AnimatedBox2DSprite animated_sprite;
         }
         
         ticker++;
-        if(ticker % 60 == 0){
+        if(ticker % 35 == 0){
             frame++;
         }
         if(frame % 2 == 0){
@@ -83,11 +84,15 @@ protected AnimatedBox2DSprite animated_sprite;
     }
     
     public void initializeAnimation(TextureAtlas atlas){
-        animation = new Animation(1/24f, atlas.getRegions());
+        float time = MathUtils.random.nextFloat()*6;
+        animation = new Animation(1/48f, atlas.getRegions());
         AnimatedSprite a = new AnimatedSprite(animation);
         animated_sprite = new AnimatedBox2DSprite(a);
+        animated_sprite.setTime(time);
+
         animated_sprite.setPlaying(true);
-        this.animated_sprite.setAutoUpdate(true);
+        //animated_sprite.setAutoUpdate(true);
+        
         
         
         //body.setUserData(animated_sprite);

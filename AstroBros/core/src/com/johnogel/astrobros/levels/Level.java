@@ -518,7 +518,7 @@ protected OrthographicCamera camera;
         for (Sun s : suns){
             for (AstroBro b : bros){
                 float distance_squared = CircleObject.distance(s, b)*CircleObject.distance(s, b);
-                float mass = s.getMass();
+                float mass = s.getMass() * .04f * b.getBody().getMass();
                 float force = mass/distance_squared;
 
                 float bro_x = b.getPosition().x;
@@ -553,7 +553,7 @@ protected OrthographicCamera camera;
         camera.update();
         batch.setProjectionMatrix(camera.projection);
 
-        //batch.begin();
+        batch.begin();
         //score.setColor(Color.WHITE);
         
       
@@ -564,7 +564,7 @@ protected OrthographicCamera camera;
         //score.draw(batch, score_chars, 0,0);
         
         //score.draw(batch, score_chars, 0, 0, 20, 10, true);
-        //batch.end();
+        batch.end();
     }
     
     //must call after suns are created in initialize method

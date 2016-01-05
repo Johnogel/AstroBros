@@ -93,7 +93,7 @@ public final int
         
         controllers.get(controller).render();
         
-        ray_handler.updateAndRender();     
+        
    
     }
     
@@ -147,16 +147,19 @@ public final int
     }
     
     public void renderGameObjects(){
+
         levels.get(level).drawBackground(batch);
-        
         batch.enableBlending();
         batch.begin();
         for (GameObject o : game_objects){
             o.render(batch);
         }
+           
+
         
-        levels.get(level).writeBitmapFonts(batch);
         batch.end();
+        ray_handler.updateAndRender();
+        levels.get(level).writeBitmapFonts(batch);
     }
     
     public void updateGameObjects(){
@@ -242,7 +245,9 @@ public final int
         //ray_handler.setLightMapRendering(false);
         ray_handler.setShadows(true);
         
-        ray_handler.setAmbientLight(0, 0, 0, .1f);
+        ray_handler.setAmbientLight(1, 1, 1, .15f);
+        
+ 
         
         
         //Sun
@@ -321,6 +326,8 @@ public final int
         for(Level l : levels){
             l.resize(width, height);
         }
+        batch.setProjectionMatrix(camera.combined);
+        
     }
     
     public int getCurrentLevel(){
