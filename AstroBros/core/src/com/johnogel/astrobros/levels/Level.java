@@ -145,6 +145,8 @@ protected OrthographicCamera camera;
         }
         
         setBroTextures();
+        
+        initializeAnimations();
     }
     
     public void updateArrays(){
@@ -699,6 +701,12 @@ protected OrthographicCamera camera;
     
     public boolean win(){
         return safe_bros == bros.size;
+    }
+    
+    public void initializeAnimations(){
+        for (Player p : bros){
+            p.initializeAnimation(mngr.getTextureHandler().getBroPack());
+        }
     }
     
 }

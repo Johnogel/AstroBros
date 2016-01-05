@@ -24,12 +24,10 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  * @author johno-gel
  */
 public class NonPlayer extends AstroBro{
-public static float PUBLIC_RADIUS = 3f;
+public static float PUBLIC_RADIUS = 5f;
     public NonPlayer(World world, OrthographicCamera camera) {
         
         super();
-        
-        
         
         this.radius = PUBLIC_RADIUS;
         
@@ -37,7 +35,6 @@ public static float PUBLIC_RADIUS = 3f;
         
         this.world = world;
         
-        this.radius = 3f;
         
         joints = new Array();
         
@@ -75,7 +72,7 @@ public static float PUBLIC_RADIUS = 3f;
         
     }
     public NonPlayer(World world, OrthographicCamera camera, float distance) {
-        this.radius = 3f;
+        this.radius = PUBLIC_RADIUS;
         
         this.world = world;
         this.camera = camera;
@@ -85,7 +82,7 @@ public static float PUBLIC_RADIUS = 3f;
         circle_def.type = BodyType.DynamicBody;
         circle_def.position.set(-distance,camera.position.y);
         
-        texture = new Texture(Gdx.files.internal("test.png"));
+        //texture = new Texture(Gdx.files.internal("test.png"));
         
         body = world.createBody(circle_def);
         CircleShape circle_shape = new CircleShape();
@@ -99,9 +96,9 @@ public static float PUBLIC_RADIUS = 3f;
         
         body.createFixture(circle_fixture);
         
-        sprite = new Box2DSprite(texture);
+        //sprite = new Box2DSprite(texture);
         
-        body.setUserData(sprite);
+        //body.setUserData(sprite);
         
         body.createFixture(circle_fixture);
         
@@ -113,6 +110,7 @@ public static float PUBLIC_RADIUS = 3f;
     @Override
     public void update(SpriteBatch batch){
         batch.setProjectionMatrix(camera.combined);
+        super.update(batch);
     }
 
     @Override

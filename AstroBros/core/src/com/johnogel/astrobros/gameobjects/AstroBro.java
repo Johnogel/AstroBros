@@ -8,9 +8,13 @@ package com.johnogel.astrobros.gameobjects;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.utils.Array;
+import net.dermetfan.gdx.graphics.g2d.AnimatedBox2DSprite;
+import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
 
 
 /**
@@ -22,32 +26,41 @@ protected float health;
 protected Array<JointDef> joints;
 protected Array<Texture> frames;
 protected int frame, ticker;
+protected Animation animation;
+protected AnimatedBox2DSprite animated_sprite;
     
     public AstroBro(){
-        frames = new Array(120);
+        //frames = new Array(120);
         frame = 0;
         ticker = 0;
+        
+       
     }
     
     @Override
     public void update(SpriteBatch batch) {
         //System.out.println("Angle: "+body.getAngle());
         batch.setProjectionMatrix(camera.combined);
-        
-        
-        ticker++;
-        if(ticker % 30 == 0){
-            frame++;
-        
+        if(animated_sprite.isAnimationFinished()){
+            animated_sprite.setPlaying(true);
         }
         
-        if(frame > frames.size-1){
+        ticker++;
+        if(ticker % 60 == 0){
+            frame++;
+        }
+        if(frame % 2 == 0){
+            this.animated_sprite.setTime(0);
+        }
+        
+        if(ticker > 5999){
+            ticker = 0;
+        }
+        
+        if(frame > 2999){
             frame = 0;
         }
         
-        if (ticker > 2999){
-            ticker = 0;
-        }
         //batch.enableBlending();
     }
 
@@ -63,12 +76,22 @@ protected int frame, ticker;
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(camera.combined);
         //batch.begin();       
-        sprite.draw(batch, body);
+        //sprite.draw(batch, body);
+        animated_sprite.draw(batch, body);
         //batch.end();
         
     }
     
-
+    public void initializeAnimation(TextureAtlas atlas){
+        animation = new Animation(1/24f, atlas.getRegions());
+        AnimatedSprite a = new AnimatedSprite(animation);
+        animated_sprite = new AnimatedBox2DSprite(a);
+        animated_sprite.setPlaying(true);
+        this.animated_sprite.setAutoUpdate(true);
+        
+        
+        //body.setUserData(animated_sprite);
+    }
     
     @Override
     public void dispose(){

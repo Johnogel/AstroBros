@@ -7,6 +7,7 @@ package com.johnogel.astrobros.support;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class TextureHandler implements Disposable{
 private final Array<Texture> textures;
+public TextureAtlas atlas;
 public static final int 
         ASTRO_BRO = 0,
         SUN = 1,
@@ -27,8 +29,7 @@ public static final int
         BACKGROUND_SMALL = 7;
 
     public TextureHandler(){
-        textures = new Array();
-        
+        textures = new Array();  
     }
     
     public void initialize(){
@@ -40,10 +41,15 @@ public static final int
         textures.add(new Texture(Gdx.files.internal("background.png")));
         textures.add(new Texture(Gdx.files.internal("background-big.png")));
         textures.add(new Texture(Gdx.files.internal("background-small.png")));
+        atlas = new TextureAtlas(Gdx.files.internal("bro/bros.pack"));
     }
     
     public Texture getTexture(int texture){
         return textures.get(texture);
+    }
+    
+    public TextureAtlas getBroPack(){
+        return atlas;
     }
 
     @Override
@@ -51,6 +57,7 @@ public static final int
         for(Texture t : textures){
             t.dispose();
         }
+        atlas.dispose();
     }
     
     

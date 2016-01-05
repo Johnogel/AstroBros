@@ -25,16 +25,16 @@ private boolean active_player;
         
         
         
-        max_vel = 50;
-        max_force = 3000;
+        max_vel = 300;
+        max_force = 10000;
   
     }
     
     public Player(World world, OrthographicCamera camera, float distance) {
         super(world, camera, distance);
         
-        max_vel = 100;
-        max_force = 3500;
+        max_vel = 300;
+        max_force = 10000;
     }
     
     
@@ -53,6 +53,15 @@ private boolean active_player;
     
     @Override
     public void update(SpriteBatch batch){
+        
+        super.update(batch);
+        
+        if(!this.animated_sprite.isPlaying()){
+            this.animated_sprite.setTime(0);
+            //this.animated_sprite.setPlaying(true);
+            
+        }
+        
         //System.out.println("Angle: "+body.getAngle());
         batch.setProjectionMatrix(camera.combined);
         if(active_player){
