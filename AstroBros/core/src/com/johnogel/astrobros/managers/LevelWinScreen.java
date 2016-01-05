@@ -70,10 +70,10 @@ public class LevelWinScreen extends GameScreen{
     public void initialize() {
         initializeWorld();
         updateReferences();
-        new PointLight(ray_handler, 5000, Color.GREEN, 400, camera.viewportWidth/2, -300 );
-        new PointLight(ray_handler, 5000, Color.GREEN, 400, camera.viewportWidth/2, 300 );
-        new PointLight(ray_handler, 5000, Color.GREEN, 400, -camera.viewportWidth/2, -300 );
-        new PointLight(ray_handler, 5000, Color.GREEN, 400, -camera.viewportWidth/2, 300 );
+        new PointLight(ray_handler, 5000, Color.GREEN, 500, camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.GREEN, 500, camera.viewportWidth/2, 300 );
+        new PointLight(ray_handler, 5000, Color.GREEN, 500, -camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.GREEN, 500, -camera.viewportWidth/2, 300 );
 
         
     }
