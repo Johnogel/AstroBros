@@ -518,7 +518,7 @@ protected OrthographicCamera camera;
         for (Sun s : suns){
             for (AstroBro b : bros){
                 float distance_squared = CircleObject.distance(s, b)*CircleObject.distance(s, b);
-                float mass = s.getMass() * .04f * b.getBody().getMass();
+                float mass = s.getMass();
                 float force = mass/distance_squared;
 
                 float bro_x = b.getPosition().x;
