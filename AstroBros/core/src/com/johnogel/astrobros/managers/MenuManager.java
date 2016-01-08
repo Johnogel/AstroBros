@@ -84,8 +84,8 @@ public class MenuManager implements Controller{
         
         //batch.draw(press_space, Gdx.graphics.getWidth()/2 - press_space.getWidth()/2, Gdx.graphics.getHeight()/2 - press_space.getHeight()/2);
         //batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, Gdx.graphics.getHeight()/2+100);
-        batch.draw(title, 0 - this.title_width*0.5f, 20, this.title_width, this.title_height);
-        batch.draw(press_space, 0 - this.space_width*0.5f, -40, this.space_width,this.space_height);
+        batch.draw(title, 0 - this.title_width*0.5f, camera.viewportHeight/2*.1f, this.title_width, this.title_height);
+        batch.draw(press_space, 0 - this.space_width*0.5f, -camera.viewportHeight/2*.6f, this.space_width,this.space_height);
         
         
         batch.end();

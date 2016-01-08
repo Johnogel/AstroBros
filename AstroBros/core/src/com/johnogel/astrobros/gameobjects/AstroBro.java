@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.utils.Array;
+import java.util.Random;
 import net.dermetfan.gdx.graphics.g2d.AnimatedBox2DSprite;
 import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
 
@@ -32,8 +33,10 @@ protected AnimatedBox2DSprite animated_sprite;
     
     public AstroBro(){
         //frames = new Array(120);
+        Random gen = new Random();
+        
         frame = 0;
-        ticker = 0;
+        ticker = gen.nextInt(80);
         
        
     }
@@ -47,7 +50,7 @@ protected AnimatedBox2DSprite animated_sprite;
         }
         
         ticker++;
-        if(ticker % 35 == 0){
+        if(ticker % 40 == 0){
             frame++;
         }
         if(frame % 2 == 0){

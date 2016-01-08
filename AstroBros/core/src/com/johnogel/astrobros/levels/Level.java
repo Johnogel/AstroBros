@@ -538,7 +538,7 @@ protected OrthographicCamera camera;
                 
                 
                 b.getBody().applyForceToCenter(force_x, force_y, true);
-                //Do math stuff here
+               
             }
         }
         
@@ -559,8 +559,8 @@ protected OrthographicCamera camera;
       
         //score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
         //score.draw(batch, score_chars, 0-camera.viewportWidth*0.4f,camera.viewportHeight*0.4f);
-        score.draw(batch, score_chars, -camera.viewportHeight*0.28f,camera.viewportHeight*0.47f, 2, 0, false);
-        score.draw(batch, timer_chars, camera.viewportHeight*0.70f,camera.viewportHeight*0.47f, 2, 0, false);
+        score.draw(batch, score_chars, -camera.viewportWidth*0.11f,camera.viewportHeight*0.47f, 2, 0, false);
+        score.draw(batch, timer_chars, camera.viewportWidth*0.45f,camera.viewportHeight*0.47f, 2, 0, false);
         //score.draw(batch, score_chars, 0,0);
         
         //score.draw(batch, score_chars, 0, 0, 20, 10, true);
@@ -587,7 +587,7 @@ protected OrthographicCamera camera;
     //call in initialize method
     protected void initializePlayer(){
         player_index = 0;
-        controlled_bros.add(new Player(world, camera, 20));
+        controlled_bros.add(new Player(world, camera, 40));
         player = (Player)controlled_bros.get(player_index);
         player.enablePlayer();
         

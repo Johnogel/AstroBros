@@ -42,7 +42,7 @@ public class LevelOne extends Level{
         //this.free_bros.add(new Player(world, camera, 120));
         //this.free_bros.add(new Player(world, camera, 100));
         //this.free_bros.add(new Player(world, camera, 50));
-        this.free_bros.add(new Player(world, camera, 40));
+        this.free_bros.add(new Player(world, camera, 60));
                                 
         //world.createJoint(joint_def);
         

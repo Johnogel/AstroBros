@@ -12,9 +12,13 @@ public class DesktopLauncher {
             //String input = Gdx.files.internal("bro_animation").path()
             LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
             config.useGL30 = false;
-
-            config.width = 1200;
-            config.height = 800;
+            
+            
+            config.title = "Astro Bros";
+            //config.fullscreen = true;
+            config.resizable = false;
+            config.width = 1000;
+            config.height = 600;
             new LwjglApplication(new AstroBros(), config);
 	}
 }

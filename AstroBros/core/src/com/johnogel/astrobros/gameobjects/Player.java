@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author johno-gel
  */
 public class Player extends NonPlayer{
-private final int max_vel = 500, max_force = 15000;
+private final int max_vel = 1500, max_force = 25000;
 private boolean space_pressed;
 private boolean active_player;
 
@@ -117,7 +117,7 @@ private boolean active_player;
     
     public void setOrbit(Sun sun){
         float distance = body.getPosition().dst(sun.getPosition());
-        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass()/15)/distance));
+        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass())/distance));
         System.out.println("\nMASS OF SUN: "+sun.getMass()+"\nVELOCITY: "+body.getLinearVelocity().y);
     }
     
