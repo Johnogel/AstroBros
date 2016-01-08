@@ -82,7 +82,9 @@ private final float
         batch.setProjectionMatrix(level.getCamera().projection);
         //batch.disableBlending();
         //batch.setColor(Color.WHITE);
+        
         batch.begin();
+        //textures.get(0).
         batch.draw(
                 textures.get(0), 
                 this.layer_1_x, 
