@@ -671,7 +671,12 @@ protected OrthographicCamera camera;
         controlled_bodies.clear(); 
         free_bodies.clear();
         
+        for(AstroBro b : bros){
+            b.dispose();
+        }
         bros.clear();
+        
+        
     }
     
     @Override
