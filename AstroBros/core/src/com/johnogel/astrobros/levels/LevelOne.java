@@ -61,8 +61,7 @@ public class LevelOne extends Level{
 
         this.initializeBoundaries();
         this.initializeBackground();
-        
-        
+                
     }
 
     

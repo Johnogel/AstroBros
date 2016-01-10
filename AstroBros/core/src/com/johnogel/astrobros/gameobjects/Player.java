@@ -64,7 +64,7 @@ private boolean active_player;
         //System.out.println("Angle: "+body.getAngle());
         batch.setProjectionMatrix(camera.combined);
         if(active_player){
-            System.out.println("MAX_FORCE: "+max_force);
+            //System.out.println("MAX_FORCE: "+max_force);
             //apply force left
             
             state = AWAKE;

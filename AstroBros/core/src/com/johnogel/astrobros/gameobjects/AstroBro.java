@@ -162,8 +162,8 @@ protected final int
     public void dispose(){
      
         //body.destroyFixture(null);
-        sprite.getTexture().dispose();
-        texture.dispose();
+        //sprite.getTexture().dispose();
+        //texture.dispose();
         stick_sound.dispose();
     }
     
