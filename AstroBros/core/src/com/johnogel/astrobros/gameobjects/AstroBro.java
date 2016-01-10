@@ -7,6 +7,8 @@ package com.johnogel.astrobros.gameobjects;
 
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.utils.Array;
+import com.johnogel.astrobros.support.TextureHandler;
 import java.util.Random;
 import net.dermetfan.gdx.graphics.g2d.AnimatedBox2DSprite;
 import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
@@ -29,8 +32,18 @@ protected Array<JointDef> joints;
 protected Array<Texture> frames;
 protected int frame, ticker;
 protected Animation animation;
+protected Array<Animation> animations;
 protected AnimatedBox2DSprite animated_sprite;
-    
+protected Array<AnimatedBox2DSprite> sprites;
+protected int state;
+protected Sound stick_sound;
+protected final float 
+        FPS = 1/24f;
+protected final int  
+        AWAKE = 2,
+        SLEEP = 1,
+        MOVE = 0;
+
     public AstroBro(){
         //frames = new Array(120);
         Random gen = new Random();
@@ -38,7 +51,19 @@ protected AnimatedBox2DSprite animated_sprite;
         frame = 0;
         ticker = gen.nextInt(80);
         
+        sprites = new Array(3);
+        animations = new Array(3);
+        
+        stick_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/stick.ogg"));
+        
        
+    }
+    
+    public void playStickSound(){
+        
+        long id = stick_sound.play();
+        stick_sound.setPitch(id, 1.6f);
+        stick_sound.setVolume(id, 1);
     }
     
     @Override
@@ -50,7 +75,7 @@ protected AnimatedBox2DSprite animated_sprite;
         }
         
         ticker++;
-        if(ticker % 40 == 0){
+        if(ticker % 60 == 0){
             frame++;
         }
         if(frame % 2 == 0){
@@ -81,7 +106,8 @@ protected AnimatedBox2DSprite animated_sprite;
         batch.setProjectionMatrix(camera.combined);
         //batch.begin();       
         //sprite.draw(batch, body);
-        animated_sprite.draw(batch, body);
+        sprites.get(state).draw(batch, body);
+        //animated_sprite.draw(batch, body);
         //batch.end();
         
     }
@@ -100,13 +126,45 @@ protected AnimatedBox2DSprite animated_sprite;
         
         //body.setUserData(animated_sprite);
     }
+    public void initializeAnimations(TextureHandler handler){
+        float time = MathUtils.random.nextFloat()*6;
+        
+        //Animation a;
+        AnimatedSprite s;
+        
+        //adding moving animation
+        animations.add(new Animation(FPS, handler.getTextureAtlas(TextureHandler.MOVE).getRegions()));
+        AnimatedSprite s1 = new AnimatedSprite(animations.get(MOVE));
+        sprites.add(new AnimatedBox2DSprite(s1));
+        sprites.get(MOVE).setTime(time);
+
+
+        //adding sleep animation
+
+        animations.add(new Animation(FPS, handler.getTextureAtlas(TextureHandler.SLEEP).getRegions()));
+        s = new AnimatedSprite(animations.get(SLEEP));
+        sprites.add(new AnimatedBox2DSprite(s));
+        sprites.get(SLEEP).setTime(time);
+
+        //adding awake animation
+
+        animations.add(new Animation(FPS, handler.getTextureAtlas(TextureHandler.AWAKE).getRegions()));
+        s = new AnimatedSprite(animations.get(AWAKE));
+        sprites.add(new AnimatedBox2DSprite(s));
+        sprites.get(AWAKE).setTime(time);
+        
+        state = SLEEP;
+        animated_sprite = sprites.get(state);
+
+    }
     
     @Override
     public void dispose(){
      
         //body.destroyFixture(null);
-        sprite.getTexture().dispose();
-        texture.dispose();
+        //sprite.getTexture().dispose();
+        //texture.dispose();
+        stick_sound.dispose();
     }
     
 }

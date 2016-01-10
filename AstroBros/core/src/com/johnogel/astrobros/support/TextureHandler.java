@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Disposable;
 public class TextureHandler implements Disposable{
 private final Array<Texture> textures;
 public TextureAtlas atlas;
+public Array<TextureAtlas> atlases;
 public static final int 
         ASTRO_BRO = 0,
         SUN = 1,
@@ -26,10 +27,14 @@ public static final int
         BOUNDARY_OUTER = 4,
         BACKGROUND = 5,
         BACKGROUND_BIG = 6,
-        BACKGROUND_SMALL = 7;
+        BACKGROUND_SMALL = 7,
+        AWAKE = 0,
+        MOVE = 1,
+        SLEEP = 2;
 
     public TextureHandler(){
-        textures = new Array();  
+        textures = new Array(8);  
+        atlases = new Array(3);
     }
     
     public void initialize(){
@@ -41,23 +46,33 @@ public static final int
         textures.add(new Texture(Gdx.files.internal("background.png")));
         textures.add(new Texture(Gdx.files.internal("background-big.png")));
         textures.add(new Texture(Gdx.files.internal("background-small.png")));
-        atlas = new TextureAtlas(Gdx.files.internal("bro/bros.pack"));
+        //atlas = new TextureAtlas(Gdx.files.internal("bro/bros.pack"));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/awake/awake.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/move/move.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/sleep/sleep.pack")));
     }
     
     public Texture getTexture(int texture){
         return textures.get(texture);
     }
     
-    public TextureAtlas getBroPack(){
+    /*public TextureAtlas getBroPack(){
         return atlas;
+    }*/
+    
+    public TextureAtlas getTextureAtlas(int index){
+        return atlases.get(index);
     }
-
+    
     @Override
     public void dispose() {
         for(Texture t : textures){
             t.dispose();
         }
-        atlas.dispose();
+        for(TextureAtlas a : atlases){
+            a.dispose();
+        }
+        //atlas.dispose();
     }
     
     

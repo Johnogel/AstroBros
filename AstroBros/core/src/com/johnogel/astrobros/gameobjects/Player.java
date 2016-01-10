@@ -58,15 +58,23 @@ private boolean active_player;
             
         }
         
+        if (state != this.SLEEP){
+            state = SLEEP;
+        }
         //System.out.println("Angle: "+body.getAngle());
         batch.setProjectionMatrix(camera.combined);
         if(active_player){
-            System.out.println("MAX_FORCE: "+max_force);
+            //System.out.println("MAX_FORCE: "+max_force);
             //apply force left
+            
+            state = AWAKE;
+            
             if(Gdx.input.isKeyPressed(Keys.A)){
                 if(this.body.getLinearVelocity().x > -max_vel){
                     this.body.applyForceToCenter(-max_force, 0, true);
                 }
+                
+                state = MOVE;
 
             }
 
@@ -75,7 +83,8 @@ private boolean active_player;
                 if(this.body.getLinearVelocity().y > -max_vel){
                     this.body.applyForceToCenter(0, -max_force, true);
                 }
-
+                
+                state = MOVE;
             }
 
             //apply force right
@@ -83,6 +92,7 @@ private boolean active_player;
                 if(this.body.getLinearVelocity().x < max_vel){
                     this.body.applyForceToCenter(max_force, 0, true);
                 } 
+                state = MOVE;
             }
 
             //apply force up
@@ -90,6 +100,8 @@ private boolean active_player;
                 if(this.body.getLinearVelocity().y < max_vel){
                     this.body.applyForceToCenter(0, max_force, true);
                 }
+                
+                state = MOVE;
 
             }
 
@@ -106,6 +118,10 @@ private boolean active_player;
 
             this.camera.position.set(this.body.getPosition(), 0);
             this.camera.update();
+        }
+        
+        if (!animated_sprite.equals(sprites.get(state))){
+            animated_sprite = sprites.get(state);
         }
         
         

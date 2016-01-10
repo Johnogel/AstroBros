@@ -9,6 +9,7 @@ package com.johnogel.astrobros.levels;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -74,6 +75,10 @@ protected boolean joint_def_created, goldilocks, is_red;
 protected float camera_last_x, camera_last_y;
 protected Background background;
 protected TextureHandler texture_handler;
+protected float sun_sound_constant;
+protected long sun_sound_id, bump_sound_id;
+
+protected Sound sun_sound, bump_sound;
 
 protected OrthographicCamera camera;
 
@@ -123,6 +128,12 @@ protected OrthographicCamera camera;
         blue_texture = this.texture_handler.getTexture(TextureHandler.BOUNDARY_BLUE);
         boundary_texture = this.texture_handler.getTexture(TextureHandler.BOUNDARY_OUTER);
         
+        sun_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/fire.wav"));
+        bump_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg"));
+        bump_sound_id = bump_sound.play(0);
+        sun_sound_id = sun_sound.play(0);
+        
+        
     }
     
     //should be called in child initialize method
@@ -147,6 +158,8 @@ protected OrthographicCamera camera;
         setBroTextures();
         
         initializeAnimations();
+        
+        
     }
     
     public void updateArrays(){
@@ -184,6 +197,10 @@ protected OrthographicCamera camera;
                 }
                 //check if both contacts are bros
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
+                    
+                    
+                    bump_sound_id = bump_sound.play(.5f);
+                    bump_sound.setPitch(bump_sound_id, .5f);
                     //System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
                     if(free_bodies.contains(contact.getFixtureA().getBody(), false) && controlled_bodies.contains(contact.getFixtureB().getBody(), false))
@@ -198,7 +215,7 @@ protected OrthographicCamera camera;
                                 
                                 to_be_attached.add(free_bros.get(i).getBody());
                                 
-                                System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
+                                //System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
 
                                 joint_def_created = true;
 
@@ -255,7 +272,7 @@ protected OrthographicCamera camera;
                         }
                         
                         if(Vector2.dst(inner_orbit.getPosition().x, inner_orbit.getPosition().y, player.getPosition().x, player.getPosition().y) > inner_orbit.getRadius()){
-                            System.out.println("GOLDILOCKS!!");
+                            //System.out.println("GOLDILOCKS!!");
                         }
                   
                     }
@@ -292,9 +309,9 @@ protected OrthographicCamera camera;
     }
     
     private void attachBodies(){
-        System.out.println("CONTROLLED BROS SIZE: "+controlled_bros.size+"\nCONTROLLED BODIES SIZE: "+controlled_bodies.size);
+        /*System.out.println("CONTROLLED BROS SIZE: "+controlled_bros.size+"\nCONTROLLED BODIES SIZE: "+controlled_bodies.size);
         System.out.println("FREE BROS SIZE: "+free_bros.size+"\nFREE BODIES SIZE: "+free_bodies.size);
-        System.out.println("BROS SIZE: "+bros.size);
+        System.out.println("BROS SIZE: "+bros.size);*/
         if(to_be_attached.size == to_be_attached_to.size && to_be_attached.size > 0){
             
             for(int i = 0; i < to_be_attached.size; i++){
@@ -343,7 +360,7 @@ protected OrthographicCamera camera;
                     }
                 }
             }
-            
+            player.playStickSound();
             to_be_attached.clear();
             to_be_attached_to.clear();
         }
@@ -397,7 +414,7 @@ protected OrthographicCamera camera;
             int size = controlled_bros.size;
             for(int i = 0; i < size; i++){
 
-                System.out.println("---------------------------------------ADD DEM FREE BODIES");
+                //System.out.println("---------------------------------------ADD DEM FREE BODIES");
                 free_bodies.add(controlled_bodies.pop());
                 free_bros.add(controlled_bros.pop());
                     
@@ -417,6 +434,8 @@ protected OrthographicCamera camera;
             
             joint_def_created = false;
         }
+        
+        
         
         //checks if any bro is in goldilocks zone. I'm not sure if I'm spelling that correctly
         int i = 0;
@@ -470,7 +489,7 @@ protected OrthographicCamera camera;
             }
             
         }
-        
+        updateSunSound();
         background.update();
 
     }
@@ -483,6 +502,13 @@ protected OrthographicCamera camera;
     //should call mngr method to handle screen changing
     private void notifyLoss(){
         mngr.resolveLevelLoss();
+    }
+    
+    private void updateSunSound(){
+        float dst = player.getBody().getPosition().dst(suns.get(0).getPosition());
+        if(dst < outer_orbit.getRadius()){
+            sun_sound.setVolume(sun_sound_id, (outer_orbit.getRadius()-dst)*this.sun_sound_constant);
+        }
     }
     
     private void enforceOutOfBounds(AstroBro b){
@@ -582,6 +608,8 @@ protected OrthographicCamera camera;
         inner_orbit.setTexture(red_texture);
         outer_orbit.setTexture(red_texture);
         outer_boundary.setTexture(boundary_texture);
+        
+        this.sun_sound_constant = 1 / outer_orbit.getRadius();
     }
     
     //call in initialize method
@@ -620,6 +648,8 @@ protected OrthographicCamera camera;
         
         
         
+        
+        
         //bros.add(player);
         //this.world = mngr.getWorld();
         
@@ -646,6 +676,11 @@ protected OrthographicCamera camera;
             mngr.addGameObject(s);
         }
         
+        sun_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/fire.wav"));
+        
+        sun_sound_id = sun_sound.play(0);
+        sun_sound.setLooping(sun_sound_id, true);
+        
         
 
     }
@@ -661,6 +696,7 @@ protected OrthographicCamera camera;
     }
     
     public void clearArrays(){
+        
         bodies.clear();
         suns.clear();
         
@@ -671,7 +707,16 @@ protected OrthographicCamera camera;
         controlled_bodies.clear(); 
         free_bodies.clear();
         
+        for(AstroBro b : bros){
+            b.dispose();
+        }
         bros.clear();
+        sun_sound.stop();
+        sun_sound.dispose();
+        bump_sound.stop();
+        bump_sound.dispose();
+        //sun_sound.dispose();
+        
     }
     
     @Override
@@ -686,6 +731,10 @@ protected OrthographicCamera camera;
         clearArrays();
         mngr.disposeGameObjectTextures();
         background.dispose();
+        sun_sound.stop();
+        sun_sound.dispose();
+        
+
     }
     
 @Override
@@ -705,7 +754,7 @@ protected OrthographicCamera camera;
     
     public void initializeAnimations(){
         for (Player p : bros){
-            p.initializeAnimation(mngr.getTextureHandler().getBroPack());
+            p.initializeAnimations(mngr.getTextureHandler());
         }
     }
     
