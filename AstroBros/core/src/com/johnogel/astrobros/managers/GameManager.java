@@ -42,7 +42,7 @@ private final Array<Level> levels;
 private final Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
-private TextureHandler texture_handler;
+private final TextureHandler texture_handler;
 
 private int level, controller;
 
