@@ -31,7 +31,7 @@ public class GameManager implements Controller{
 private World world; 
 private Box2DDebugRenderer renderer;
 private FPSLogger logger;
-private int width, height;
+private final int width, height;
 private OrthographicCamera camera;
 protected Array<GameObject> game_objects, disposables;
 private final int max_count;
