@@ -705,7 +705,7 @@ protected OrthographicCamera camera;
     
     public void initializeAnimations(){
         for (Player p : bros){
-            p.initializeAnimation(mngr.getTextureHandler().getBroPack());
+            p.initializeAnimations(mngr.getTextureHandler());
         }
     }
     
