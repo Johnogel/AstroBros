@@ -343,7 +343,7 @@ protected OrthographicCamera camera;
                     }
                 }
             }
-            
+            player.playStickSound();
             to_be_attached.clear();
             to_be_attached_to.clear();
         }

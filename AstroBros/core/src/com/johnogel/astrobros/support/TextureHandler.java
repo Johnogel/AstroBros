@@ -69,7 +69,10 @@ public static final int
         for(Texture t : textures){
             t.dispose();
         }
-        atlas.dispose();
+        for(TextureAtlas a : atlases){
+            a.dispose();
+        }
+        //atlas.dispose();
     }
     
     

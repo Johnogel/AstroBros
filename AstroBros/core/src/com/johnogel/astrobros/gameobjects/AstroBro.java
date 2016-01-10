@@ -7,6 +7,8 @@ package com.johnogel.astrobros.gameobjects;
 
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,6 +36,7 @@ protected Array<Animation> animations;
 protected AnimatedBox2DSprite animated_sprite;
 protected Array<AnimatedBox2DSprite> sprites;
 protected int state;
+protected Sound stick_sound;
 protected final float 
         FPS = 1/24f;
 protected final int  
@@ -51,7 +54,16 @@ protected final int
         sprites = new Array(3);
         animations = new Array(3);
         
+        stick_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/stick.ogg"));
+        
        
+    }
+    
+    public void playStickSound(){
+        
+        long id = stick_sound.play();
+        stick_sound.setPitch(id, 1.6f);
+        stick_sound.setVolume(id, 1);
     }
     
     @Override
@@ -152,6 +164,7 @@ protected final int
         //body.destroyFixture(null);
         sprite.getTexture().dispose();
         texture.dispose();
+        stick_sound.dispose();
     }
     
 }
