@@ -37,6 +37,7 @@ protected Array<Sound> sounds;
         texture.dispose();
         texture = new Texture(Gdx.files.internal(image_name));
         sprite = new Box2DSprite(texture);
+        
         body.setUserData(sprite);
         
     }

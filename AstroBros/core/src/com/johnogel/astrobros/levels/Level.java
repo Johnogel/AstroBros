@@ -136,6 +136,9 @@ protected OrthographicCamera camera;
         
     }
     
+    public Player getPlayer(){
+        return player;
+    }
     //should be called in child initialize method
     protected void initializeArrays(){
         
