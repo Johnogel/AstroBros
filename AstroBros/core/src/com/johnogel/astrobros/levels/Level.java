@@ -560,8 +560,24 @@ protected OrthographicCamera camera;
     
     private void cleanUp(){
         for(Body b : to_be_destroyed){
+            
+     
+            world.destroyBody(b);
+            b.setUserData(null);
+            b = null;
+            
+            for(int i = 0; i < locators.size; i++){
+                if(locators.get(i).getPlayer().getBody().equals(b) || locators.get(i).getOtherBro().getBody().equals(b)){
+                    locators.removeIndex(i);
+                }               
+            }
+            
             for(int i = 0; i < bros.size; i++){
                 if(bros.get(i).getBody().equals(b)){
+                    if(b.equals(player.getBody())){
+                        player.disablePlayer();
+                        player = null;
+                    }
                     bodies.removeValue(b, true);
                     free_bodies.removeValue(b, true);
                     controlled_bodies.removeValue(b, true);
@@ -573,17 +589,6 @@ protected OrthographicCamera camera;
                 }
         
             }
-            
-            for(int i = 0; i < locators.size; i++){
-                if(locators.get(i).getPlayer().getBody().equals(b) || locators.get(i).getOtherBro().getBody().equals(b)){
-                    locators.removeIndex(i);
-                }               
-            }
-            
-            world.destroyBody(b);
-            b.setUserData(null);
-            b = null;
-            
         
         }
         
@@ -828,6 +833,8 @@ protected OrthographicCamera camera;
         free_bodies.clear();
         
         locators.clear();
+        
+        to_be_destroyed.clear();
         
         for(AstroBro b : bros){
             b.dispose();

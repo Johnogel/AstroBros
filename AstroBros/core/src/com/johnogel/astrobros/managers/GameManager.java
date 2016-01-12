@@ -131,9 +131,11 @@ public final int
         
             ray_handler.setCombinedMatrix(camera);            
             
+            controllers.get(controller).update();
+            
             world.step(this.fps, 6, 2); 
             
-            controllers.get(controller).update();
+            
         }
         
 //        if(levels.get(level).getTime()<1){
@@ -267,7 +269,7 @@ public final int
         //ray_handler.setLightMapRendering(false);
         ray_handler.setShadows(true);
         
-        ray_handler.setAmbientLight(1, 1, 1, .15f);
+        ray_handler.setAmbientLight(1, 1, 1, .10f);
         
  
         
@@ -305,7 +307,7 @@ public final int
         this.world = mngr.getWorld();
         levels.add(new LevelOne(this, 30));
         levels.add(new LevelTwo(this, 60));
-        levels.add(new LevelThree(this, 5));
+        levels.add(new LevelThree(this, 30));
         
         controllers.add(levels.get(0));
         controllers.add(levels.get(1));
