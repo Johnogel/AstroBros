@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.support.TextureHandler;
 
@@ -99,6 +100,11 @@ private float angle;
     @Override
     public void dispose() {
         
+    }
+
+    @Override
+    public Body getBody() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

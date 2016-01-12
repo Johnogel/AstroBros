@@ -37,6 +37,7 @@ protected AnimatedBox2DSprite animated_sprite;
 protected Array<AnimatedBox2DSprite> sprites;
 protected int state;
 protected Sound stick_sound;
+protected boolean alive;
 protected final float 
         FPS = 1/24f;
 protected final int  
@@ -56,6 +57,7 @@ protected final int
         
         stick_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/stick.ogg"));
         
+        alive = true;
        
     }
     
@@ -101,12 +103,21 @@ protected final int
         joints.add(joint);
     }
     
+    public void setAlive(boolean state){
+        this.alive = state;
+        body.setAwake(state);
+        //world.destroyBody(body);
+    }
     @Override
+    
+
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(camera.combined);
         //batch.begin();       
         //sprite.draw(batch, body);
-        sprites.get(state).draw(batch, body);
+        if(alive){
+            sprites.get(state).draw(batch, body);
+        }
         //animated_sprite.draw(batch, body);
         //batch.end();
         

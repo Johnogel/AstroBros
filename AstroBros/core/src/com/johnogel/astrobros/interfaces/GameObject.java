@@ -6,6 +6,7 @@
 package com.johnogel.astrobros.interfaces;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
 
 /**
  *
@@ -15,6 +16,7 @@ public interface GameObject {
     
     public void update(SpriteBatch batch);
     public void render(SpriteBatch batch);
+    public Body getBody();
     public void dispose();
     
 }

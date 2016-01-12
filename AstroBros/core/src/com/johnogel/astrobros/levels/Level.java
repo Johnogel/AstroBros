@@ -58,6 +58,7 @@ protected Array<Body> to_be_attached;
 protected Array<Body> to_be_attached_to;
 
 protected Array<Locator> locators;
+protected Array<Body> to_be_destroyed;
 
 protected World world;
 protected Player player;
@@ -111,6 +112,8 @@ protected OrthographicCamera camera;
         
         to_be_attached = new Array(MAX_BROS);
         to_be_attached_to = new Array(MAX_BROS);
+        
+        to_be_destroyed = new Array(MAX_BROS);
         
         locators = new Array(MAX_BROS);
         
@@ -196,11 +199,51 @@ protected OrthographicCamera camera;
             public void beginContact(Contact contact) {
                 boolean is_bro;
                 
-                if ((contact.getFixtureA().getBody().equals(suns.get(0).getBody())
-                        || contact.getFixtureB().getBody().equals(suns.get(0).getBody()))
-                        && (contact.getFixtureA().getBody().equals(player.getBody())
-                        || contact.getFixtureB().getBody().equals(player.getBody()))) {
-                    notifyLoss();
+                //check if a bro is touching the sun
+                if (contact.getFixtureA().getBody().equals(suns.get(0).getBody())
+                        || contact.getFixtureB().getBody().equals(suns.get(0).getBody())){
+                    
+                
+                    if (bro_bodies.contains(contact.getFixtureA().getBody(), true)){
+                        if(contact.getFixtureA().getBody().equals(player.getBody())){
+                            notifyLoss();
+                        }
+                        
+                        //contact.getFixtureA().getBody().setActive(false);
+                        for(AstroBro b : bros){
+                            if(b.getBody().equals(contact.getFixtureA().getBody())){
+                                b.setAlive(false);
+                                
+                                to_be_destroyed.add(b.getBody());
+                        
+                            }
+                        }
+                        free_bodies.removeValue(contact.getFixtureA().getBody(), true);
+                        controlled_bodies.removeValue(contact.getFixtureA().getBody(), true);
+                        bro_bodies.removeValue(contact.getFixtureA().getBody(), true);
+                        mngr.removeGameObject(contact.getFixtureA().getBody());
+                    }
+                    
+                    if (bro_bodies.contains(contact.getFixtureB().getBody(), true)){
+                        if(contact.getFixtureB().getBody().equals(player.getBody())){
+                            notifyLoss();
+                        }
+                        //contact.getFixtureB().getBody().setActive(false);
+                        for(AstroBro b : bros){
+                            if(b.getBody().equals(contact.getFixtureB().getBody())){
+                                b.setAlive(false);
+                                
+                        
+                            }
+                        }
+                        free_bodies.removeValue(contact.getFixtureB().getBody(), true);
+                        controlled_bodies.removeValue(contact.getFixtureB().getBody(), true);
+                        bro_bodies.removeValue(contact.getFixtureB().getBody(), true);
+                        mngr.removeGameObject(contact.getFixtureB().getBody());
+                    }
+            
+                    
+               
                 }
                 //check if both contacts are bros
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
@@ -500,7 +543,9 @@ protected OrthographicCamera camera;
         background.update();
         updateLocators(mngr.getSpriteBatch());
         
-        
+        for(Body b : to_be_destroyed){
+            world.destroyBody(b);
+        }
 
     }
     

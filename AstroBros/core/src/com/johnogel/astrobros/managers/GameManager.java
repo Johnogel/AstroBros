@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -146,6 +147,26 @@ public final int
         
             
             
+    }
+    
+    public void removeGameObject(GameObject o){
+        game_objects.removeIndex(game_objects.indexOf(o, true));
+    }
+    
+    public void removeGameObject(Body b){
+        int index = -1;
+        //b.destroyFixture(b.getFixtureList().pop());
+        //b.setActive(false);
+        //b.setAwake(false);
+        for (GameObject o : game_objects){
+            if(b.equals(o.getBody())){
+                index = game_objects.indexOf(o, false);
+                break;
+            }
+        }
+        if(index > -1){
+            game_objects.removeIndex(index);
+        }
     }
     
     public void renderGameObjects(){
