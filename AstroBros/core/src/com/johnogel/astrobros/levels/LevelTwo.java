@@ -58,6 +58,7 @@ public class LevelTwo extends Level{
         
         this.initializeBoundaries();
         this.initializeBackground();
+        this.initializeLocators();
         
         
     }

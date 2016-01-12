@@ -30,7 +30,7 @@ private boolean active_player;
     
     public Player(World world, OrthographicCamera camera, float distance) {
         super(world, camera, distance);
- 
+        
     }
     
     

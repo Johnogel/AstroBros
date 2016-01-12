@@ -31,6 +31,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.gameobjects.BoundaryCircle;
 import com.johnogel.astrobros.gameobjects.CircleObject;
+import com.johnogel.astrobros.gameobjects.Locator;
 import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.support.Background;
@@ -55,6 +56,8 @@ protected Array<Body> free_bodies;
 
 protected Array<Body> to_be_attached;
 protected Array<Body> to_be_attached_to;
+
+protected Array<Locator> locators;
 
 protected World world;
 protected Player player;
@@ -82,6 +85,7 @@ protected Sound sun_sound, bump_sound;
 
 protected OrthographicCamera camera;
 
+
     public Level(GameManager mngr, int start_time){
         
         this.START_TIME = start_time;
@@ -108,7 +112,7 @@ protected OrthographicCamera camera;
         to_be_attached = new Array(MAX_BROS);
         to_be_attached_to = new Array(MAX_BROS);
         
-       
+        locators = new Array(MAX_BROS);
         
         this.mngr = mngr;
         
@@ -494,9 +498,17 @@ protected OrthographicCamera camera;
         }
         updateSunSound();
         background.update();
+        updateLocators(mngr.getSpriteBatch());
+        
+        
 
     }
     
+    private void updateLocators(SpriteBatch batch){
+        for (Locator l : locators){
+            l.update(batch);
+        }
+    }
     //should call mngr method to handle screen changing
     private void notifyWin(){
         mngr.resolveLevelWin();
@@ -541,6 +553,20 @@ protected OrthographicCamera camera;
         
     }
     
+    //should be called in child initialize method after players are initialized
+    public void initializeLocators(){
+        
+        for(AstroBro b : bros){
+            locators.add(new Locator(player, b));
+        }
+        
+        for(Locator l : locators){
+            l.initializeTexture(texture_handler);
+            l.initialize();
+        }
+        
+    }
+    
     private void gravitate(){
         
         //sets force on each body towards each sun
@@ -578,7 +604,7 @@ protected OrthographicCamera camera;
         
     }
     
-    public void writeBitmapFonts(SpriteBatch batch){
+    public void drawHUD(SpriteBatch batch){
         camera.update();
         batch.setProjectionMatrix(camera.projection);
 
@@ -594,6 +620,9 @@ protected OrthographicCamera camera;
         
         //score.draw(batch, score_chars, 0, 0, 20, 10, true);
         batch.end();
+        for(Locator l : locators){
+            l.render(batch);
+        }
     }
     
     //must call after suns are created in initialize method
@@ -709,6 +738,8 @@ protected OrthographicCamera camera;
         bro_bodies.clear(); 
         controlled_bodies.clear(); 
         free_bodies.clear();
+        
+        locators.clear();
         
         for(AstroBro b : bros){
             b.dispose();

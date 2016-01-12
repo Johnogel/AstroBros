@@ -59,6 +59,7 @@ public class LevelThree extends Level{
         
         this.initializeBoundaries();
         this.initializeBackground();
+        this.initializeLocators();
         
     }
     

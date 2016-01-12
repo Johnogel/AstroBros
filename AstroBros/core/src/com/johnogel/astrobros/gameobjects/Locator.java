@@ -18,14 +18,14 @@ import com.johnogel.astrobros.support.TextureHandler;
  * @author johno-gel
  */
 public class Locator implements GameObject{
-private final Player player, other_bro;
+private final AstroBro player, other_bro;
 private Vector2 position, center;
 private Texture texture;
 private Sprite sprite;
-private final float RADIUS = 5;
+private final float RADIUS = 50;
 private float angle;
 
-    public Locator(Player player, Player other){
+    public Locator(AstroBro player, AstroBro other){
         this.player = player;
         this.other_bro = other;
         
@@ -37,17 +37,26 @@ private float angle;
         
     }
     
+    private void updateAngle(){
+        float p_x = player.getPosition().x;
+        float p_y = player.getPosition().y;
+        float o_x = other_bro.getPosition().x;
+        float o_y = other_bro.getPosition().y;
+
+        angle = MathUtils.atan2(p_y - o_y, p_x - o_x)*MathUtils.radiansToDegrees + 180;
+    }
+    
     public void initialize(){
-        angle = center.angle(this.other_bro.getPosition());
+        updateAngle();
         sprite.setRotation(angle);
-        float x = 5*MathUtils.cosDeg(angle);
-        float y = 5*MathUtils.sinDeg(angle);
+        float x = RADIUS*MathUtils.cosDeg(angle);
+        float y = RADIUS*MathUtils.sinDeg(angle);
         position.set(x, y);
         
     }
     
     public void initializeTexture(TextureHandler h){
-        this.texture = h.getTexture(0);
+        this.texture = h.getTexture(TextureHandler.LOCATOR);
         sprite = new Sprite(texture);
 
     }
@@ -55,10 +64,15 @@ private float angle;
     
 @Override
     public void render(SpriteBatch batch){
-        batch.begin();
-        //batch.draw(texture, position.x, position.y, 1, 1);
-        sprite.draw(batch);
-        batch.end();
+        if(!player.equals(other_bro) && (center.dst(other_bro.getPosition()) > 110)){
+            batch.begin();
+            //batch.draw(texture, position.x, position.y, 1, 1);
+            //sprite.draw(batch);
+            //batch.dr
+            //batch.draw(sprite, position.x, position.y, 10, 10);
+            batch.draw(sprite, position.x, position.y, 0, 0, 5, 5, 1, 1, angle-90);
+            batch.end();
+        }
     }
     
     public void reset(){
@@ -67,10 +81,15 @@ private float angle;
 
     @Override
     public void update(SpriteBatch batch) {
-        angle = center.angle(this.other_bro.getPosition());
+        if(!center.equals(player.getPosition())){
+            center = player.getPosition();
+        }
+        
+        
+        updateAngle();
         sprite.setRotation(angle);
-        float x = 5*MathUtils.cosDeg(angle);
-        float y = 5*MathUtils.sinDeg(angle);
+        float x = RADIUS*MathUtils.cosDeg(angle);
+        float y = RADIUS*MathUtils.sinDeg(angle);
         
         position.set(x,y);
         

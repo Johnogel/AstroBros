@@ -159,7 +159,7 @@ public final int
 
         batch.end();
         ray_handler.updateAndRender();
-        levels.get(level).writeBitmapFonts(batch);
+        levels.get(level).drawHUD(batch);
         
     }
     
