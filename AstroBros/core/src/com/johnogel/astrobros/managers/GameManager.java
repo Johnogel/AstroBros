@@ -112,7 +112,7 @@ public final int
 
     @Override
     public void update() {
-        
+        System.out.println("\n\nWIDTH: "+camera.viewportWidth+"\nHEIGHT: "+camera.viewportHeight);
         //System.out.println("Game Objects: "+this.game_objects.size);
         if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
             this.setLevel(this.LEVEL_ONE);
