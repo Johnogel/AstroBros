@@ -84,6 +84,8 @@ protected long sun_sound_id, bump_sound_id;
 
 protected Sound sun_sound, bump_sound;
 
+protected int total_bros;
+
 protected OrthographicCamera camera;
 
 
@@ -218,10 +220,11 @@ protected OrthographicCamera camera;
                         
                             }
                         }
-                        free_bodies.removeValue(contact.getFixtureA().getBody(), true);
+                        /*free_bodies.removeValue(contact.getFixtureA().getBody(), true);
                         controlled_bodies.removeValue(contact.getFixtureA().getBody(), true);
                         bro_bodies.removeValue(contact.getFixtureA().getBody(), true);
-                        mngr.removeGameObject(contact.getFixtureA().getBody());
+                        mngr.removeGameObject(contact.getFixtureA().getBody());*/
+                        //System.out.println("SO FAR SO GOOD!---------------");
                     }
                     
                     if (bro_bodies.contains(contact.getFixtureB().getBody(), true)){
@@ -236,10 +239,12 @@ protected OrthographicCamera camera;
                         
                             }
                         }
-                        free_bodies.removeValue(contact.getFixtureB().getBody(), true);
+                        /*free_bodies.removeValue(contact.getFixtureB().getBody(), true);
                         controlled_bodies.removeValue(contact.getFixtureB().getBody(), true);
                         bro_bodies.removeValue(contact.getFixtureB().getBody(), true);
-                        mngr.removeGameObject(contact.getFixtureB().getBody());
+                        mngr.removeGameObject(contact.getFixtureB().getBody());*/
+                        
+                        //System.out.println("SO FAR SO GOOD!---------------");
                     }
             
                     
@@ -513,7 +518,7 @@ protected OrthographicCamera camera;
         }
 
         safe_bros = i;
-        score_chars = "SAFE: "+i+"/"+bros.size;
+        score_chars = "SAFE: "+i+"/"+this.total_bros;
         
         
         if(!goldilocks && !is_red){
@@ -530,7 +535,7 @@ protected OrthographicCamera camera;
         
         //check if level is over
         if(timer < 1){
-            if(this.safe_bros >= this.bros.size/2){
+            if(this.safe_bros >= this.total_bros/2){
                 notifyWin();
             }
             
@@ -539,14 +544,50 @@ protected OrthographicCamera camera;
             }
             
         }
+        
+        
+        
+        cleanUp();
+        
         updateSunSound();
         background.update();
         updateLocators(mngr.getSpriteBatch());
         
-        for(Body b : to_be_destroyed){
-            world.destroyBody(b);
-        }
+        
+        
 
+    }
+    
+    private void cleanUp(){
+        for(Body b : to_be_destroyed){
+            for(int i = 0; i < bros.size; i++){
+                if(bros.get(i).getBody().equals(b)){
+                    bodies.removeValue(b, true);
+                    free_bodies.removeValue(b, true);
+                    controlled_bodies.removeValue(b, true);
+                    bro_bodies.removeValue(b, true);
+                    mngr.removeGameObject(b);
+                    free_bros.removeValue(bros.get(i), true);
+                    controlled_bros.removeValue(bros.get(i), true);
+                    bros.removeIndex(i);
+                }
+        
+            }
+            
+            for(int i = 0; i < locators.size; i++){
+                if(locators.get(i).getPlayer().getBody().equals(b) || locators.get(i).getOtherBro().getBody().equals(b)){
+                    locators.removeIndex(i);
+                }               
+            }
+            
+            world.destroyBody(b);
+            b.setUserData(null);
+            b = null;
+            
+        
+        }
+        
+        to_be_destroyed.clear();
     }
     
     private void updateLocators(SpriteBatch batch){
@@ -719,7 +760,7 @@ protected OrthographicCamera camera;
         safe_bros = 0;
         timer = this.START_TIME;
         ticker = 0;
-        score_chars = "SAFE: 0/"+bros.size;
+        score_chars = "SAFE: 0/"+this.total_bros;
         timer_chars = ""+timer;
         
         
@@ -758,6 +799,8 @@ protected OrthographicCamera camera;
         sun_sound_id = sun_sound.play(0);
         sun_sound.setLooping(sun_sound_id, true);
         
+        
+        total_bros = bros.size;
         
 
     }
@@ -828,7 +871,7 @@ protected OrthographicCamera camera;
     }
     
     public boolean win(){
-        return safe_bros == bros.size;
+        return safe_bros >= this.total_bros/2;
     }
     
     public void initializeAnimations(){

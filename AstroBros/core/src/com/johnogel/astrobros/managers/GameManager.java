@@ -129,11 +129,11 @@ public final int
         
         else /*if(Gdx.input.isKeyPressed(Keys.ENTER))*/{
         
-            ray_handler.setCombinedMatrix(camera);
-            
-            controllers.get(controller).update();
+            ray_handler.setCombinedMatrix(camera);            
             
             world.step(this.fps, 6, 2); 
+            
+            controllers.get(controller).update();
         }
         
 //        if(levels.get(level).getTime()<1){

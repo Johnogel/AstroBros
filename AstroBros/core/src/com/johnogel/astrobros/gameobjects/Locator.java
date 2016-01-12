@@ -62,6 +62,13 @@ private float angle;
 
     }
         
+    public AstroBro getPlayer(){
+        return player;
+    }
+    
+    public AstroBro getOtherBro(){
+        return other_bro;
+    }
     
 @Override
     public void render(SpriteBatch batch){
