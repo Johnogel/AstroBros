@@ -487,7 +487,7 @@ protected OrthographicCamera camera;
         
         //check if level is over
         if(timer < 1){
-            if(this.safe_bros == this.bros.size){
+            if(this.safe_bros >= this.bros.size/2){
                 notifyWin();
             }
             
