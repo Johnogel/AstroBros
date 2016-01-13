@@ -34,7 +34,7 @@ public class LevelWinScreen extends GameScreen{
         
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         font.getData().setScale(0.3f, 0.3f);  
-        game_over = "LEVEL PASSED";
+        game_over = "PASSED!";
         press_space = "PRESS SPACE TO CONTINUE";
         score = "0";
         
@@ -82,8 +82,8 @@ public class LevelWinScreen extends GameScreen{
     public void initialize() {
         initializeWorld();
         updateReferences();
-        String s = ""+mngr.getTotalScore();
-        score = "TOTAL SCORE: " + s;
+        String s = ""+mngr.getPreviousScore();
+        score = "YOU SAVED " + s + " BROS";
         System.out.println("score: "+s);
         layout_middle = new GlyphLayout(font, score);
         new PointLight(ray_handler, 5000, Color.GREEN, 500, camera.viewportWidth/2, -300 );

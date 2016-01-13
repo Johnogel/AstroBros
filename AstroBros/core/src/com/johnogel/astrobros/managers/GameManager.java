@@ -49,7 +49,7 @@ private boolean started;
 private SpriteBatch batch;
 private final TextureHandler texture_handler;
 private int total_score, top_score, lives;
-
+private int prev_score;
 private int level, controller_index;
 private Controller controller;
 
@@ -129,6 +129,7 @@ public final int
     
     public void resolveLevelWin(int score){
         total_score += score;
+        prev_score = score;
         controller = controllers.get(this.LEVEL_WIN);
         controller.initialize();
         
@@ -189,6 +190,10 @@ public final int
         
             
             
+    }
+    
+    public int getPreviousScore(){
+        return prev_score;
     }
     
     public void removeGameObject(GameObject o){
@@ -350,9 +355,7 @@ public final int
         levels.add(new LevelThree(this, 10));
         
         top_score = 0;
-        for(Level l: levels){
-            top_score += l.getMaxBros();
-        }
+        
         
         controllers.add(levels.get(0));
         controllers.add(levels.get(1));
@@ -395,7 +398,15 @@ public final int
         
         
     }
-
+    
+    public void updateTopScore(int score){
+        top_score += score;
+    }
+    
+    public int getTopScore(){
+        return top_score;
+    }
+    
     @Override
     public void resize(int width, int height) {
         this.camera = mngr.getCamera();

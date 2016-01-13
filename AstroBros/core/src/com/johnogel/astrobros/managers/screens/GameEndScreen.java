@@ -34,9 +34,9 @@ public class GameEndScreen extends GameScreen{
         super(mngr);
         
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
-        font.getData().setScale(0.3f, 0.3f);  
-        game_over = "COMPLETE!";
-        press_space = "HOW'D YA DO?";
+        font.getData().setScale(0.33f, 0.33f);  
+        game_over = "YOU SAVED";
+        press_space = "ASTRO BROS";
         score = "0";
         
         layout_top = new GlyphLayout(font, game_over);
@@ -84,7 +84,8 @@ public class GameEndScreen extends GameScreen{
         initializeWorld();
         updateReferences();
         String s = ""+mngr.getTotalScore();
-        score = "TOTAL SCORE: " + s;
+        String t = ""+mngr.getTopScore();
+        score = s + " OUT OF " + t;
         System.out.println("score: "+s);
         layout_middle = new GlyphLayout(font, score);
         new PointLight(ray_handler, 5000, Color.BLUE, 500, camera.viewportWidth/2, -300 );

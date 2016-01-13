@@ -63,6 +63,9 @@ public class MenuManager implements Controller{
             
         }
         
+        camera.rotate(15.0f);
+        camera.update();
+        
         ray_handler.setCombinedMatrix(camera);
     }
 
@@ -128,7 +131,9 @@ public class MenuManager implements Controller{
         
         
         
-        PointLight pointLight = new PointLight(ray_handler, 800, Color.BLUE, 200, 0, 0);
+        new PointLight(ray_handler, 200, Color.BLUE, 500, 0, 300);
+        new PointLight(ray_handler, 200, Color.BLUE, 500, 0, -300);
+        
         ray_handler.setCombinedMatrix(camera);
         
     }

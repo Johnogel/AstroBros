@@ -172,6 +172,10 @@ protected OrthographicCamera camera;
         
         initializeAnimations();
         
+        total_bros = bros.size;
+        
+        
+        
         
     }
     
@@ -614,6 +618,7 @@ protected OrthographicCamera camera;
     //should call mngr method to handle screen changing
     private void notifyWin(){
         sun_sound.stop();
+        mngr.updateTopScore(total_bros);
         mngr.resolveLevelWin(this.safe_bros);
     }
     
