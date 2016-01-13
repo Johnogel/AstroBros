@@ -605,7 +605,7 @@ protected OrthographicCamera camera;
     }
     //should call mngr method to handle screen changing
     private void notifyWin(){
-        mngr.resolveLevelWin();
+        mngr.resolveLevelWin(this.safe_bros);
     }
     
     //should call mngr method to handle screen changing
@@ -760,6 +760,12 @@ protected OrthographicCamera camera;
         //background.dispose();
         background.initialize();
     }
+    
+    public int getMaxBros(){
+        return this.total_bros;
+    }
+    
+    
     
     @Override
     public void initializeWorld(){

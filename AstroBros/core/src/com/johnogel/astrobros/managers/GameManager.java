@@ -44,6 +44,7 @@ private final Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
 private final TextureHandler texture_handler;
+private int total_score, top_score;
 
 private int level, controller;
 
@@ -79,7 +80,8 @@ public final int
         height = Gdx.graphics.getHeight()/5;
 
         level = this.LEVEL_ONE;
-
+        
+        total_score = 0;
     }
     
     @Override
@@ -100,7 +102,12 @@ public final int
    
     }
     
-    public void resolveLevelWin(){
+    public int getTotalScore(){
+        return total_score;
+    }
+    
+    public void resolveLevelWin(int score){
+        total_score += score;
         controller = this.LEVEL_WIN;
         controllers.get(controller).initialize();
         
@@ -113,7 +120,7 @@ public final int
 
     @Override
     public void update() {
-        System.out.println("\n\nWIDTH: "+camera.viewportWidth+"\nHEIGHT: "+camera.viewportHeight);
+        //System.out.println("\n\nWIDTH: "+camera.viewportWidth+"\nHEIGHT: "+camera.viewportHeight);
         //System.out.println("Game Objects: "+this.game_objects.size);
         if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
             this.setLevel(this.LEVEL_ONE);
@@ -305,9 +312,14 @@ public final int
         this.camera.update();
         this.ray_handler = mngr.getRayHandler();
         this.world = mngr.getWorld();
-        levels.add(new LevelOne(this, 30));
-        levels.add(new LevelTwo(this, 60));
-        levels.add(new LevelThree(this, 30));
+        levels.add(new LevelOne(this, 10));
+        levels.add(new LevelTwo(this, 10));
+        levels.add(new LevelThree(this, 10));
+        
+        top_score = 0;
+        for(Level l: levels){
+            top_score += l.getMaxBros();
+        }
         
         controllers.add(levels.get(0));
         controllers.add(levels.get(1));
