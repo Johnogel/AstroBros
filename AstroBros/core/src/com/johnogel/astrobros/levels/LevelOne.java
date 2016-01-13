@@ -23,8 +23,6 @@ public class LevelOne extends Level{
     }
     @Override
     public void initialize() {
-        
-        
 
         this.initializeWorld();
         
@@ -43,6 +41,9 @@ public class LevelOne extends Level{
         //this.free_bros.add(new Player(world, camera, 100));
         //this.free_bros.add(new Player(world, camera, 50));
         this.free_bros.add(new Player(world, camera, 60));
+        this.free_bros.add(new Player(world, camera, 100));
+        this.free_bros.add(new Player(world, camera, 80));
+        this.free_bros.add(new Player(world, camera, 50));
                                 
         //world.createJoint(joint_def);
         

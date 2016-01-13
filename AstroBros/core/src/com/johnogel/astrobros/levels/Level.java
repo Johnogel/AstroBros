@@ -561,10 +561,9 @@ protected OrthographicCamera camera;
     private void cleanUp(){
         for(Body b : to_be_destroyed){
             
-     
-            world.destroyBody(b);
-            b.setUserData(null);
-            b = null;
+            b.setActive(false);
+            //b.setAwake(false);
+            
             
             for(int i = 0; i < locators.size; i++){
                 if(locators.get(i).getPlayer().getBody().equals(b) || locators.get(i).getOtherBro().getBody().equals(b)){
@@ -589,6 +588,10 @@ protected OrthographicCamera camera;
                 }
         
             }
+            
+            //world.destroyBody(b);
+            
+            //b = null;
         
         }
         

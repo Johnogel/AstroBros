@@ -131,9 +131,9 @@ public final int
         
             ray_handler.setCombinedMatrix(camera);            
             
-            controllers.get(controller).update();
-            
             world.step(this.fps, 6, 2); 
+            
+            controllers.get(controller).update();
             
             
         }
