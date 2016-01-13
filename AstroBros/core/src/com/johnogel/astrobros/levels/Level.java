@@ -10,10 +10,12 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.johnogel.astrobros.managers.GameManager;
@@ -85,7 +87,9 @@ protected long sun_sound_id, bump_sound_id;
 protected Sound sun_sound, bump_sound;
 
 protected int total_bros;
-protected boolean dead;
+protected boolean dead, paused;
+
+protected ShapeRenderer shape_renderer;
 
 protected OrthographicCamera camera;
 
@@ -130,7 +134,7 @@ protected OrthographicCamera camera;
         suns = new Array(2);
         sun_bodies = new Array(2);
         
-        
+        this.shape_renderer = mngr.getShapeRenderer();
         
         this.texture_handler = mngr.getTextureHandler();
         
@@ -435,137 +439,145 @@ protected OrthographicCamera camera;
     @Override
     public void update(){
         //player.update(mngr.getSpriteBatch());
-        this.camera_last_x = camera.position.x;
-        this.camera_last_y = camera.position.y;
-        
-        mngr.updateGameObjects();
-        
-        if(dead){
-            notifyLoss();
+        if(Gdx.input.isKeyJustPressed(Keys.P)){
+            resolvePause();
         }
         
-        //switches player if connected
-        if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
-            
-            player_index++;
-            if(player_index > controlled_bros.size - 1){
-                player_index = 0;
-            }
-            player.disablePlayer();
-            player = (Player)controlled_bros.get(player_index);
-            player.enablePlayer();
-        }
         
-        //switches player if connected
-        if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
-            
-            player_index--;
-            if(player_index == -1 || player_index > controlled_bros.size - 1){
-                player_index = controlled_bros.size - 1;
-            }
-            player.disablePlayer();
-            player = (Player)controlled_bros.get(player_index);
-            player.enablePlayer();
-        }
         
-        gravitate();
-        if(Gdx.input.isKeyJustPressed(Keys.R)){
-            Array<Joint> joints = new Array(); 
-            world.getJoints(joints);
-            for(Joint j : joints){
-                if(j.getBodyA().equals(player.getBody()) || j.getBodyB().equals(player.getBody())){
-                    world.destroyJoint(j);
-                }
-            }
-            int size = controlled_bros.size;
-            for(int i = 0; i < size; i++){
+        if(!paused){
+        
+            this.camera_last_x = camera.position.x;
+            this.camera_last_y = camera.position.y;
 
-                //System.out.println("---------------------------------------ADD DEM FREE BODIES");
-                free_bodies.add(controlled_bodies.pop());
-                free_bros.add(controlled_bros.pop());
-                    
+            mngr.updateGameObjects();
 
-            }
-            controlled_bros.clear();
-            controlled_bodies.clear();
-            free_bros.removeValue(player, false);
-            free_bodies.removeValue(player.getBody(), false);
-            controlled_bodies.add(player.getBody());
-            controlled_bros.add(player);
-        }
-        
-        //need to figure out way to remove bodies from arrays outside of contact listener
-        attachBodies();
-        if (joint_def_created){
-            
-            joint_def_created = false;
-        }
-        
-        
-        
-        //checks if any bro is in goldilocks zone. I'm not sure if I'm spelling that correctly
-        int i = 0;
-        goldilocks = false;
-        for(AstroBro b : bros){
-            if(CircleObject.distance(b, inner_orbit) > inner_orbit.getRadius() && CircleObject.distance(b, outer_orbit) < outer_orbit.getRadius()){
-                //System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                i++;
-                goldilocks = true;
-                
-                if(is_red){
-//                    inner_orbit.setTexture(BoundaryCircle.BLUE);
-//                    outer_orbit.setTexture(BoundaryCircle.BLUE);
-                    inner_orbit.setTexture(blue_texture);
-                    outer_orbit.setTexture(blue_texture);
-                    
-                    is_red = false;
-                    
-                }
-            }
-            if(CircleObject.distance(b, inner_orbit) > outer_boundary.getRadius() ){
-                this.enforceOutOfBounds(b);
-
-            }
-        }
-
-        safe_bros = i;
-        score_chars = "SAFE: "+i+"/"+this.total_bros;
-        
-        
-        if(!goldilocks && !is_red){
-            inner_orbit.setTexture(red_texture);
-            outer_orbit.setTexture(red_texture);
-            is_red = true;
-        }
-        
-        ticker++;
-        if(ticker%60 == 0){
-            timer--;
-            timer_chars = ""+timer;
-        }
-        
-        //check if level is over
-        if(timer < 1){
-            if(this.safe_bros > this.total_bros/2){
-                notifyWin();
-            }
-            
-            else{
+            if(dead){
                 notifyLoss();
             }
-            
-        }
-        
-        
-        
-        cleanUp();
-        
-        if(!dead){
-            updateSunSound();
-            background.update();
-            updateLocators(mngr.getSpriteBatch());
-        }
 
+            //switches player if connected
+            if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
+
+                player_index++;
+                if(player_index > controlled_bros.size - 1){
+                    player_index = 0;
+                }
+                player.disablePlayer();
+                player = (Player)controlled_bros.get(player_index);
+                player.enablePlayer();
+            }
+
+            //switches player if connected
+            if(Gdx.input.isKeyJustPressed(Keys.LEFT)){
+
+                player_index--;
+                if(player_index == -1 || player_index > controlled_bros.size - 1){
+                    player_index = controlled_bros.size - 1;
+                }
+                player.disablePlayer();
+                player = (Player)controlled_bros.get(player_index);
+                player.enablePlayer();
+            }
+
+            gravitate();
+            if(Gdx.input.isKeyJustPressed(Keys.R)){
+                Array<Joint> joints = new Array(); 
+                world.getJoints(joints);
+                for(Joint j : joints){
+                    if(j.getBodyA().equals(player.getBody()) || j.getBodyB().equals(player.getBody())){
+                        world.destroyJoint(j);
+                    }
+                }
+                int size = controlled_bros.size;
+                for(int i = 0; i < size; i++){
+
+                    //System.out.println("---------------------------------------ADD DEM FREE BODIES");
+                    free_bodies.add(controlled_bodies.pop());
+                    free_bros.add(controlled_bros.pop());
+
+
+                }
+                controlled_bros.clear();
+                controlled_bodies.clear();
+                free_bros.removeValue(player, false);
+                free_bodies.removeValue(player.getBody(), false);
+                controlled_bodies.add(player.getBody());
+                controlled_bros.add(player);
+            }
+
+            //need to figure out way to remove bodies from arrays outside of contact listener
+            attachBodies();
+            if (joint_def_created){
+
+                joint_def_created = false;
+            }
+
+
+
+            //checks if any bro is in goldilocks zone. I'm not sure if I'm spelling that correctly
+            int i = 0;
+            goldilocks = false;
+            for(AstroBro b : bros){
+                if(CircleObject.distance(b, inner_orbit) > inner_orbit.getRadius() && CircleObject.distance(b, outer_orbit) < outer_orbit.getRadius()){
+                    //System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    i++;
+                    goldilocks = true;
+
+                    if(is_red){
+    //                    inner_orbit.setTexture(BoundaryCircle.BLUE);
+    //                    outer_orbit.setTexture(BoundaryCircle.BLUE);
+                        inner_orbit.setTexture(blue_texture);
+                        outer_orbit.setTexture(blue_texture);
+
+                        is_red = false;
+
+                    }
+                }
+                if(CircleObject.distance(b, inner_orbit) > outer_boundary.getRadius() ){
+                    this.enforceOutOfBounds(b);
+
+                }
+            }
+
+            safe_bros = i;
+            score_chars = "SAFE: "+i+"/"+this.total_bros;
+
+
+            if(!goldilocks && !is_red){
+                inner_orbit.setTexture(red_texture);
+                outer_orbit.setTexture(red_texture);
+                is_red = true;
+            }
+
+            ticker++;
+            if(ticker%60 == 0){
+                timer--;
+                timer_chars = ""+timer;
+            }
+
+            //check if level is over
+            if(timer < 1){
+                if(this.safe_bros > this.total_bros/2){
+                    notifyWin();
+                }
+
+                else{
+                    notifyLoss();
+                }
+
+            }
+
+
+
+            cleanUp();
+
+            if(!dead){
+                updateSunSound();
+                background.update();
+                updateLocators(mngr.getSpriteBatch());
+            }
+        }
         
 
     }
@@ -780,7 +792,22 @@ protected OrthographicCamera camera;
         return this.total_bros;
     }
     
-    
+    private void resolvePause(){
+        paused = !paused;
+        if(paused){
+            
+            for(Player p : bros){
+                p.setAnimationPlaying(false);
+            }
+        }
+        else{
+            
+            for(Player p : bros){
+                p.setAnimationPlaying(true);
+            }
+            
+        }
+    }
     
     @Override
     public void initializeWorld(){
@@ -791,7 +818,7 @@ protected OrthographicCamera camera;
         ticker = 0;
         score_chars = "SAFE: 0/"+this.total_bros;
         timer_chars = ""+timer;
-        
+        paused = false;
         
         
         
@@ -876,8 +903,22 @@ protected OrthographicCamera camera;
     @Override
     public void render() {
         mngr.renderGameObjects();
+        if(paused){
+            
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            shape_renderer.setColor(0, 0, 0, .5f);
+            shape_renderer.begin(ShapeRenderer.ShapeType.Filled);  
+            shape_renderer.rect(-50, 0,1200, 1200);            
+            shape_renderer.end();
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
     }
-
+    
+    @Override
+    public boolean isPaused(){
+        return paused;
+    }
 
     @Override
     public void dispose() {

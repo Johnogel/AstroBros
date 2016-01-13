@@ -112,5 +112,10 @@ public static final int
     public void resize(int width, int height) {
         manager.resize(width, height);
     }
+
+    @Override
+    public boolean isPaused() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -52,6 +53,7 @@ private int total_score, top_score, lives;
 private int prev_score;
 private int level, controller_index;
 private Controller controller;
+private ShapeRenderer shape_renderer;
 
 private float alpha, delta;
 
@@ -80,6 +82,8 @@ public final int
         texture_handler.initialize();
         
         batch = new SpriteBatch(100);
+        
+        shape_renderer = new ShapeRenderer();
         
         started = false;
         
@@ -168,14 +172,15 @@ public final int
             this.setLevel(this.LEVEL_THREE);
         }
         
-        else /*if(Gdx.input.isKeyPressed(Keys.ENTER))*/{
-        
-            ray_handler.setCombinedMatrix(camera);            
+        else {
             
-            world.step(this.fps, 6, 2); 
+            if(!isPaused()){
+                ray_handler.setCombinedMatrix(camera);            
+
+                world.step(this.fps, 6, 2); 
+            }
             
             controller.update();
-            
             
         }
         
@@ -342,8 +347,14 @@ public final int
         //this.initializeWorld();
     }
 
+    public ShapeRenderer getShapeRenderer(){
+        return shape_renderer;
+    }
+    
     @Override
     public void initialize() {
+        shape_renderer.dispose();
+        shape_renderer = new ShapeRenderer();
         mngr.initializeWorld();
         this.camera = mngr.getCamera();
         this.camera.position.set(width * .5f, height * .5f, 0);
@@ -436,5 +447,10 @@ public final int
         }
         
  
+    }
+
+    @Override
+    public boolean isPaused() {
+        return controller.isPaused();
     }
 }

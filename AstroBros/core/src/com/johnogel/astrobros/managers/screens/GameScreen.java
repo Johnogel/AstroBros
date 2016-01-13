@@ -79,5 +79,10 @@ public abstract class GameScreen implements Controller{
     public void dispose() {
     }
     
+    @Override
+    public boolean isPaused(){
+        return false;
+    }
+    
     
 }

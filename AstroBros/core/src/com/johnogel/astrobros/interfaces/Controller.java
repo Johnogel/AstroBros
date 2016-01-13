@@ -19,6 +19,7 @@ public interface Controller {
     public void initializeWorld();
     public void initialize();
     public void dispose();
+    public boolean isPaused();
     
     
 }

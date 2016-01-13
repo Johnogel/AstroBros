@@ -68,6 +68,10 @@ protected final int
         stick_sound.setVolume(id, 1);
     }
     
+    public void setAnimationPlaying(boolean playing){
+        animated_sprite.setPlaying(playing);
+    }
+    
     @Override
     public void update(SpriteBatch batch) {
         //System.out.println("Angle: "+body.getAngle());
@@ -77,7 +81,7 @@ protected final int
         }
         
         ticker++;
-        if(ticker % 60 == 0){
+        if(ticker % 70 == 0){
             frame++;
         }
         if(frame % 2 == 0){

@@ -94,4 +94,5 @@ public class GameEndScreen extends GameScreen{
         new PointLight(ray_handler, 5000, Color.BLUE, 500, -camera.viewportWidth/2, 300 );
 
     }
+
 }

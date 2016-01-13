@@ -131,8 +131,8 @@ public class MenuManager implements Controller{
         
         
         
-        new PointLight(ray_handler, 200, Color.BLUE, 500, 0, 300);
-        new PointLight(ray_handler, 200, Color.BLUE, 500, 0, -300);
+        new PointLight(ray_handler, 200, Color.BLUE, 600, 0, 300);
+        new PointLight(ray_handler, 200, Color.BLUE, 600, 0, -300);
         
         ray_handler.setCombinedMatrix(camera);
         
@@ -141,6 +141,11 @@ public class MenuManager implements Controller{
     @Override
     public void resize(int width, int height) {
         this.camera = mngr.getCamera();
+    }
+
+    @Override
+    public boolean isPaused() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
