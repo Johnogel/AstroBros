@@ -24,6 +24,7 @@ import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.levels.LevelOne;
 import com.johnogel.astrobros.levels.LevelThree;
 import com.johnogel.astrobros.levels.LevelTwo;
+import com.johnogel.astrobros.managers.screens.GameEndScreen;
 import com.johnogel.astrobros.managers.screens.LevelLossScreen;
 import com.johnogel.astrobros.support.TextureHandler;
 
@@ -52,18 +53,23 @@ private int total_score, top_score, lives;
 private int level, controller_index;
 private Controller controller;
 
+private float alpha, delta;
+
 public final int 
         LEVEL_ONE = 0,
         LEVEL_TWO = 1,
         LEVEL_THREE = 2,
         GAME_OVER = 3,
         LEVEL_WIN = 4,
-        LEVEL_LOSS = 5;
+        LEVEL_LOSS = 5,
+        GAME_END = 6;
 
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
         this.fps = 1/60f;
         max_count = 50;
+        alpha = 1;
+        delta = .001f;
         
         game_objects = new Array();
         
@@ -94,6 +100,7 @@ public final int
         
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
+        
         //Gdx.gl20.glActiveTexture(GL20.);
 
         //renderer.render(world, camera.combined);
@@ -101,6 +108,19 @@ public final int
         
         controller.render();
         
+        /*
+        alpha += delta;
+        
+        if(delta < 0 && alpha <.002f){
+            delta = -delta;
+        }
+        if(delta > 0 && alpha > .998f){
+            delta = -delta;
+        }
+        
+        Gdx.gl20.glClearColor(1, 1, 1, alpha);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        */
     }
     
     public int getTotalScore(){
@@ -340,6 +360,7 @@ public final int
         controllers.add(new GameOverScreen(this));
         controllers.add(new LevelWinScreen(this));
         controllers.add(new LevelLossScreen(this));
+        controllers.add(new GameEndScreen(this));
         //this.setLevel(level);
 
         renderer = new Box2DDebugRenderer();
@@ -397,6 +418,10 @@ public final int
     public void incrementLevel(){
         if (level < levels.size - 1){
             this.setLevel(level + 1);
+        }
+        else{
+            controller = controllers.get(this.GAME_END);
+            controller.initialize();
         }
         
  

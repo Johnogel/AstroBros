@@ -45,7 +45,7 @@ public static final int
         managers.add(new GameManager(this));
         
         manager = managers.get(SuperManager.MENU_MANAGER);
-        manager.initializeWorld();
+        manager.initialize();
 
 
     }
