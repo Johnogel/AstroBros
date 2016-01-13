@@ -535,7 +535,7 @@ protected OrthographicCamera camera;
         
         //check if level is over
         if(timer < 1){
-            if(this.safe_bros >= this.total_bros/2){
+            if(this.safe_bros > this.total_bros/2){
                 notifyWin();
             }
             
@@ -881,7 +881,7 @@ protected OrthographicCamera camera;
     }
     
     public boolean win(){
-        return safe_bros >= this.total_bros/2;
+        return safe_bros > this.total_bros/2;
     }
     
     public void initializeAnimations(){
