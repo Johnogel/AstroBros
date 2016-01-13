@@ -613,11 +613,13 @@ protected OrthographicCamera camera;
     }
     //should call mngr method to handle screen changing
     private void notifyWin(){
+        sun_sound.stop();
         mngr.resolveLevelWin(this.safe_bros);
     }
     
     //should call mngr method to handle screen changing
     private void notifyLoss(){
+        sun_sound.stop();
         mngr.resolveLevelLoss();
     }
     

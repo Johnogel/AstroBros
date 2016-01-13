@@ -31,7 +31,7 @@ public class LevelLossScreen extends GameScreen{
         super(mngr);
         
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
-        font.getData().setScale(0.1f, 0.3f);        
+        font.getData().setScale(0.2f, 0.3f);        
   
         game_over = "LEVEL LOSS";
         press_space = "PRESS SPACE TO RESTART LEVEL";
