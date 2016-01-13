@@ -49,6 +49,7 @@ public class GameOverScreen extends GameScreen{
     public void update() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             //mngr.setLevel(mngr.getCurrentLevel());
+            
             mngr.getSuperManager().setController(SuperManager.MENU_MANAGER);
         }
         ray_handler.setCombinedMatrix(camera.combined);

@@ -83,7 +83,7 @@ public class LevelWinScreen extends GameScreen{
         initializeWorld();
         updateReferences();
         String s = ""+mngr.getTotalScore();
-        score = s;
+        score = "TOTAL SCORE: " + s;
         System.out.println("score: "+s);
         layout_middle = new GlyphLayout(font, score);
         new PointLight(ray_handler, 5000, Color.GREEN, 500, camera.viewportWidth/2, -300 );

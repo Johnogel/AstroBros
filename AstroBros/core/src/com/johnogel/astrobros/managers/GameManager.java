@@ -49,7 +49,8 @@ private SpriteBatch batch;
 private final TextureHandler texture_handler;
 private int total_score, top_score, lives;
 
-private int level, controller;
+private int level, controller_index;
+private Controller controller;
 
 public final int 
         LEVEL_ONE = 0,
@@ -67,11 +68,7 @@ public final int
         game_objects = new Array();
         
         levels = new Array(6);
-        controllers = new Array(10);
-        
-        
-        level = this.LEVEL_ONE;
-        controller = level;
+        controllers = new Array(10);        
         
         texture_handler = new TextureHandler();
         texture_handler.initialize();
@@ -102,10 +99,8 @@ public final int
         //renderer.render(world, camera.combined);
         //update();
         
-        controllers.get(controller).render();
+        controller.render();
         
-        
-   
     }
     
     public int getTotalScore(){
@@ -114,8 +109,8 @@ public final int
     
     public void resolveLevelWin(int score){
         total_score += score;
-        controller = this.LEVEL_WIN;
-        controllers.get(controller).initialize();
+        controller = controllers.get(this.LEVEL_WIN);
+        controller.initialize();
         
     }
     
@@ -127,13 +122,13 @@ public final int
         lives--;
         System.out.println("LIVES: "+lives);
         if (lives >= 0){
-            controller = this.LEVEL_LOSS;
+            controller = controllers.get(this.LEVEL_LOSS);
         }
         else{
-            controller = this.GAME_OVER;
+            controller = controllers.get(this.GAME_OVER);
         }
         
-        controllers.get(controller).initialize();
+        controller.initialize();
     }
 
     @Override
@@ -158,7 +153,7 @@ public final int
             
             world.step(this.fps, 6, 2); 
             
-            controllers.get(controller).update();
+            controller.update();
             
             
         }
@@ -316,7 +311,7 @@ public final int
     public void setLevel(int level){
         levels.get(level).dispose();
         this.level = level;
-        this.controller = level;
+        controller = controllers.get(level);
         levels.get(level).initialize();
         levels.get(level).initializeGameObjects();
         //this.initializeWorld();
@@ -369,9 +364,13 @@ public final int
         
         ray_handler.setAmbientLight(1, 1, 1, .6f);
         
+        level = LEVEL_ONE;
+        
         this.setLevel(level);
         
         lives = 3;
+        
+        
         
         
     }
