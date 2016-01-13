@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.johnogel.astrobros.managers;
+package com.johnogel.astrobros.managers.screens;
 
 import box2dLight.Light;
 import box2dLight.RayHandler;
@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.levels.Level;
+import com.johnogel.astrobros.managers.GameManager;
 
 /**
  *

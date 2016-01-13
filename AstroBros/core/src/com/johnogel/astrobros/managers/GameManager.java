@@ -5,6 +5,8 @@
  */
 package com.johnogel.astrobros.managers;
 
+import com.johnogel.astrobros.managers.screens.GameOverScreen;
+import com.johnogel.astrobros.managers.screens.LevelWinScreen;
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.interfaces.Controller;
 import box2dLight.RayHandler;
@@ -22,6 +24,7 @@ import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.levels.LevelOne;
 import com.johnogel.astrobros.levels.LevelThree;
 import com.johnogel.astrobros.levels.LevelTwo;
+import com.johnogel.astrobros.managers.screens.LevelLossScreen;
 import com.johnogel.astrobros.support.TextureHandler;
 
 /**
@@ -44,7 +47,7 @@ private final Array<Controller> controllers;
 private boolean started;
 private SpriteBatch batch;
 private final TextureHandler texture_handler;
-private int total_score, top_score;
+private int total_score, top_score, lives;
 
 private int level, controller;
 
@@ -53,7 +56,8 @@ public final int
         LEVEL_TWO = 1,
         LEVEL_THREE = 2,
         GAME_OVER = 3,
-        LEVEL_WIN = 4;
+        LEVEL_WIN = 4,
+        LEVEL_LOSS = 5;
 
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
@@ -82,6 +86,8 @@ public final int
         level = this.LEVEL_ONE;
         
         total_score = 0;
+        
+        lives = 3;
     }
     
     @Override
@@ -113,8 +119,20 @@ public final int
         
     }
     
+    public SuperManager getSuperManager(){
+        return this.mngr;
+    }
+    //Such a sexy method
     public void resolveLevelLoss(){
-        controller = this.GAME_OVER;
+        lives--;
+        System.out.println("LIVES: "+lives);
+        if (lives >= 0){
+            controller = this.LEVEL_LOSS;
+        }
+        else{
+            controller = this.GAME_OVER;
+        }
+        
         controllers.get(controller).initialize();
     }
 
@@ -326,6 +344,7 @@ public final int
         controllers.add(levels.get(2));
         controllers.add(new GameOverScreen(this));
         controllers.add(new LevelWinScreen(this));
+        controllers.add(new LevelLossScreen(this));
         //this.setLevel(level);
 
         renderer = new Box2DDebugRenderer();
@@ -351,6 +370,8 @@ public final int
         ray_handler.setAmbientLight(1, 1, 1, .6f);
         
         this.setLevel(level);
+        
+        lives = 3;
         
         
     }

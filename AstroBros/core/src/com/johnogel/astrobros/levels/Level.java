@@ -85,6 +85,7 @@ protected long sun_sound_id, bump_sound_id;
 protected Sound sun_sound, bump_sound;
 
 protected int total_bros;
+protected boolean dead;
 
 protected OrthographicCamera camera;
 
@@ -208,7 +209,8 @@ protected OrthographicCamera camera;
                 
                     if (bro_bodies.contains(contact.getFixtureA().getBody(), true)){
                         if(contact.getFixtureA().getBody().equals(player.getBody())){
-                            notifyLoss();
+                            //notifyLoss();
+                            dead = true;
                         }
                         
                         //contact.getFixtureA().getBody().setActive(false);
@@ -229,7 +231,8 @@ protected OrthographicCamera camera;
                     
                     if (bro_bodies.contains(contact.getFixtureB().getBody(), true)){
                         if(contact.getFixtureB().getBody().equals(player.getBody())){
-                            notifyLoss();
+                            //notifyLoss();
+                            dead = true;
                         }
                         //contact.getFixtureB().getBody().setActive(false);
                         for(AstroBro b : bros){
@@ -433,6 +436,10 @@ protected OrthographicCamera camera;
         
         mngr.updateGameObjects();
         
+        if(dead){
+            notifyLoss();
+        }
+        
         //switches player if connected
         if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
             
@@ -549,11 +556,12 @@ protected OrthographicCamera camera;
         
         cleanUp();
         
-        updateSunSound();
-        background.update();
-        updateLocators(mngr.getSpriteBatch());
-        
-        
+        if(!dead){
+            updateSunSound();
+            background.update();
+            updateLocators(mngr.getSpriteBatch());
+        }
+
         
 
     }
@@ -816,6 +824,7 @@ protected OrthographicCamera camera;
         
         total_bros = bros.size;
         
+        dead = false;
 
     }
     

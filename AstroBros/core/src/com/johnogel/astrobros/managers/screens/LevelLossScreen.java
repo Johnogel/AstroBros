@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.johnogel.astrobros.managers;
+package com.johnogel.astrobros.managers.screens;
 
 import box2dLight.PointLight;
 import com.badlogic.gdx.Gdx;
@@ -11,13 +11,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-
+import com.johnogel.astrobros.managers.GameManager;
 
 /**
  *
  * @author johno-gel
  */
-public class GameOverScreen extends GameScreen{
+public class LevelLossScreen extends GameScreen{
+    
     private final BitmapFont font;
     private CharSequence game_over, press_space;
     private GlyphLayout layout_top, layout_bottom;
@@ -25,15 +26,15 @@ public class GameOverScreen extends GameScreen{
     final float top_font_y, bottom_font_y;
 
     
-    public GameOverScreen(GameManager mngr){
+    public LevelLossScreen(GameManager mngr){
        
         super(mngr);
         
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
-        font.getData().setScale(0.3f, 0.3f);        
+        font.getData().setScale(0.1f, 0.3f);        
   
-        game_over = "GAME OVER";
-        press_space = "PRESS SPACE TO RESTART";
+        game_over = "LEVEL LOSS";
+        press_space = "PRESS SPACE TO RESTART LEVEL";
         layout_top = new GlyphLayout(font, game_over);
         layout_bottom = new GlyphLayout(font, press_space);
         top_font_x =  -layout_top.width / 2;
@@ -69,13 +70,12 @@ public class GameOverScreen extends GameScreen{
     public void initialize() {
         initializeWorld();
         this.updateReferences();
-        new PointLight(ray_handler, 5000, Color.RED, 500, -camera.viewportWidth/2, -300 );
-        new PointLight(ray_handler, 5000, Color.RED, 500, camera.viewportWidth/2, -300 );
-        new PointLight(ray_handler, 5000, Color.RED, 500, -camera.viewportWidth/2, 300 );
+        new PointLight(ray_handler, 5000, Color.YELLOW, 500, -camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.YELLOW, 500, camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.YELLOW, 500, -camera.viewportWidth/2, 300 );
         new PointLight(ray_handler, 5000, Color.RED, 500, camera.viewportWidth/2, 300 );
 
         
     }
-
     
 }
