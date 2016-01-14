@@ -904,7 +904,8 @@ protected OrthographicCamera camera;
     public void render() {
         mngr.renderGameObjects();
         if(paused){
-            
+            Texture texture = mngr.getTextureHandler().getTexture(TextureHandler.PAUSED);
+            SpriteBatch batch = mngr.getSpriteBatch();
             Gdx.gl.glEnable(GL20.GL_BLEND);
             Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             shape_renderer.setColor(0, 0, 0, .5f);
@@ -912,6 +913,12 @@ protected OrthographicCamera camera;
             shape_renderer.rect(-50, 0,1200, 1200);            
             shape_renderer.end();
             Gdx.gl.glDisable(GL20.GL_BLEND);
+            batch.setProjectionMatrix(camera.projection);
+            batch.begin();
+            
+            batch.draw(texture, -10, 10, 20, 20);
+            batch.end();
+            //batch.setProjectionMatrix(camera.combined);
         }
     }
     

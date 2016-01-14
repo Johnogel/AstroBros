@@ -29,12 +29,13 @@ public static final int
         BACKGROUND_BIG = 6,
         BACKGROUND_SMALL = 7,
         LOCATOR = 8,
+        PAUSED= 9,
         AWAKE = 0,
         MOVE = 1,
         SLEEP = 2;
 
     public TextureHandler(){
-        textures = new Array(9);  
+        textures = new Array(10);  
         atlases = new Array(3);
     }
     
@@ -48,6 +49,7 @@ public static final int
         textures.add(new Texture(Gdx.files.internal("background-big.png")));
         textures.add(new Texture(Gdx.files.internal("background-small.png")));
         textures.add(new Texture(Gdx.files.internal("locator.png")));
+        textures.add(new Texture(Gdx.files.internal("paused.png")));
         //atlas = new TextureAtlas(Gdx.files.internal("bro/bros.pack"));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/awake/awake.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/move/move.pack")));
