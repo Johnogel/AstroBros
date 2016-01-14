@@ -25,6 +25,7 @@ import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.levels.LevelOne;
 import com.johnogel.astrobros.levels.LevelThree;
 import com.johnogel.astrobros.levels.LevelTwo;
+import com.johnogel.astrobros.managers.screens.AwardScreen;
 import com.johnogel.astrobros.managers.screens.GameEndScreen;
 import com.johnogel.astrobros.managers.screens.LevelLossScreen;
 import com.johnogel.astrobros.support.TextureHandler;
@@ -64,7 +65,8 @@ public final int
         GAME_OVER = 3,
         LEVEL_WIN = 4,
         LEVEL_LOSS = 5,
-        GAME_END = 6;
+        GAME_END = 6,
+        AWARD = 7;
 
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
@@ -343,7 +345,7 @@ public final int
     }
     
     public void setLevel(int level){
-        levels.get(level).dispose();
+        levels.get(this.level).dispose();
         this.level = level;
         controller = controllers.get(level);
         levels.get(level).initialize();
@@ -379,6 +381,7 @@ public final int
         controllers.add(new LevelWinScreen(this));
         controllers.add(new LevelLossScreen(this));
         controllers.add(new GameEndScreen(this));
+        controllers.add(new AwardScreen(this));
         //this.setLevel(level);
 
         renderer = new Box2DDebugRenderer();
