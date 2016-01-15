@@ -162,7 +162,16 @@ public final int
         
     }
     
-
+    public void resolveEndGame(){
+        mngr.transition();
+        if(this.total_score > top_score / 2){
+            controller_index = this.AWARD;
+        }
+        else{
+            controller_index = this.GAME_OVER;
+        }
+        
+    }
     
     public SuperManager getSuperManager(){
         return this.mngr;
@@ -392,7 +401,7 @@ public final int
         levels.clear();
         controllers.clear();
         
-        levels.add(new LevelOne(this, 10));
+        levels.add(new LevelOne(this, 4));
         levels.add(new LevelTwo(this, 10));
         levels.add(new LevelThree(this, 10));
         
@@ -479,7 +488,7 @@ public final int
     
     public void incrementLevel(){
         mngr.transition();
-        if (level < levels.size - 1){
+        if (level < levels.size - 3/*change back to one*/){
             this.setLevel(level + 1);
         }
         else{

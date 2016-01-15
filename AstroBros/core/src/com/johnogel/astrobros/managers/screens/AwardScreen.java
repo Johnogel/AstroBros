@@ -9,9 +9,13 @@ import box2dLight.PointLight;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.johnogel.astrobros.managers.GameManager;
+import com.johnogel.astrobros.support.TextureHandler;
+import net.dermetfan.gdx.graphics.g2d.AnimatedBox2DSprite;
+import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
 
 /**
  *
@@ -27,14 +31,18 @@ public class AwardScreen extends GameScreen{
     final float top_font_y, bottom_font_y;
     private float middle_font_x, middle_font_y;
     private int level;
-    
+    private Animation animation;
+    private AnimatedSprite sprite;
+    private final float 
+            FPS = 1/60f;
+    private float state_time;
     public AwardScreen(GameManager mngr){
     
         super(mngr);
         
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         font.getData().setScale(0.3f, 0.3f);  
-        game_over = "";
+        game_over = "AWARD!";
         press_space = "PRESS SPACE TO CONTINUE";
         score = "0";
         
@@ -48,16 +56,23 @@ public class AwardScreen extends GameScreen{
         
         bottom_font_x =  -layout_bottom.width / 2;
         bottom_font_y =  -20;
-    
+        
+        //ticker = 0;
+        state_time = 0;
     }
 
     @Override
     public void update() {
         
-        
+        state_time += FPS*.5f;
         middle_font_x = -layout_middle.width / 2;
         
         ray_handler.setCombinedMatrix(camera.combined);
+        
+        if(sprite.isAnimationFinished()){
+            sprite.setTime(0);
+            sprite.play();
+        }
 
     
     }
@@ -70,10 +85,14 @@ public class AwardScreen extends GameScreen{
         batch.setProjectionMatrix(camera.projection);
         super.render();
         batch.begin();
-        font.draw(batch, layout_top, top_font_x, top_font_y);
-        font.draw(batch, layout_middle, middle_font_x, middle_font_y);
-        font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
+        //font.draw(batch, layout_top, top_font_x, top_font_y);
+        //font.draw(batch, layout_middle, middle_font_x, middle_font_y);
+        //font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);       
+        batch.draw(animation.getKeyFrame(state_time), -19, 0, 38, 38);
         batch.end();
+        //batch.setProjectionMatrix(camera.projection);
+        
+                
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             mngr.incrementLevel();
             //mngr.getSuperManager().transition();
@@ -88,10 +107,21 @@ public class AwardScreen extends GameScreen{
         score = "YOU SAVED " + s + " BROS";
         System.out.println("score: "+s);
         layout_middle = new GlyphLayout(font, score);
-        new PointLight(ray_handler, 5000, Color.GREEN, 500, camera.viewportWidth/2, -300 );
-        new PointLight(ray_handler, 5000, Color.GREEN, 500, camera.viewportWidth/2, 300 );
-        new PointLight(ray_handler, 5000, Color.GREEN, 500, -camera.viewportWidth/2, -300 );
-        new PointLight(ray_handler, 5000, Color.GREEN, 500, -camera.viewportWidth/2, 300 );
+        new PointLight(ray_handler, 5000, Color.WHITE, 500, camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.BLACK, 500, camera.viewportWidth/2, 300 );
+        new PointLight(ray_handler, 5000, Color.BLACK, 500, -camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.WHITE, 500, -camera.viewportWidth/2, 300 );
+        
+        //AnimatedSprite sp;
+        
+        //adding moving animation
+        animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.GOLD).getRegions());
+        sprite = new AnimatedSprite(animation);
+        
+        animation.setPlayMode(Animation.PlayMode.LOOP);
+        sprite.setTime(0);
+        sprite.play();
+        
 
         
     }

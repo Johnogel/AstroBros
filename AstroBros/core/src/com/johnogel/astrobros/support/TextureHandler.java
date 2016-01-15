@@ -32,7 +32,8 @@ public static final int
         PAUSED= 9,
         AWAKE = 0,
         MOVE = 1,
-        SLEEP = 2;
+        SLEEP = 2,
+        GOLD = 3;
 
     public TextureHandler(){
         textures = new Array(10);  
@@ -54,6 +55,7 @@ public static final int
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/awake/awake.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/move/move.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/sleep/sleep.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/gold/gold.pack")));
     }
     
     public Texture getTexture(int texture){
