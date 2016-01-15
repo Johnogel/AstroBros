@@ -75,7 +75,7 @@ public class GameEndScreen extends GameScreen{
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
         batch.end();
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            mngr.getSuperManager().setController(SuperManager.MENU_MANAGER);
+            mngr.getSuperManager().setSuperController(SuperManager.MENU_MANAGER);
             mngr.getSuperManager().transition();
         }
     }

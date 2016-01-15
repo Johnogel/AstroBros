@@ -36,6 +36,8 @@ private ShapeRenderer shape_renderer;
 private float alpha;
 private boolean fading_in, fading_out;
 private final float DELTA = .05f;
+private int index;
+private boolean super_controller_changed;
 
 protected SoundPlayer sound_player;
 public static final int 
@@ -67,7 +69,8 @@ public static final int
         
         fading_in = false;
         fading_out = false;
-
+        
+        super_controller_changed = false;
 
     }
     
@@ -86,8 +89,6 @@ public static final int
     public void render() {
         manager.render();
         resolveTransition();
-        
-
     }
     
     private void resolveTransition(){
@@ -97,8 +98,16 @@ public static final int
                 if(alpha > .999f){
                     fading_out = false;
                     fading_in = true;
-                    manager.initializeController();
-                    manager.update();
+                    if(this.super_controller_changed){
+                        manager = managers.get(index);
+                        this.super_controller_changed = false;
+                        manager.initialize();
+                        manager.update();
+                    }
+                    else{
+                        manager.initializeController();
+                        manager.update(); 
+                    }
                     
                 }
             }
@@ -146,6 +155,13 @@ public static final int
     
     public RayHandler getRayHandler(){
         return ray_handler;
+    }
+    
+    public void setSuperController(int index){
+        
+        this.index = index;
+        this.super_controller_changed = true;
+        
     }
     
     @Override

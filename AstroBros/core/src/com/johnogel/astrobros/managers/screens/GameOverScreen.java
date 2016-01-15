@@ -65,7 +65,7 @@ public class GameOverScreen extends GameScreen{
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             //mngr.setLevel(mngr.getCurrentLevel());
             
-            mngr.getSuperManager().setController(SuperManager.MENU_MANAGER);
+            mngr.getSuperManager().setSuperController(SuperManager.MENU_MANAGER);
             mngr.getSuperManager().transition();
         }
 
