@@ -46,9 +46,7 @@ public class LevelLossScreen extends GameScreen{
 
     @Override
     public void update() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            mngr.setLevel(mngr.getCurrentLevel());
-        }
+
         /*ray_handler.setCombinedMatrix(camera.combined);
         camera.rotate(1.3f);
         camera.update();*/
@@ -67,7 +65,10 @@ public class LevelLossScreen extends GameScreen{
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
         batch.end();
 
-        
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            mngr.setLevel(mngr.getCurrentLevel());
+            mngr.getSuperManager().transition();
+        }
     }
 
     @Override

@@ -54,9 +54,7 @@ public class GameEndScreen extends GameScreen{
 
     @Override
     public void update() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            mngr.getSuperManager().setController(SuperManager.MENU_MANAGER);
-        }
+        
         
         middle_font_x = -layout_middle.width / 2;
         
@@ -76,7 +74,10 @@ public class GameEndScreen extends GameScreen{
         font.draw(batch, layout_middle, middle_font_x, middle_font_y);
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
         batch.end();
-    
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            mngr.getSuperManager().setController(SuperManager.MENU_MANAGER);
+            mngr.getSuperManager().transition();
+        }
     }
 
     @Override

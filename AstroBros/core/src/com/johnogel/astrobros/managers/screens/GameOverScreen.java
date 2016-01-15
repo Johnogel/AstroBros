@@ -47,11 +47,7 @@ public class GameOverScreen extends GameScreen{
 
     @Override
     public void update() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            //mngr.setLevel(mngr.getCurrentLevel());
-            
-            mngr.getSuperManager().setController(SuperManager.MENU_MANAGER);
-        }
+        
         ray_handler.setCombinedMatrix(camera.combined);
         camera.rotate(1.3f);
         camera.update();
@@ -66,6 +62,12 @@ public class GameOverScreen extends GameScreen{
         font.draw(batch, layout_top, top_font_x, top_font_y);
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
         batch.end();
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            //mngr.setLevel(mngr.getCurrentLevel());
+            
+            mngr.getSuperManager().setController(SuperManager.MENU_MANAGER);
+            mngr.getSuperManager().transition();
+        }
 
         
     }

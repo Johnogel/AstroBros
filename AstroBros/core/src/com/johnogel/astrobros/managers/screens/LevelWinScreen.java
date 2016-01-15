@@ -53,9 +53,7 @@ public class LevelWinScreen extends GameScreen{
 
     @Override
     public void update() {
-        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
-            mngr.incrementLevel();
-        }
+
         
         middle_font_x = -layout_middle.width / 2;
         
@@ -67,7 +65,7 @@ public class LevelWinScreen extends GameScreen{
 
     @Override
     public void render() {
-        super.render();
+        
         batch.setProjectionMatrix(camera.projection);
         super.render();
         batch.begin();
@@ -75,6 +73,12 @@ public class LevelWinScreen extends GameScreen{
         font.draw(batch, layout_middle, middle_font_x, middle_font_y);
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
         batch.end();
+        
+        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
+            mngr.incrementLevel();
+            mngr.getSuperManager().transition();
+        }
+        
     
     }
 

@@ -98,6 +98,7 @@ public static final int
                     fading_out = false;
                     fading_in = true;
                     manager.initializeController();
+                    manager.update();
                     
                 }
             }

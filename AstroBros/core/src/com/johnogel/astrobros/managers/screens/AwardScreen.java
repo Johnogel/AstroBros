@@ -53,9 +53,7 @@ public class AwardScreen extends GameScreen{
 
     @Override
     public void update() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            mngr.incrementLevel();
-        }
+        
         
         middle_font_x = -layout_middle.width / 2;
         
@@ -76,7 +74,10 @@ public class AwardScreen extends GameScreen{
         font.draw(batch, layout_middle, middle_font_x, middle_font_y);
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);
         batch.end();
-    
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            mngr.incrementLevel();
+            mngr.getSuperManager().transition();
+        }
     }
 
     @Override
