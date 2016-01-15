@@ -868,6 +868,7 @@ protected OrthographicCamera camera;
         sun_sound = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
         
         //sun_sound_id = sun_sound.play(0);
+        sun_sound.play();
         sun_sound.setLooping(true);
         
         

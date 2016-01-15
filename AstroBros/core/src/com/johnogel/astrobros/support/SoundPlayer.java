@@ -81,6 +81,7 @@ boolean initialized;
     
     public void pause(){
         music.pause();
+       
     }
     
     public void stop(){
