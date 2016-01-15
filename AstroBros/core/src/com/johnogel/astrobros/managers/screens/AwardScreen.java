@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.johnogel.astrobros.managers.GameManager;
+import com.johnogel.astrobros.managers.SuperManager;
 import com.johnogel.astrobros.support.TextureHandler;
 import net.dermetfan.gdx.graphics.g2d.AnimatedBox2DSprite;
 import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
@@ -94,8 +95,10 @@ public class AwardScreen extends GameScreen{
         
                 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            mngr.incrementLevel();
-            //mngr.getSuperManager().transition();
+            //mngr.setLevel(mngr.getCurrentLevel());
+            
+            mngr.getSuperManager().setSuperController(SuperManager.MENU_MANAGER);
+            mngr.getSuperManager().transition();
         }
     }
 
