@@ -93,7 +93,7 @@ protected Music sun_sound;
 protected int total_bros;
 protected boolean dead, paused;
 
-private final SoundPlayer music;
+private final SoundPlayer sound_player;
 
 protected ShapeRenderer shape_renderer;
 
@@ -153,7 +153,7 @@ protected OrthographicCamera camera;
         //bump_sound_id = bump_sound.play(0);
         //sun_sound_id = sun_sound.play(0);
         
-        music = mngr.getSuperManager().getMusicPlayer();
+        sound_player = mngr.getSuperManager().getMusicPlayer();
         
     }
     
@@ -249,6 +249,7 @@ protected OrthographicCamera camera;
                             //notifyLoss();
                             dead = true;
                         }
+                        
                         //contact.getFixtureB().getBody().setActive(false);
                         for(AstroBro b : bros){
                             if(b.getBody().equals(contact.getFixtureB().getBody())){
@@ -273,7 +274,7 @@ protected OrthographicCamera camera;
                     
                     if(bump_sound != null ){ 
                         bump_sound_id = bump_sound.play(.5f);
-                        bump_sound.setPitch(bump_sound_id, .3f);
+                        bump_sound.setPitch(bump_sound_id, .55f);
                     }
                     //System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
@@ -637,7 +638,7 @@ protected OrthographicCamera camera;
     }
     //should call mngr method to handle screen changing
     private void notifyWin(){
-        music.stop();
+        sound_player.stop();
         sun_sound.stop();
         mngr.updateTopScore(total_bros);
         mngr.resolveLevelWin(this.safe_bros);
@@ -645,7 +646,7 @@ protected OrthographicCamera camera;
     
     //should call mngr method to handle screen changing
     private void notifyLoss(){
-        music.stop();
+        sound_player.stop();
         sun_sound.stop();
         mngr.resolveLevelLoss();
     }
@@ -805,14 +806,14 @@ protected OrthographicCamera camera;
     private void resolvePause(){
         paused = !paused;
         if(paused){
-            music.pause();
+            sound_player.pause();
             for(Player p : bros){
                 p.setAnimationPlaying(false);
             }
         }
         else{
             
-            music.playSong();
+            sound_player.playSong();
             for(Player p : bros){
                 p.setAnimationPlaying(true);
             }
@@ -868,7 +869,7 @@ protected OrthographicCamera camera;
         bump_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg"));
         bump_sound_id = bump_sound.play(0);
         
-        sun_sound = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
+        sun_sound = sound_player.getSunSound();
         
         //sun_sound_id = sun_sound.play(0);
         sun_sound.setLooping(true);
@@ -882,18 +883,18 @@ protected OrthographicCamera camera;
         
         /*music.stop();
         music.dispose();*/
-        music.setSong(SuperManager.GAMEPLAY_SONG);
+        sound_player.setSong(SuperManager.GAMEPLAY_SONG);
         
-        music.log();
+        sound_player.log();
         //music = mngr.getSuperManager().getMusicStream();
         /*music.setLooping(true);
         music.play();*/
-        music.setLooping(true);
-        music.setVolume(0.80f);
+        sound_player.setLooping(true);
+        sound_player.setVolume(0.80f);
         
         //music.log();
         
-        music.playSong();
+        sound_player.playSong();
 
     }
     
@@ -930,9 +931,8 @@ protected OrthographicCamera camera;
         
         if(sun_sound != null){
             sun_sound.stop();
-            sun_sound.dispose();
+            
         }
-        
         if(bump_sound != null){
             bump_sound.stop();
             bump_sound.dispose();
@@ -974,10 +974,6 @@ protected OrthographicCamera camera;
         clearArrays();
         mngr.disposeGameObjectTextures();
         background.dispose();
-        if(sun_sound != null){
-            sun_sound.stop();
-            sun_sound.dispose();
-        }
         
         if(bump_sound != null){
             bump_sound.stop();
@@ -1015,7 +1011,7 @@ protected OrthographicCamera camera;
     
     @Override
     public void stop(){
-        music.stop();
+        sound_player.stop();
         //music.dispose();
 
     }

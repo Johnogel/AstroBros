@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.Array;
  * @author johno-gel
  */
 public class SoundPlayer {
-private Music music;
+private Music music, sun;
 private Array<Sound> sounds;
 private Array<FileHandle> file_handles;
 public static int
@@ -30,23 +30,34 @@ boolean initialized;
         initialized = false;
         sounds = new Array(3);
         file_handles = new Array(3);
+        sounds.add(Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg")));
+        sounds.add(Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg")));
+        
+        for (Sound s : sounds){
+            s.dispose();
+        }
     }
     
     public void initialize(){
         file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
         file_handles.add(Gdx.files.internal("sounds/stick.ogg"));
+        sun = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
         //file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
     }
     
-    public void loadSound(int index){
+    public Sound getSound(int index){
         Sound sound = sounds.get(index);
         sound = Gdx.audio.newSound(file_handles.get(index));
+        return sounds.get(index);
     }
     
     public void playSoundEffect(int index){
         
     }
     
+    public Music getSunSound(){
+        return sun;
+    }
     
     public void setSong(String path){
 
@@ -109,6 +120,10 @@ boolean initialized;
         if (music != null){
             music.stop();
             music.dispose();
+        }
+        sun.dispose();
+        for(Sound s : sounds){
+            s.dispose();
         }
         //music = null;
     }

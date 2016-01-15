@@ -32,7 +32,7 @@ private OrthographicCamera camera;
 private RayHandler ray_handler;
 private int width, height;
 
-protected SoundPlayer music;
+protected SoundPlayer sound_player;
 public static final int 
         MENU_MANAGER = 0,
         GAME_MANAGER = 1;
@@ -50,7 +50,8 @@ public static final String
         
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
         
-        music = new SoundPlayer();
+        sound_player = new SoundPlayer();
+        sound_player.initialize();
         
         managers.add(new MenuManager(this));
         managers.add(new GameManager(this));
@@ -102,7 +103,7 @@ public static final String
     @Override
     public void dispose() {
         manager.dispose();
-        music.dispose();
+        sound_player.dispose();
     }
 
 
@@ -132,7 +133,7 @@ public static final String
     }
     
     public SoundPlayer getMusicPlayer(){
-        return music;
+        return sound_player;
     }
     
     /*public Music getMusicStream(){
@@ -150,7 +151,7 @@ public static final String
     public void initialize() {
         ray_handler = new RayHandler(world);
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
-        music = new SoundPlayer();
+        sound_player = new SoundPlayer();
 
     }
 
