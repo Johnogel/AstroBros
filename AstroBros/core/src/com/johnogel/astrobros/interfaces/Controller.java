@@ -18,6 +18,7 @@ public interface Controller {
     public void resize(int width, int height);
     public void initializeWorld();
     public void initialize();
+    public void initializeController();
     public void dispose();
     public boolean isPaused();
     public void stop();

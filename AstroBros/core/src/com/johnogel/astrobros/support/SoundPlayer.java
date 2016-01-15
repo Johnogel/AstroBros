@@ -60,7 +60,9 @@ boolean initialized;
     }
     
     public void playSound(int index, float volume){
-        sounds.get(index).play(volume);
+        long id = sounds.get(index).play(0);
+        sounds.get(index).setVolume(id, volume);
+        sounds.get(index).play(id);
     }
     
     public void playSound(int index, float volume, float pitch){

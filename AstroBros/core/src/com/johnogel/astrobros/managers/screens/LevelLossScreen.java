@@ -49,13 +49,17 @@ public class LevelLossScreen extends GameScreen{
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             mngr.setLevel(mngr.getCurrentLevel());
         }
-        ray_handler.setCombinedMatrix(camera.combined);
+        /*ray_handler.setCombinedMatrix(camera.combined);
         camera.rotate(1.3f);
-        camera.update();
+        camera.update();*/
     }
 
     @Override
     public void render() {
+        ray_handler.setCombinedMatrix(camera.combined);
+        camera.rotate(1.3f);
+        camera.update();        
+        super.render();
         batch.setProjectionMatrix(camera.projection);
         super.render();
         batch.begin();

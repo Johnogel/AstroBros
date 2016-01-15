@@ -396,6 +396,7 @@ protected OrthographicCamera camera;
             
             for(int i = 0; i < to_be_attached.size; i++){
                 if(Gdx.input.isKeyPressed(Keys.SPACE)){
+                    sound_player.playSound(SoundPlayer.STICK_SOUND, 1f);
                     RevoluteJointDef joint_def = new RevoluteJointDef();
                     joint_def.bodyA = to_be_attached_to.get(i);
                     joint_def.bodyB = to_be_attached.get(i);
@@ -585,7 +586,7 @@ protected OrthographicCamera camera;
             while (bumps > 0){
                 float pitch = MathUtils.random(.4f) + .42f;
                 System.out.println("PITCH: "+pitch);
-                sound_player.playSound(SoundPlayer.BUMP_SOUND, .4f, pitch);
+                sound_player.playSound(SoundPlayer.BUMP_SOUND, .01f, pitch);
                 bumps--;
             }
 
@@ -661,6 +662,11 @@ protected OrthographicCamera camera;
         sound_player.stop();
         sun_sound.stop();
         mngr.resolveLevelLoss();
+    }
+    
+    @Override
+    public void initializeController(){
+        
     }
     
     private void updateSunSound(){

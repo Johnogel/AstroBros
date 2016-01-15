@@ -10,9 +10,10 @@ import box2dLight.Light;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -31,6 +32,10 @@ private World world;
 private OrthographicCamera camera;
 private RayHandler ray_handler;
 private int width, height;
+private ShapeRenderer shape_renderer;
+private float alpha;
+private boolean fading_in, fading_out;
+private final float DELTA = .01f;
 
 protected SoundPlayer sound_player;
 public static final int 
@@ -45,6 +50,7 @@ public static final int
         this.camera = camera;
         this.ray_handler = ray_handler;
         
+        alpha = 0f;
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
         
         sound_player = new SoundPlayer();
@@ -56,20 +62,64 @@ public static final int
         //initialize();
         manager = managers.get(SuperManager.MENU_MANAGER);
         manager.initialize();
+        
+        shape_renderer = new ShapeRenderer();
+        
+        fading_in = false;
+        fading_out = false;
 
 
     }
     
-    
+    public void transition(){
+        fading_out = true;
+    }
     
     @Override
     public void update() {
-        manager.update();
+        if(!isTransitioning()){
+            manager.update();
+        }
     }
 
     @Override
     public void render() {
         manager.render();
+        resolveTransition();
+        
+
+    }
+    
+    private void resolveTransition(){
+        if(fading_out || fading_in){
+            if(fading_out){
+                alpha += DELTA;
+                if(alpha > .999f){
+                    fading_out = false;
+                    fading_in = true;
+                    manager.initializeController();
+                    
+                }
+            }
+            else if (fading_in){
+                alpha -= DELTA;
+                if(alpha < .001f){
+                    fading_in = false;
+                }
+                    
+            }
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            shape_renderer.setColor(0, 0, 0, alpha);
+            shape_renderer.begin(ShapeRenderer.ShapeType.Filled);  
+            shape_renderer.rect(-50, 0,1200, 1200);            
+            shape_renderer.end();
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
+    }
+    
+    private boolean isTransitioning(){
+        return (fading_in || fading_out);
     }
     
     public void setController(int INDEX){
@@ -101,6 +151,7 @@ public static final int
     public void dispose() {
         manager.dispose();
         sound_player.dispose();
+        shape_renderer.dispose();
     }
 
 
@@ -167,6 +218,11 @@ public static final int
 
     @Override
     public void stop() {
+    }
+
+    @Override
+    public void initializeController() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

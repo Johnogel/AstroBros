@@ -82,6 +82,10 @@ public abstract class GameScreen implements Controller{
         mngr.initializeWorld();
     }
     
+    @Override
+    public void initializeController(){
+        
+    }
     
     @Override
     public void dispose() {

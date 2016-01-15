@@ -73,6 +73,11 @@ public class MenuManager implements Controller{
     }
 
     @Override
+    public void initializeController(){
+        
+    }
+        
+    @Override
     public void render() {
         
         batch.setProjectionMatrix(camera.projection);   
@@ -116,9 +121,6 @@ public class MenuManager implements Controller{
         
         ray_handler.setCombinedMatrix(camera);
         
-        
-        
-        
     }
 
     @Override
@@ -130,16 +132,11 @@ public class MenuManager implements Controller{
         press_space = new Texture(Gdx.files.internal("PressSpace.png"));
         title = new Texture(Gdx.files.internal("AstroBros.png"));
         
-        
-        
-        
-        
         new PointLight(ray_handler, 200, Color.BLUE, 600, 0, 300);
         new PointLight(ray_handler, 200, Color.BLUE, 600, 0, -300);
         
         ray_handler.setCombinedMatrix(camera);
-        
-        
+
         music.setSong(SoundPlayer.TITLE_SONG);
         music.setLooping(true);
         music.playSong();

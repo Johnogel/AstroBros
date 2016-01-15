@@ -59,6 +59,7 @@ public class GameOverScreen extends GameScreen{
 
     @Override
     public void render() {
+        super.render();
         batch.setProjectionMatrix(camera.projection);
         super.render();
         batch.begin();

@@ -68,7 +68,7 @@ public class GameEndScreen extends GameScreen{
 
     @Override
     public void render() {
-        
+        super.render();
         batch.setProjectionMatrix(camera.projection);
         super.render();
         batch.begin();

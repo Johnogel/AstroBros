@@ -60,14 +60,15 @@ public class AwardScreen extends GameScreen{
         middle_font_x = -layout_middle.width / 2;
         
         ray_handler.setCombinedMatrix(camera.combined);
-        camera.rotate(1.3f);
-        camera.update();
+
     
     }
 
     @Override
     public void render() {
-        
+        camera.rotate(1.3f);
+        camera.update();
+        super.render();
         batch.setProjectionMatrix(camera.projection);
         super.render();
         batch.begin();

@@ -135,31 +135,44 @@ public final int
         return total_score;
     }
     
+@Override
+    public void initializeController(){
+        controller = controllers.get(controller_index);
+        controller.initialize();
+    }
+    
     public void resolveLevelWin(int score){
         total_score += score;
         prev_score = score;
+        mngr.transition();
         //controller.stop();
-        controller = controllers.get(this.LEVEL_WIN);
-        controller.initialize();
+        //controller = controllers.get(this.LEVEL_WIN);
+        controller_index = this.LEVEL_WIN;
+        //controller.initialize();
         
     }
+    
+
     
     public SuperManager getSuperManager(){
         return this.mngr;
     }
     //Such a sexy method
     public void resolveLevelLoss(){
+        mngr.transition();
         lives--;
         System.out.println("LIVES: "+lives);
         //controller.stop();
         if (lives >= 0){
-            controller = controllers.get(this.LEVEL_LOSS);
+            //controller = controllers.get(this.LEVEL_LOSS);
+            controller_index = this.LEVEL_LOSS;
         }
         else{
-            controller = controllers.get(this.GAME_OVER);
+            //controller = controllers.get(this.GAME_OVER);
+            controller_index = this.GAME_OVER;
         }
         
-        controller.initialize();
+        //controller.initialize();
     }
 
     @Override
