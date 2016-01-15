@@ -9,7 +9,6 @@ import box2dLight.Light;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -18,6 +17,7 @@ import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.managers.GameManager;
+import com.johnogel.astrobros.support.MusicPlayer;
 
 /**
  *
@@ -38,6 +38,7 @@ public abstract class GameScreen implements Controller{
     protected Array<Level> levels;
     protected boolean started;
     protected SpriteBatch batch;
+    protected MusicPlayer music;
 
     public GameScreen(GameManager mngr){
         this.mngr = mngr;
@@ -45,6 +46,7 @@ public abstract class GameScreen implements Controller{
         this.camera = mngr.getCamera();        
         this.batch = mngr.getSpriteBatch();
         this.ray_handler = mngr.getRayHandler();
+        music = mngr.getSuperManager().getMusicPlayer();
         
     }
     
@@ -55,7 +57,7 @@ public abstract class GameScreen implements Controller{
     
     @Override
     public void stop(){
-        
+        music.stop();
     }
 
     //call in child initialize method
@@ -65,6 +67,7 @@ public abstract class GameScreen implements Controller{
         this.batch = mngr.getSpriteBatch();
         this.ray_handler = mngr.getRayHandler();
         this.ray_handler.setCulling(false);
+        
     }
     
 

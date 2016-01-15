@@ -9,7 +9,6 @@ package com.johnogel.astrobros.levels;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -39,6 +38,7 @@ import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.managers.SuperManager;
 import com.johnogel.astrobros.support.Background;
+import com.johnogel.astrobros.support.MusicPlayer;
 import com.johnogel.astrobros.support.TextureHandler;
 
 /**
@@ -91,7 +91,7 @@ protected Sound sun_sound, bump_sound;
 protected int total_bros;
 protected boolean dead, paused;
 
-private Music music;
+private final MusicPlayer music;
 
 protected ShapeRenderer shape_renderer;
 
@@ -151,7 +151,7 @@ protected OrthographicCamera camera;
         bump_sound_id = bump_sound.play(0);
         sun_sound_id = sun_sound.play(0);
         
-        music = mngr.getSuperManager().getMusicStream();
+        music = mngr.getSuperManager().getMusicPlayer();
         
     }
     
@@ -853,6 +853,7 @@ protected OrthographicCamera camera;
         mngr.addGameObject(inner_orbit);
         mngr.addGameObject(outer_orbit);
         mngr.addGameObject(outer_boundary);
+        
         for(Player p : bros){
             mngr.addGameObject(p);
         }
@@ -871,10 +872,19 @@ protected OrthographicCamera camera;
         
         dead = false;
         
+        /*music.stop();
+        music.dispose();*/
+        music.setSong(SuperManager.TITLE_SONG);
         
-        mngr.getSuperManager().setSong(SuperManager.GAMEPLAY_SONG);
-        music = mngr.getSuperManager().getMusicStream();
+        music.log();
+        //music = mngr.getSuperManager().getMusicStream();
+        /*music.setLooping(true);
+        music.play();*/
         music.setLooping(true);
+        music.setVolume(0.80f);
+        
+        //music.log();
+        
         music.play();
 
     }
@@ -954,10 +964,9 @@ protected OrthographicCamera camera;
         sun_sound.dispose();
         //music.stop();
         //music.dispose();
-        music.stop();
-        music.dispose();
-        mngr.getSuperManager().getMusicStream().stop();
-        mngr.getSuperManager().getMusicStream().dispose();
+
+        //mngr.getSuperManager().getMusicStream().stop();
+        //mngr.getSuperManager().getMusicStream().dispose();
 
     }
     
@@ -985,7 +994,7 @@ protected OrthographicCamera camera;
     @Override
     public void stop(){
         music.stop();
-        music.dispose();
+        //music.dispose();
 
     }
     

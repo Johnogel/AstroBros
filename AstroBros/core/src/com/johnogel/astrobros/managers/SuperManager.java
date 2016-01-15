@@ -16,13 +16,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.johnogel.astrobros.support.MusicPlayer;
 
 
 /**
  *
  * @author johno-gel
  */
-public final class SuperManager implements Controller{
+public class SuperManager implements Controller{
 static Controller manager;
 static Array<Controller> managers;
 private Array<Light> lights;
@@ -30,13 +31,14 @@ private World world;
 private OrthographicCamera camera;
 private RayHandler ray_handler;
 private int width, height;
-protected Music music;
+
+protected MusicPlayer music;
 public static final int 
         MENU_MANAGER = 0,
         GAME_MANAGER = 1;
 public static final String
-        GAMEPLAY_SONG = "music/DontSleep.wav",
-        TITLE_SONG = "music/Sleep.wav";
+        GAMEPLAY_SONG = "music/DontSleep.ogg",
+        TITLE_SONG = "music/Sleep.ogg";
 
     public SuperManager(World world, OrthographicCamera camera, RayHandler ray_handler){
         lights = new Array();
@@ -46,12 +48,14 @@ public static final String
         this.camera = camera;
         this.ray_handler = ray_handler;
         
-        music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
+        //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
+        
+        music = new MusicPlayer();
         
         managers.add(new MenuManager(this));
         managers.add(new GameManager(this));
         
-        initialize();
+        //initialize();
         manager = managers.get(SuperManager.MENU_MANAGER);
         manager.initialize();
 
@@ -73,7 +77,7 @@ public static final String
     public void setController(int INDEX){
         
         //manager.turnOffLights();
-        manager.stop();
+        //manager.stop();
         manager = managers.get(INDEX);
         manager.initialize();
         
@@ -105,9 +109,17 @@ public static final String
     
 @Override
     public void initializeWorld(){
-        ray_handler.dispose();
+        if(ray_handler != null){
+            ray_handler.dispose();
+        }
+        
         //music.stop();
         //music.dispose();
+        //if(music_player != null){
+         //   music_player.dispose();
+
+        //}
+        //music_player = new MusicPlayer();
         world = new World(new Vector2(0,0), false);
         width = Gdx.graphics.getWidth()/5;
         height = Gdx.graphics.getHeight()/5;
@@ -119,18 +131,26 @@ public static final String
         
     }
     
-    public Music getMusicStream(){
+    public MusicPlayer getMusicPlayer(){
         return music;
     }
     
+    /*public Music getMusicStream(){
+        return music;
+    }*/
+    
     public void setSong(String filename){
+        //music.stop();
         //music.dispose();
-        music = Gdx.audio.newMusic(Gdx.files.internal(filename));
+        
+        //music = Gdx.audio.newMusic(Gdx.files.internal(filename));
     }
 
     @Override
     public void initialize() {
         ray_handler = new RayHandler(world);
+        //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
+        music = new MusicPlayer();
 
     }
 

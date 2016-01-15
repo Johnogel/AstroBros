@@ -138,7 +138,7 @@ public final int
     public void resolveLevelWin(int score){
         total_score += score;
         prev_score = score;
-        controller.stop();
+        //controller.stop();
         controller = controllers.get(this.LEVEL_WIN);
         controller.initialize();
         
@@ -151,7 +151,7 @@ public final int
     public void resolveLevelLoss(){
         lives--;
         System.out.println("LIVES: "+lives);
-        controller.stop();
+        //controller.stop();
         if (lives >= 0){
             controller = controllers.get(this.LEVEL_LOSS);
         }

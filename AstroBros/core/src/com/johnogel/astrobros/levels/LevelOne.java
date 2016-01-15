@@ -59,7 +59,8 @@ public class LevelOne extends Level{
         
         this.setOrbits();
         
-
+        
+        
         this.initializeBoundaries();
         this.initializeBackground();
         this.initializeLocators();

@@ -11,7 +11,6 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,6 +18,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.johnogel.astrobros.support.MusicPlayer;
 
 /**
  *
@@ -35,7 +35,7 @@ public class MenuManager implements Controller{
     private SuperManager mngr;
     private Array<Light> lights;
     private int title_width, title_height, space_width, space_height;
-    private Music music;
+    private final MusicPlayer music;
     
     public MenuManager(SuperManager mngr){
         
@@ -51,6 +51,7 @@ public class MenuManager implements Controller{
         this.space_width = 120;
         this.space_height = 35;
         
+        music = mngr.getMusicPlayer();
         
         
         
@@ -138,8 +139,8 @@ public class MenuManager implements Controller{
         
         ray_handler.setCombinedMatrix(camera);
         
-        music = mngr.getMusicStream();
-        mngr.setSong(SuperManager.TITLE_SONG);
+        
+        music.setSong(SuperManager.TITLE_SONG);
         music.setLooping(true);
         music.play();
         
