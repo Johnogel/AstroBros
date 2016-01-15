@@ -273,7 +273,7 @@ protected OrthographicCamera camera;
                     
                     if(bump_sound != null ){ 
                         bump_sound_id = bump_sound.play(.5f);
-                        bump_sound.setPitch(bump_sound_id, .5f);
+                        bump_sound.setPitch(bump_sound_id, .3f);
                     }
                     //System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
