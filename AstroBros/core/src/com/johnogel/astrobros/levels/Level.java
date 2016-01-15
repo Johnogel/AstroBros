@@ -865,11 +865,15 @@ protected OrthographicCamera camera;
             mngr.addGameObject(s);
         }
         
+        bump_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg"));
+        bump_sound_id = bump_sound.play(0);
+        
         sun_sound = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
         
         //sun_sound_id = sun_sound.play(0);
-        sun_sound.play();
         sun_sound.setLooping(true);
+        sun_sound.play();
+        
         
         
         total_bros = bros.size;
