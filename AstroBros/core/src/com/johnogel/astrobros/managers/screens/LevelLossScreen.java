@@ -67,7 +67,6 @@ public class LevelLossScreen extends GameScreen{
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             mngr.setLevel(mngr.getCurrentLevel());
-            mngr.getSuperManager().transition();
         }
     }
 

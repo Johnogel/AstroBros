@@ -76,7 +76,7 @@ public class AwardScreen extends GameScreen{
         batch.end();
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             mngr.incrementLevel();
-            mngr.getSuperManager().transition();
+            //mngr.getSuperManager().transition();
         }
     }
 

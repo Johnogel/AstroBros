@@ -478,12 +478,14 @@ public final int
     }
     
     public void incrementLevel(){
+        mngr.transition();
         if (level < levels.size - 1){
             this.setLevel(level + 1);
         }
         else{
-            controller = controllers.get(this.GAME_END);
-            controller.initialize();
+            controller_index = this.GAME_END;
+            
+            //controller.initialize();
         }
         
  

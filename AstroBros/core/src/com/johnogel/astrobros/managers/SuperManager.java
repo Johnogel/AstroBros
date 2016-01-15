@@ -91,6 +91,7 @@ public static final int
         resolveTransition();
     }
     
+    
     private void resolveTransition(){
         if(fading_out || fading_in){
             if(fading_out){
@@ -107,10 +108,10 @@ public static final int
                     else{
                         manager.initializeController();
                         manager.update(); 
-                    }
-                    
+                    }         
                 }
             }
+            
             else if (fading_in){
                 alpha -= DELTA;
                 if(alpha < .001f){

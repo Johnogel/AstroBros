@@ -76,7 +76,7 @@ public class LevelWinScreen extends GameScreen{
         
         if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
             mngr.incrementLevel();
-            mngr.getSuperManager().transition();
+            //mngr.getSuperManager().transition();
         }
         
     
