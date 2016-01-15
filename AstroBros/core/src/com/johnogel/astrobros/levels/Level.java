@@ -435,6 +435,8 @@ protected OrthographicCamera camera;
                     }
                 }
             }
+            
+
             //player.playStickSound();
             to_be_attached.clear();
             to_be_attached_to.clear();
@@ -491,7 +493,7 @@ protected OrthographicCamera camera;
             }
             */
             gravitate();
-            if(Gdx.input.isKeyJustPressed(Keys.R)){
+            if(!player.isSpacePressed()){
                 Array<Joint> joints = new Array(); 
                 world.getJoints(joints);
                 for(Joint j : joints){

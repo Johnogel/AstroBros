@@ -67,11 +67,13 @@ public class LevelLossScreen extends GameScreen{
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             mngr.setLevel(mngr.getCurrentLevel());
+            mngr.getSuperManager().transition();
         }
     }
 
     @Override
     public void initialize() {
+        
         initializeWorld();
         this.updateReferences();
         new PointLight(ray_handler, 5000, Color.YELLOW, 500, -camera.viewportWidth/2, -300 );
