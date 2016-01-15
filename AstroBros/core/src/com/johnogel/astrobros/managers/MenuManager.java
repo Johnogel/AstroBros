@@ -11,6 +11,7 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -34,6 +35,7 @@ public class MenuManager implements Controller{
     private SuperManager mngr;
     private Array<Light> lights;
     private int title_width, title_height, space_width, space_height;
+    private Music music;
     
     public MenuManager(SuperManager mngr){
         
@@ -136,6 +138,11 @@ public class MenuManager implements Controller{
         
         ray_handler.setCombinedMatrix(camera);
         
+        music = mngr.getMusicStream();
+        mngr.setSong(SuperManager.TITLE_SONG);
+        music.setLooping(true);
+        music.play();
+        
     }
 
     @Override
@@ -146,6 +153,11 @@ public class MenuManager implements Controller{
     @Override
     public boolean isPaused() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void stop() {
+        music.stop();
     }
     
 }

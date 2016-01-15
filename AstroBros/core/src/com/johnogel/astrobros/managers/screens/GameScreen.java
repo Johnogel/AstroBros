@@ -52,6 +52,11 @@ public abstract class GameScreen implements Controller{
     public void resize(int width, int height) {
         
     }
+    
+    @Override
+    public void stop(){
+        
+    }
 
     //call in child initialize method
     protected void updateReferences(){

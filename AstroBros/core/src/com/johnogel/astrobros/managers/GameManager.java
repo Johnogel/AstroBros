@@ -12,6 +12,7 @@ import com.johnogel.astrobros.interfaces.Controller;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
@@ -55,6 +56,7 @@ private int prev_score;
 private int level, controller_index;
 private Controller controller;
 private ShapeRenderer shape_renderer;
+private Music music;
 
 private float alpha, delta;
 
@@ -136,6 +138,7 @@ public final int
     public void resolveLevelWin(int score){
         total_score += score;
         prev_score = score;
+        controller.stop();
         controller = controllers.get(this.LEVEL_WIN);
         controller.initialize();
         
@@ -148,6 +151,7 @@ public final int
     public void resolveLevelLoss(){
         lives--;
         System.out.println("LIVES: "+lives);
+        controller.stop();
         if (lives >= 0){
             controller = controllers.get(this.LEVEL_LOSS);
         }
@@ -367,6 +371,10 @@ public final int
         this.camera.update();
         this.ray_handler = mngr.getRayHandler();
         this.world = mngr.getWorld();
+        
+        levels.clear();
+        controllers.clear();
+        
         levels.add(new LevelOne(this, 10));
         levels.add(new LevelTwo(this, 10));
         levels.add(new LevelThree(this, 10));
@@ -459,5 +467,10 @@ public final int
     @Override
     public boolean isPaused() {
         return controller.isPaused();
+    }
+
+    @Override
+    public void stop() {
+        music.stop();
     }
 }

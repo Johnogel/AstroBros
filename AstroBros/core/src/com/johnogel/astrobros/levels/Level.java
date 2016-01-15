@@ -9,6 +9,7 @@ package com.johnogel.astrobros.levels;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -36,6 +37,7 @@ import com.johnogel.astrobros.gameobjects.CircleObject;
 import com.johnogel.astrobros.gameobjects.Locator;
 import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
+import com.johnogel.astrobros.managers.SuperManager;
 import com.johnogel.astrobros.support.Background;
 import com.johnogel.astrobros.support.TextureHandler;
 
@@ -88,6 +90,8 @@ protected Sound sun_sound, bump_sound;
 
 protected int total_bros;
 protected boolean dead, paused;
+
+private Music music;
 
 protected ShapeRenderer shape_renderer;
 
@@ -147,6 +151,7 @@ protected OrthographicCamera camera;
         bump_sound_id = bump_sound.play(0);
         sun_sound_id = sun_sound.play(0);
         
+        music = mngr.getSuperManager().getMusicStream();
         
     }
     
@@ -629,6 +634,7 @@ protected OrthographicCamera camera;
     }
     //should call mngr method to handle screen changing
     private void notifyWin(){
+        music.stop();
         sun_sound.stop();
         mngr.updateTopScore(total_bros);
         mngr.resolveLevelWin(this.safe_bros);
@@ -636,6 +642,7 @@ protected OrthographicCamera camera;
     
     //should call mngr method to handle screen changing
     private void notifyLoss(){
+        music.stop();
         sun_sound.stop();
         mngr.resolveLevelLoss();
     }
@@ -795,13 +802,14 @@ protected OrthographicCamera camera;
     private void resolvePause(){
         paused = !paused;
         if(paused){
-            
+            music.pause();
             for(Player p : bros){
                 p.setAnimationPlaying(false);
             }
         }
         else{
             
+            music.play();
             for(Player p : bros){
                 p.setAnimationPlaying(true);
             }
@@ -812,6 +820,8 @@ protected OrthographicCamera camera;
     @Override
     public void initializeWorld(){
         clearArrays();
+//        music.stop();
+//        music.play();
         mngr.initializeWorld();
         safe_bros = 0;
         timer = this.START_TIME;
@@ -819,6 +829,7 @@ protected OrthographicCamera camera;
         score_chars = "SAFE: 0/"+this.total_bros;
         timer_chars = ""+timer;
         paused = false;
+
         
         
         
@@ -859,6 +870,12 @@ protected OrthographicCamera camera;
         total_bros = bros.size;
         
         dead = false;
+        
+        
+        mngr.getSuperManager().setSong(SuperManager.GAMEPLAY_SONG);
+        music = mngr.getSuperManager().getMusicStream();
+        music.setLooping(true);
+        music.play();
 
     }
     
@@ -935,7 +952,12 @@ protected OrthographicCamera camera;
         background.dispose();
         sun_sound.stop();
         sun_sound.dispose();
-        
+        //music.stop();
+        //music.dispose();
+        music.stop();
+        music.dispose();
+        mngr.getSuperManager().getMusicStream().stop();
+        mngr.getSuperManager().getMusicStream().dispose();
 
     }
     
@@ -958,6 +980,13 @@ protected OrthographicCamera camera;
         for (Player p : bros){
             p.initializeAnimations(mngr.getTextureHandler());
         }
+    }
+    
+    @Override
+    public void stop(){
+        music.stop();
+        music.dispose();
+
     }
     
 }

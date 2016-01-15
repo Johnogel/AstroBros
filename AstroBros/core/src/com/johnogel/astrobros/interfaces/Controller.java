@@ -20,6 +20,8 @@ public interface Controller {
     public void initialize();
     public void dispose();
     public boolean isPaused();
+    public void stop();
+   
     
     
 }
