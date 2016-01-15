@@ -392,9 +392,9 @@ protected OrthographicCamera camera;
         /*System.out.println("CONTROLLED BROS SIZE: "+controlled_bros.size+"\nCONTROLLED BODIES SIZE: "+controlled_bodies.size);
         System.out.println("FREE BROS SIZE: "+free_bros.size+"\nFREE BODIES SIZE: "+free_bodies.size);
         System.out.println("BROS SIZE: "+bros.size);*/
-        if(to_be_attached.size == to_be_attached_to.size && to_be_attached.size > 0){
+        if(to_be_attached.size == to_be_attached_to.size && to_be_attached.size > 0 && controlled_bros.size < 2){
             
-            for(int i = 0; i < to_be_attached.size; i++){
+            for(int i = to_be_attached.size - 1; i < to_be_attached.size; i++){
                 if(Gdx.input.isKeyPressed(Keys.SPACE)){
                     sound_player.playSound(SoundPlayer.STICK_SOUND, 1f);
                     RevoluteJointDef joint_def = new RevoluteJointDef();
@@ -418,14 +418,8 @@ protected OrthographicCamera camera;
                     
                     //angle = MathUtils.atan2(b_y - a_y, b_x - a_x)*MathUtils.radiansToDegrees + 180;
 
-                    
-                    
-                    
                     joint_def.localAnchorB.set(0,0);
-                    
-                    
-                    
-                    
+
                     world.createJoint(joint_def);
                     //System.out.println("RADIUS: "+free_bros.get(i).getRadius()*2);
                     //controlled_bodies.add(free_bodies.removeIndex(free_bodies.indexOf(to_be_attached.get(i), false)));
@@ -470,7 +464,8 @@ protected OrthographicCamera camera;
             if(dead){
                 notifyLoss();
             }
-
+            
+            /*this was the part where you could switch, but I'm nixing it
             //switches player if connected
             if(Gdx.input.isKeyJustPressed(Keys.RIGHT)){
 
@@ -494,7 +489,7 @@ protected OrthographicCamera camera;
                 player = (Player)controlled_bros.get(player_index);
                 player.enablePlayer();
             }
-
+            */
             gravitate();
             if(Gdx.input.isKeyJustPressed(Keys.R)){
                 Array<Joint> joints = new Array(); 
