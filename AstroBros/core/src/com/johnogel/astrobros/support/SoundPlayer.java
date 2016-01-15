@@ -7,23 +7,49 @@ package com.johnogel.astrobros.support;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
  * @author johno-gel
  */
-public class MusicPlayer {
+public class SoundPlayer {
 private Music music;
+private Array<Sound> sounds;
+private Array<FileHandle> file_handles;
+public static int
+        BUMP_SOUND = 0,
+        STICK_SOUND = 1;
+
 boolean initialized;
 
-    public MusicPlayer(){
+
+    public SoundPlayer(){
         initialized = false;
+        sounds = new Array(3);
+        file_handles = new Array(3);
     }
     
+    public void initialize(){
+        file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
+        file_handles.add(Gdx.files.internal("sounds/stick.ogg"));
+        //file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
+    }
+    
+    public void loadSound(int index){
+        Sound sound = sounds.get(index);
+        sound = Gdx.audio.newSound(file_handles.get(index));
+    }
+    
+    public void playSoundEffect(int index){
+        
+    }
+    
+    
     public void setSong(String path){
-        
 
-        
         if(music != null){
             music.setLooping(false);
             if(music.isPlaying()){
@@ -37,19 +63,15 @@ boolean initialized;
             System.out.println("INITIALIZED TRUE");
         }
         //music = null;
-        Music temp = Gdx.audio.newMusic(Gdx.files.internal(path));
         
-        music = temp;
+        music = Gdx.audio.newMusic(Gdx.files.internal(path));
         
         System.out.println(music.toString());
         
-        
-        
-        
-        
     }
     
-    public void play(){
+    //used for playing song or long sound effect
+    public void playSong(){
         music.play();
     }
     

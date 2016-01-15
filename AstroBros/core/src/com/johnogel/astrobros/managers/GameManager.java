@@ -182,8 +182,6 @@ public final int
             
             if(!isPaused()){
                 ray_handler.setCombinedMatrix(camera);            
-
-                 
             }
             
             controller.update();

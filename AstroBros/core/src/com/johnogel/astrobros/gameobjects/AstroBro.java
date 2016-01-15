@@ -55,7 +55,7 @@ protected final int
         sprites = new Array(3);
         animations = new Array(3);
         
-        stick_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/stick.ogg"));
+        //stick_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/stick.ogg"));
         
         alive = true;
        

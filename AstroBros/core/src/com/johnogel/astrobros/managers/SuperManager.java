@@ -16,7 +16,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.johnogel.astrobros.support.MusicPlayer;
+import com.johnogel.astrobros.support.SoundPlayer;
 
 
 /**
@@ -32,7 +32,7 @@ private OrthographicCamera camera;
 private RayHandler ray_handler;
 private int width, height;
 
-protected MusicPlayer music;
+protected SoundPlayer music;
 public static final int 
         MENU_MANAGER = 0,
         GAME_MANAGER = 1;
@@ -50,7 +50,7 @@ public static final String
         
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
         
-        music = new MusicPlayer();
+        music = new SoundPlayer();
         
         managers.add(new MenuManager(this));
         managers.add(new GameManager(this));
@@ -131,7 +131,7 @@ public static final String
         
     }
     
-    public MusicPlayer getMusicPlayer(){
+    public SoundPlayer getMusicPlayer(){
         return music;
     }
     
@@ -150,7 +150,7 @@ public static final String
     public void initialize() {
         ray_handler = new RayHandler(world);
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
-        music = new MusicPlayer();
+        music = new SoundPlayer();
 
     }
 

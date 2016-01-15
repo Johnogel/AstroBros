@@ -9,6 +9,7 @@ package com.johnogel.astrobros.levels;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -38,7 +39,7 @@ import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.managers.SuperManager;
 import com.johnogel.astrobros.support.Background;
-import com.johnogel.astrobros.support.MusicPlayer;
+import com.johnogel.astrobros.support.SoundPlayer;
 import com.johnogel.astrobros.support.TextureHandler;
 
 /**
@@ -86,12 +87,13 @@ protected TextureHandler texture_handler;
 protected float sun_sound_constant;
 protected long sun_sound_id, bump_sound_id;
 
-protected Sound sun_sound, bump_sound;
+protected Sound bump_sound;
+protected Music sun_sound;
 
 protected int total_bros;
 protected boolean dead, paused;
 
-private final MusicPlayer music;
+private final SoundPlayer music;
 
 protected ShapeRenderer shape_renderer;
 
@@ -146,10 +148,10 @@ protected OrthographicCamera camera;
         blue_texture = this.texture_handler.getTexture(TextureHandler.BOUNDARY_BLUE);
         boundary_texture = this.texture_handler.getTexture(TextureHandler.BOUNDARY_OUTER);
         
-        sun_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/fire.wav"));
-        bump_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg"));
-        bump_sound_id = bump_sound.play(0);
-        sun_sound_id = sun_sound.play(0);
+        //sun_sound = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
+        //bump_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg"));
+        //bump_sound_id = bump_sound.play(0);
+        //sun_sound_id = sun_sound.play(0);
         
         music = mngr.getSuperManager().getMusicPlayer();
         
@@ -269,9 +271,10 @@ protected OrthographicCamera camera;
                 //check if both contacts are bros
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
                     
-                    
-                    bump_sound_id = bump_sound.play(.5f);
-                    bump_sound.setPitch(bump_sound_id, .5f);
+                    if(bump_sound != null ){ 
+                        bump_sound_id = bump_sound.play(.5f);
+                        bump_sound.setPitch(bump_sound_id, .5f);
+                    }
                     //System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
                     if(free_bodies.contains(contact.getFixtureA().getBody(), false) && controlled_bodies.contains(contact.getFixtureB().getBody(), false))
@@ -431,7 +434,7 @@ protected OrthographicCamera camera;
                     }
                 }
             }
-            player.playStickSound();
+            //player.playStickSound();
             to_be_attached.clear();
             to_be_attached_to.clear();
         }
@@ -650,7 +653,7 @@ protected OrthographicCamera camera;
     private void updateSunSound(){
         float dst = player.getBody().getPosition().dst(suns.get(0).getPosition());
         if(dst < outer_orbit.getRadius()){
-            sun_sound.setVolume(sun_sound_id, (outer_orbit.getRadius()-dst)*this.sun_sound_constant);
+            sun_sound.setVolume((outer_orbit.getRadius()-dst)*this.sun_sound_constant);
         }
     }
     
@@ -809,7 +812,7 @@ protected OrthographicCamera camera;
         }
         else{
             
-            music.play();
+            music.playSong();
             for(Player p : bros){
                 p.setAnimationPlaying(true);
             }
@@ -862,10 +865,10 @@ protected OrthographicCamera camera;
             mngr.addGameObject(s);
         }
         
-        sun_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/fire.wav"));
+        sun_sound = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
         
-        sun_sound_id = sun_sound.play(0);
-        sun_sound.setLooping(sun_sound_id, true);
+        //sun_sound_id = sun_sound.play(0);
+        sun_sound.setLooping(true);
         
         
         total_bros = bros.size;
@@ -874,7 +877,7 @@ protected OrthographicCamera camera;
         
         /*music.stop();
         music.dispose();*/
-        music.setSong(SuperManager.TITLE_SONG);
+        music.setSong(SuperManager.GAMEPLAY_SONG);
         
         music.log();
         //music = mngr.getSuperManager().getMusicStream();
@@ -885,7 +888,7 @@ protected OrthographicCamera camera;
         
         //music.log();
         
-        music.play();
+        music.playSong();
 
     }
     
@@ -919,10 +922,16 @@ protected OrthographicCamera camera;
             b.dispose();
         }
         bros.clear();
-        sun_sound.stop();
-        sun_sound.dispose();
-        bump_sound.stop();
-        bump_sound.dispose();
+        
+        if(sun_sound != null){
+            sun_sound.stop();
+            sun_sound.dispose();
+        }
+        
+        if(bump_sound != null){
+            bump_sound.stop();
+            bump_sound.dispose();
+        }
         //sun_sound.dispose();
         
     }
@@ -960,8 +969,16 @@ protected OrthographicCamera camera;
         clearArrays();
         mngr.disposeGameObjectTextures();
         background.dispose();
-        sun_sound.stop();
-        sun_sound.dispose();
+        if(sun_sound != null){
+            sun_sound.stop();
+            sun_sound.dispose();
+        }
+        
+        if(bump_sound != null){
+            bump_sound.stop();
+            bump_sound.dispose();
+        }
+        
         //music.stop();
         //music.dispose();
 

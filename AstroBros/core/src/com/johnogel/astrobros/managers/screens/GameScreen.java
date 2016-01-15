@@ -17,7 +17,7 @@ import com.johnogel.astrobros.interfaces.Controller;
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.managers.GameManager;
-import com.johnogel.astrobros.support.MusicPlayer;
+import com.johnogel.astrobros.support.SoundPlayer;
 
 /**
  *
@@ -38,7 +38,7 @@ public abstract class GameScreen implements Controller{
     protected Array<Level> levels;
     protected boolean started;
     protected SpriteBatch batch;
-    protected MusicPlayer music;
+    protected SoundPlayer music;
 
     public GameScreen(GameManager mngr){
         this.mngr = mngr;

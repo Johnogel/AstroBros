@@ -18,7 +18,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.johnogel.astrobros.support.MusicPlayer;
+import com.johnogel.astrobros.support.SoundPlayer;
 
 /**
  *
@@ -35,7 +35,7 @@ public class MenuManager implements Controller{
     private SuperManager mngr;
     private Array<Light> lights;
     private int title_width, title_height, space_width, space_height;
-    private final MusicPlayer music;
+    private final SoundPlayer music;
     
     public MenuManager(SuperManager mngr){
         
@@ -142,7 +142,7 @@ public class MenuManager implements Controller{
         
         music.setSong(SuperManager.TITLE_SONG);
         music.setLooping(true);
-        music.play();
+        music.playSong();
         
     }
 
