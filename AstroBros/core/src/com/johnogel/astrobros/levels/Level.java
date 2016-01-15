@@ -97,6 +97,8 @@ private final SoundPlayer sound_player;
 
 protected ShapeRenderer shape_renderer;
 
+protected int bumps;
+
 protected OrthographicCamera camera;
 
 
@@ -155,6 +157,7 @@ protected OrthographicCamera camera;
         
         sound_player = mngr.getSuperManager().getMusicPlayer();
         
+        bumps  = 0;
     }
     
     public Player getPlayer(){
@@ -272,10 +275,11 @@ protected OrthographicCamera camera;
                 //check if both contacts are bros
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
                     
-                    if(bump_sound != null ){ 
+                    if(sound_player != null ){ 
                         /*bump_sound_id = bump_sound.play(.5f);
                         bump_sound.setPitch(bump_sound_id, .55f);*/
-                        sound_player.playSound(SoundPlayer.BUMP_SOUND, .8f, .55f);
+                        //sound_player.playSound(SoundPlayer.BUMP_SOUND, .8f, .55f);
+                        bumps++;
                     }
                     //System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
@@ -578,7 +582,12 @@ protected OrthographicCamera camera;
 
             }
 
-
+            while (bumps > 0){
+                float pitch = MathUtils.random(.4f) + .42f;
+                System.out.println("PITCH: "+pitch);
+                sound_player.playSound(SoundPlayer.BUMP_SOUND, .4f, pitch);
+                bumps--;
+            }
 
             cleanUp();
 
@@ -587,6 +596,8 @@ protected OrthographicCamera camera;
                 background.update();
                 updateLocators(mngr.getSpriteBatch());
             }
+            
+            
         }
         
 
@@ -835,19 +846,12 @@ protected OrthographicCamera camera;
         timer_chars = ""+timer;
         paused = false;
 
-        
-        
-        
-        
-        
         //bros.add(player);
         //this.world = mngr.getWorld();
         
         //don't change this...?
 
         //world.getBodies(bodies);
-        
-        
 
     }
     
@@ -877,8 +881,6 @@ protected OrthographicCamera camera;
         //sun_sound_id = sun_sound.play(0);
         sun_sound.setLooping(true);
         sun_sound.play();
-        
-        
         
         total_bros = bros.size;
         

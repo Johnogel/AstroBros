@@ -17,8 +17,8 @@ import com.badlogic.gdx.utils.Array;
  */
 public class SoundPlayer {
 private Music music, sun;
-private Array<Sound> sounds;
-private Array<FileHandle> sound_handles, music_handles;
+private final Array<Sound> sounds;
+private final Array<FileHandle> sound_handles, music_handles;
 public static int
         BUMP_SOUND = 0,
         STICK_SOUND = 1,
@@ -64,9 +64,10 @@ boolean initialized;
     }
     
     public void playSound(int index, float volume, float pitch){
-        long id = sounds.get(index).play(volume);
+        long id = sounds.get(index).play(0);
         sounds.get(index).setPitch(id, pitch);
-        
+        sounds.get(index).setVolume(id, volume);
+        sounds.get(index).play(id);
     }
     
     public void playSoundEffect(int index){
