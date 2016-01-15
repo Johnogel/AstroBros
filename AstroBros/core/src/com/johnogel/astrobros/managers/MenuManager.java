@@ -61,8 +61,8 @@ public class MenuManager implements Controller{
     public void update() {
         
         if (Gdx.input.isKeyJustPressed(Keys.SPACE)){
+            mngr.transition();
             
-            mngr.setController(SuperManager.GAME_MANAGER);
             
         }
         
@@ -74,7 +74,7 @@ public class MenuManager implements Controller{
 
     @Override
     public void initializeController(){
-        
+        mngr.setController(SuperManager.GAME_MANAGER);
     }
         
     @Override

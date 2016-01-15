@@ -113,8 +113,10 @@ public final int
 
         //renderer.render(world, camera.combined);
         //update();
-        
-        controller.render();
+        if(controller != null){
+            controller.render();
+            
+        }
         
         /*
         alpha += delta;
@@ -137,8 +139,16 @@ public final int
     
 @Override
     public void initializeController(){
-        controller = controllers.get(controller_index);
-        controller.initialize();
+        if(controller_index < levels.size){
+            controller = controllers.get(level);
+            levels.get(level).initialize();
+            levels.get(level).initializeGameObjects();
+        }
+        else{
+            controller = controllers.get(controller_index);
+            controller.initialize();
+        }
+
     }
     
     public void resolveLevelWin(int score){
@@ -327,9 +337,7 @@ public final int
         this.camera.update();
         
         this.clearGameObjects();
-        
-        
-        
+
         //game_objects.add(player);
         
         //ray_handler.setCombinedMatrix(camera);
@@ -341,10 +349,7 @@ public final int
         ray_handler.setShadows(true);
         
         ray_handler.setAmbientLight(1, 1, 1, .10f);
-        
- 
-        
-        
+
         //Sun
         //this.addLight(8000, Color.YELLOW, 600, width/2, height/2 );
         
@@ -362,9 +367,10 @@ public final int
     public void setLevel(int level){
         levels.get(this.level).dispose();
         this.level = level;
-        controller = controllers.get(level);
-        levels.get(level).initialize();
-        levels.get(level).initializeGameObjects();
+        controller_index = level;
+//        controller = controllers.get(level);
+//        levels.get(level).initialize();
+//        levels.get(level).initializeGameObjects();
         //this.initializeWorld();
     }
 
@@ -426,10 +432,18 @@ public final int
         ray_handler.setAmbientLight(1, 1, 1, .6f);
         
         level = LEVEL_ONE;
+        //controller_index = level;
+        controller = controllers.get(level);
+        controller.initialize();
+        levels.get(level).initializeGameObjects();
+        levels.get(level).update();
+        //this.setLevel(level);
         
-        this.setLevel(level);
+        
         
         lives = 3;
+        
+        
         
         
         

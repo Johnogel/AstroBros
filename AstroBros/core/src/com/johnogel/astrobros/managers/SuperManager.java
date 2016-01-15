@@ -35,7 +35,7 @@ private int width, height;
 private ShapeRenderer shape_renderer;
 private float alpha;
 private boolean fading_in, fading_out;
-private final float DELTA = .01f;
+private final float DELTA = .05f;
 
 protected SoundPlayer sound_player;
 public static final int 
@@ -222,7 +222,7 @@ public static final int
 
     @Override
     public void initializeController() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }
