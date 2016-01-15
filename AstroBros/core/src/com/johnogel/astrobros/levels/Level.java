@@ -273,8 +273,9 @@ protected OrthographicCamera camera;
                 if(bro_bodies.contains(contact.getFixtureA().getBody(), false) && bro_bodies.contains(contact.getFixtureB().getBody(), false)){
                     
                     if(bump_sound != null ){ 
-                        bump_sound_id = bump_sound.play(.5f);
-                        bump_sound.setPitch(bump_sound_id, .55f);
+                        /*bump_sound_id = bump_sound.play(.5f);
+                        bump_sound.setPitch(bump_sound_id, .55f);*/
+                        sound_player.playSound(SoundPlayer.BUMP_SOUND, .8f, .55f);
                     }
                     //System.out.println("THEY'RE BROS!!!!!!!!!!!!!!!!!!!!!");
                     //if contact A is free and B is trying to grab
@@ -866,8 +867,10 @@ protected OrthographicCamera camera;
             mngr.addGameObject(s);
         }
         
-        bump_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg"));
-        bump_sound_id = bump_sound.play(0);
+        sound_player.initializeLevelSounds();
+        
+        //bump_sound = sound_player.getSound(SoundPlayer.BUMP_SOUND);
+        //bump_sound_id = bump_sound.play(0);
         
         sun_sound = sound_player.getSunSound();
         
@@ -883,7 +886,7 @@ protected OrthographicCamera camera;
         
         /*music.stop();
         music.dispose();*/
-        sound_player.setSong(SuperManager.GAMEPLAY_SONG);
+        sound_player.setSong(SoundPlayer.GAMEPLAY_SONG);
         
         sound_player.log();
         //music = mngr.getSuperManager().getMusicStream();
@@ -933,10 +936,10 @@ protected OrthographicCamera camera;
             sun_sound.stop();
             
         }
-        if(bump_sound != null){
+        /*if(bump_sound != null){
             bump_sound.stop();
             bump_sound.dispose();
-        }
+        }*/
         //sun_sound.dispose();
         
     }
@@ -975,10 +978,10 @@ protected OrthographicCamera camera;
         mngr.disposeGameObjectTextures();
         background.dispose();
         
-        if(bump_sound != null){
+        /*if(bump_sound != null){
             bump_sound.stop();
             bump_sound.dispose();
-        }
+        }*/
         
         //music.stop();
         //music.dispose();

@@ -140,7 +140,7 @@ public class MenuManager implements Controller{
         ray_handler.setCombinedMatrix(camera);
         
         
-        music.setSong(SuperManager.TITLE_SONG);
+        music.setSong(SoundPlayer.TITLE_SONG);
         music.setLooping(true);
         music.playSong();
         

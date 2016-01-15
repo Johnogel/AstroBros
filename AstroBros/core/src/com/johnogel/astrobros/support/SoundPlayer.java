@@ -18,10 +18,12 @@ import com.badlogic.gdx.utils.Array;
 public class SoundPlayer {
 private Music music, sun;
 private Array<Sound> sounds;
-private Array<FileHandle> file_handles;
+private Array<FileHandle> sound_handles, music_handles;
 public static int
         BUMP_SOUND = 0,
-        STICK_SOUND = 1;
+        STICK_SOUND = 1,
+        GAMEPLAY_SONG = 0,
+        TITLE_SONG = 1;
 
 boolean initialized;
 
@@ -29,26 +31,42 @@ boolean initialized;
     public SoundPlayer(){
         initialized = false;
         sounds = new Array(3);
-        file_handles = new Array(3);
-        sounds.add(Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg")));
-        sounds.add(Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg")));
-        
-        for (Sound s : sounds){
-            s.dispose();
-        }
+        sound_handles = new Array(3);
+        music_handles = new Array(3);
+
     }
     
     public void initialize(){
-        file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
-        file_handles.add(Gdx.files.internal("sounds/stick.ogg"));
-        sun = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
+        sound_handles.add(Gdx.files.internal("sounds/bump.ogg"));
+        sound_handles.add(Gdx.files.internal("sounds/stick.ogg"));
+        music_handles.add(Gdx.files.internal("music/DontSleep.ogg"));
+        music_handles.add(Gdx.files.internal("music/Sleep.ogg"));
         //file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
     }
     
+    public void initializeLevelSounds(){
+        sounds.add(Gdx.audio.newSound(sound_handles.get(0)));
+        sounds.add(Gdx.audio.newSound(sound_handles.get(1)));
+        sun = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
+        
+    }
+    
+    
+    
     public Sound getSound(int index){
         Sound sound = sounds.get(index);
-        sound = Gdx.audio.newSound(file_handles.get(index));
+        sound = Gdx.audio.newSound(sound_handles.get(index));
         return sounds.get(index);
+    }
+    
+    public void playSound(int index, float volume){
+        sounds.get(index).play(volume);
+    }
+    
+    public void playSound(int index, float volume, float pitch){
+        long id = sounds.get(index).play(volume);
+        sounds.get(index).setPitch(id, pitch);
+        
     }
     
     public void playSoundEffect(int index){
@@ -59,7 +77,7 @@ boolean initialized;
         return sun;
     }
     
-    public void setSong(String path){
+    public void setSong(int file_handle){
 
         if(music != null){
             music.setLooping(false);
@@ -75,7 +93,7 @@ boolean initialized;
         }
         //music = null;
         
-        music = Gdx.audio.newMusic(Gdx.files.internal(path));
+        music = Gdx.audio.newMusic(music_handles.get(file_handle));
         
         System.out.println(music.toString());
         
@@ -121,10 +139,17 @@ boolean initialized;
             music.stop();
             music.dispose();
         }
-        sun.dispose();
+        if (sun != null){
+            sun.dispose();
+        }
         for(Sound s : sounds){
             s.dispose();
         }
+        
+        sounds.clear();
+        
+        //sounds.clear();
+        
         //music = null;
     }
     

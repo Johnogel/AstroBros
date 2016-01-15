@@ -36,9 +36,6 @@ protected SoundPlayer sound_player;
 public static final int 
         MENU_MANAGER = 0,
         GAME_MANAGER = 1;
-public static final String
-        GAMEPLAY_SONG = "music/DontSleep.ogg",
-        TITLE_SONG = "music/Sleep.ogg";
 
     public SuperManager(World world, OrthographicCamera camera, RayHandler ray_handler){
         lights = new Array();
@@ -112,6 +109,9 @@ public static final String
     public void initializeWorld(){
         if(ray_handler != null){
             ray_handler.dispose();
+        }
+        if(sound_player != null){
+            sound_player.dispose();
         }
         
         //music.stop();
