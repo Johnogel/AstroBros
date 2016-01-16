@@ -20,7 +20,7 @@ public class TextureHandler implements Disposable{
 private final Array<Texture> textures;
 public TextureAtlas atlas;
 public Array<TextureAtlas> atlases;
-private Array<FileHandle> atlas_handles;
+//private Array<FileHandle> atlas_handles;
 public static final int 
         ASTRO_BRO = 0,
         SUN = 1,
@@ -35,12 +35,15 @@ public static final int
         AWAKE = 0,
         MOVE = 1,
         SLEEP = 2,
-        GOLD = 3;
+        GOLD = 3,
+        SILVER = 4,
+        BRONZE = 5,
+        PLATINUM = 6;
 
     public TextureHandler(){
         textures = new Array(10);  
-        atlases = new Array(3);
-        atlas_handles = new Array(3);
+        atlases = new Array(7);
+       
     }
     
 
@@ -61,6 +64,9 @@ public static final int
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/move/move.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/sleep/sleep.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/gold/gold.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/silver/silver.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/bronze/bronze.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/platinum/platinum.pack")));
 
     }
     

@@ -194,7 +194,7 @@ public static final int
             sound_player.dispose();
         }
         
-        texture_handler.disposeAtlases();
+        //texture_handler.disposeAtlases();
         
         //music.stop();
         //music.dispose();

@@ -84,7 +84,6 @@ public final int
         
         texture_handler = mngr.getTextureHandler();
         
-        
         batch = new SpriteBatch(100);
         
         shape_renderer = new ShapeRenderer();
@@ -216,11 +215,13 @@ public final int
                 ray_handler.setCombinedMatrix(camera);            
             }
             
-            controller.update();
+            
             
             if(!isPaused()){
                 world.step(this.fps, 6, 2);
             }
+            
+            controller.update();
             
         }
         
@@ -400,12 +401,12 @@ public final int
         levels.clear();
         controllers.clear();
         
-        levels.add(new LevelOne(this, 4));
-        levels.add(new LevelTwo(this, 10));
-        levels.add(new LevelThree(this, 10));
+        levels.add(new LevelOne(this, 20));
+        levels.add(new LevelTwo(this, 20));
+        levels.add(new LevelThree(this, 20));
         
         top_score = 0;
-        
+        total_score = 0;
         
         controllers.add(levels.get(0));
         controllers.add(levels.get(1));
