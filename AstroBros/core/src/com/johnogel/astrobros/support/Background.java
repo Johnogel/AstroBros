@@ -35,12 +35,12 @@ private float
         layer_4_y;
 
 private final float
-        SCALE_1 = .45f,
-        SCALE_2 = .25f,
+        SCALE_1 = .25f,
+        SCALE_2 = .10f,
         SCALE_3 = .05f,
         SCALE_4 = .02f,
-        SIZE_1 = .5f,
-        SIZE_2 = .5f,
+        SIZE_1 = .25f,
+        SIZE_2 = .25f,
         SIZE_3 = .3f,
         SIZE_4 = .12f;
 

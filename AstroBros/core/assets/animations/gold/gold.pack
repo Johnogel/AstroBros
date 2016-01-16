@@ -44,28 +44,28 @@ gold
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 1
+  index: 62
 gold
   rotate: false
   xy: 259, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 30
+  index: 48
 gold
   rotate: false
   xy: 517, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 3
+  index: 1
 gold
   rotate: false
   xy: 517, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 14
+  index: 30
 
 gold2.png
 format: RGBA8888
@@ -77,63 +77,63 @@ gold
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 16
+  index: 3
 gold
   rotate: false
   xy: 1, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 7
+  index: 14
 gold
   rotate: false
   xy: 259, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 21
+  index: 76
 gold
   rotate: false
   xy: 1, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 22
+  index: 55
 gold
   rotate: false
   xy: 259, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 36
+  index: 54
 gold
   rotate: false
   xy: 517, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 24
+  index: 16
 gold
   rotate: false
   xy: 259, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 31
+  index: 7
 gold
   rotate: false
   xy: 517, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 23
+  index: 21
 gold
   rotate: false
   xy: 517, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 28
+  index: 22
 
 gold3.png
 format: RGBA8888
@@ -145,63 +145,63 @@ gold
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 25
+  index: 36
 gold
   rotate: false
   xy: 1, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 42
+  index: 24
 gold
   rotate: false
   xy: 259, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 38
+  index: 31
 gold
   rotate: false
   xy: 1, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 40
+  index: 58
 gold
   rotate: false
   xy: 259, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 15
+  index: 23
 gold
   rotate: false
   xy: 517, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 10
+  index: 67
 gold
   rotate: false
   xy: 259, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 17
+  index: 28
 gold
   rotate: false
   xy: 517, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 39
+  index: 25
 gold
   rotate: false
   xy: 517, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 26
+  index: 42
 
 gold4.png
 format: RGBA8888
@@ -213,28 +213,164 @@ gold
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 5
+  index: 38
 gold
   rotate: false
   xy: 1, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 8
+  index: 40
 gold
   rotate: false
   xy: 259, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 13
+  index: 47
 gold
   rotate: false
   xy: 1, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
+  index: 15
+gold
+  rotate: false
+  xy: 259, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 84
+gold
+  rotate: false
+  xy: 517, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 74
+gold
+  rotate: false
+  xy: 259, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 63
+gold
+  rotate: false
+  xy: 517, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 10
+gold
+  rotate: false
+  xy: 517, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 17
+
+gold5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gold
+  rotate: false
+  xy: 1, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 39
+gold
+  rotate: false
+  xy: 1, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 83
+gold
+  rotate: false
+  xy: 259, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 26
+gold
+  rotate: false
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 60
+gold
+  rotate: false
+  xy: 259, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 78
+gold
+  rotate: false
+  xy: 517, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 5
+gold
+  rotate: false
+  xy: 259, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 57
+gold
+  rotate: false
+  xy: 517, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 8
+gold
+  rotate: false
+  xy: 517, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 13
+
+gold6.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gold
+  rotate: false
+  xy: 1, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 61
+gold
+  rotate: false
+  xy: 1, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
   index: 29
+gold
+  rotate: false
+  xy: 259, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 46
+gold
+  rotate: false
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 77
 gold
   rotate: false
   xy: 259, 259
@@ -248,30 +384,30 @@ gold
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 2
+  index: 79
 gold
   rotate: false
   xy: 259, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 33
+  index: 66
 gold
   rotate: false
   xy: 517, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 9
+  index: 43
 gold
   rotate: false
   xy: 517, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 41
+  index: 81
 
-gold5.png
+gold7.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -281,39 +417,222 @@ gold
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 20
+  index: 2
 gold
   rotate: false
   xy: 1, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 19
+  index: 64
 gold
   rotate: false
   xy: 259, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 12
+  index: 59
 gold
   rotate: false
   xy: 1, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 4
+  index: 33
 gold
   rotate: false
   xy: 259, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
-  index: 37
+  index: 9
 gold
   rotate: false
   xy: 517, 517
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
+  index: 41
+gold
+  rotate: false
+  xy: 259, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 75
+gold
+  rotate: false
+  xy: 517, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 20
+gold
+  rotate: false
+  xy: 517, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 70
+
+gold8.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gold
+  rotate: false
+  xy: 1, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 44
+gold
+  rotate: false
+  xy: 1, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 50
+gold
+  rotate: false
+  xy: 259, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 19
+gold
+  rotate: false
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 12
+gold
+  rotate: false
+  xy: 259, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 71
+gold
+  rotate: false
+  xy: 517, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 82
+gold
+  rotate: false
+  xy: 259, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 56
+gold
+  rotate: false
+  xy: 517, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 49
+gold
+  rotate: false
+  xy: 517, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 80
+
+gold9.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gold
+  rotate: false
+  xy: 1, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 53
+gold
+  rotate: false
+  xy: 1, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 68
+gold
+  rotate: false
+  xy: 259, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 4
+gold
+  rotate: false
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 37
+gold
+  rotate: false
+  xy: 259, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 52
+gold
+  rotate: false
+  xy: 517, 517
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 69
+gold
+  rotate: false
+  xy: 259, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 65
+gold
+  rotate: false
+  xy: 517, 259
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 45
+gold
+  rotate: false
+  xy: 517, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 72
+
+gold10.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gold
+  rotate: false
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
   index: 18
+gold
+  rotate: false
+  xy: 259, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 51
+gold
+  rotate: false
+  xy: 517, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 73
