@@ -6,6 +6,7 @@
 package com.johnogel.astrobros.support;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
@@ -19,6 +20,7 @@ public class TextureHandler implements Disposable{
 private final Array<Texture> textures;
 public TextureAtlas atlas;
 public Array<TextureAtlas> atlases;
+private Array<FileHandle> atlas_handles;
 public static final int 
         ASTRO_BRO = 0,
         SUN = 1,
@@ -38,6 +40,7 @@ public static final int
     public TextureHandler(){
         textures = new Array(10);  
         atlases = new Array(3);
+        atlas_handles = new Array(3);
     }
     
     public void initialize(){
@@ -52,10 +55,14 @@ public static final int
         textures.add(new Texture(Gdx.files.internal("locator.png")));
         textures.add(new Texture(Gdx.files.internal("paused.png")));
         //atlas = new TextureAtlas(Gdx.files.internal("bro/bros.pack"));
-        atlases.add(new TextureAtlas(Gdx.files.internal("animations/awake/awake.pack")));
+        /*atlases.add(new TextureAtlas(Gdx.files.internal("animations/awake/awake.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/move/move.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/sleep/sleep.pack")));
-        atlases.add(new TextureAtlas(Gdx.files.internal("animations/gold/gold.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/gold/gold.pack")));*/
+        atlas_handles.add(Gdx.files.internal("animations/awake/awake.pack"));
+        atlas_handles.add(Gdx.files.internal("animations/move/move.pack"));
+        atlas_handles.add(Gdx.files.internal("animations/sleep/sleep.pack"));
+        atlas_handles.add(Gdx.files.internal("animations/gold/gold.pack"));
     }
     
     public Texture getTexture(int texture){
@@ -67,7 +74,15 @@ public static final int
     }*/
     
     public TextureAtlas getTextureAtlas(int index){
-        return atlases.get(index);
+        atlases.add(new TextureAtlas(atlas_handles.get(index)));
+        return atlases.get(atlases.size - 1);
+    }
+    
+    public void disposeAtlases(){
+        for (TextureAtlas a : atlases){
+            a.dispose();
+        }
+        atlases.clear();
     }
     
     @Override
@@ -78,6 +93,8 @@ public static final int
         for(TextureAtlas a : atlases){
             a.dispose();
         }
+        
+        
         //atlas.dispose();
     }
     

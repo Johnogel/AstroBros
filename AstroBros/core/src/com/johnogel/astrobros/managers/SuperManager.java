@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.support.SoundPlayer;
+import com.johnogel.astrobros.support.TextureHandler;
 
 
 /**
@@ -38,6 +39,7 @@ private boolean fading_in, fading_out;
 private final float DELTA = .05f;
 private int index;
 private boolean super_controller_changed;
+private final TextureHandler texture_handler;
 
 protected SoundPlayer sound_player;
 public static final int 
@@ -51,6 +53,9 @@ public static final int
         this.world = world;
         this.camera = camera;
         this.ray_handler = ray_handler;
+        
+        texture_handler = new TextureHandler();
+        texture_handler.initialize();
         
         alpha = 0f;
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
@@ -84,7 +89,11 @@ public static final int
             manager.update();
         }
     }
-
+    
+    public TextureHandler getTextureHandler(){
+        return texture_handler;
+    }
+    
     @Override
     public void render() {
         manager.render();
@@ -170,6 +179,8 @@ public static final int
         manager.dispose();
         sound_player.dispose();
         shape_renderer.dispose();
+        texture_handler.dispose();
+
     }
 
 
@@ -182,6 +193,8 @@ public static final int
         if(sound_player != null){
             sound_player.dispose();
         }
+        
+        texture_handler.disposeAtlases();
         
         //music.stop();
         //music.dispose();

@@ -82,8 +82,8 @@ public final int
         levels = new Array(6);
         controllers = new Array(10);        
         
-        texture_handler = new TextureHandler();
-        texture_handler.initialize();
+        texture_handler = mngr.getTextureHandler();
+        
         
         batch = new SpriteBatch(100);
         
@@ -295,7 +295,6 @@ public final int
     public void dispose() {
         batch.dispose();
         world.dispose();
-        texture_handler.dispose();
     }
     
     public SpriteBatch getSpriteBatch(){
@@ -328,7 +327,7 @@ public final int
     }
     
     public TextureHandler getTextureHandler(){
-        return this.texture_handler;
+        return mngr.getTextureHandler();
     }
     
 @Override
