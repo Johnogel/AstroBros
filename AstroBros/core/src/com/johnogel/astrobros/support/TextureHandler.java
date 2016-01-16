@@ -43,6 +43,8 @@ public static final int
         atlas_handles = new Array(3);
     }
     
+
+    
     public void initialize(){
         textures.add(new Texture(Gdx.files.internal("test.png")));
         textures.add(new Texture(Gdx.files.internal("SunOutline.png")));
@@ -55,14 +57,11 @@ public static final int
         textures.add(new Texture(Gdx.files.internal("locator.png")));
         textures.add(new Texture(Gdx.files.internal("paused.png")));
         //atlas = new TextureAtlas(Gdx.files.internal("bro/bros.pack"));
-        /*atlases.add(new TextureAtlas(Gdx.files.internal("animations/awake/awake.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/awake/awake.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/move/move.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/sleep/sleep.pack")));
-        atlases.add(new TextureAtlas(Gdx.files.internal("animations/gold/gold.pack")));*/
-        atlas_handles.add(Gdx.files.internal("animations/awake/awake.pack"));
-        atlas_handles.add(Gdx.files.internal("animations/move/move.pack"));
-        atlas_handles.add(Gdx.files.internal("animations/sleep/sleep.pack"));
-        atlas_handles.add(Gdx.files.internal("animations/gold/gold.pack"));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/gold/gold.pack")));
+
     }
     
     public Texture getTexture(int texture){
@@ -74,8 +73,8 @@ public static final int
     }*/
     
     public TextureAtlas getTextureAtlas(int index){
-        atlases.add(new TextureAtlas(atlas_handles.get(index)));
-        return atlases.get(atlases.size - 1);
+        return atlases.get(index);
+        
     }
     
     public void disposeAtlases(){
