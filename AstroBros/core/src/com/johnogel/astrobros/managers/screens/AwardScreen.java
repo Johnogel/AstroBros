@@ -25,11 +25,11 @@ import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
 public class AwardScreen extends GameScreen{
 
     private final BitmapFont font;
-    private final CharSequence game_over, press_space;
-    private CharSequence score;
+    private final CharSequence game_over;
+    private CharSequence middle_text, bottom_text;
     private GlyphLayout layout_top, layout_bottom, layout_middle;
-    final float top_font_x, bottom_font_x;
-    final float top_font_y, bottom_font_y;
+    private float top_font_x, bottom_font_x;
+    private float top_font_y, bottom_font_y;
     private float middle_font_x, middle_font_y;
     private int level;
     private Animation animation;
@@ -44,12 +44,12 @@ public class AwardScreen extends GameScreen{
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         font.getData().setScale(0.3f, 0.3f);  
         game_over = "AWARD!";
-        press_space = "PRESS SPACE TO CONTINUE";
-        score = "0";
+        bottom_text = "";
+        middle_text = "0";
         
         layout_top = new GlyphLayout(font, game_over);
         
-        layout_bottom = new GlyphLayout(font, press_space);
+        layout_bottom = new GlyphLayout(font, bottom_text);
         top_font_x =  -layout_top.width / 2;
         top_font_y =  20;
         
@@ -70,6 +70,9 @@ public class AwardScreen extends GameScreen{
         
         ray_handler.setCombinedMatrix(camera.combined);
         
+        bottom_font_x =  -layout_bottom.width / 2;
+        bottom_font_y =  -20;
+        
         if(sprite.isAnimationFinished()){
             sprite.setTime(0);
             sprite.play();
@@ -88,7 +91,7 @@ public class AwardScreen extends GameScreen{
         batch.begin();
         //font.draw(batch, layout_top, top_font_x, top_font_y);
         //font.draw(batch, layout_middle, middle_font_x, middle_font_y);
-        //font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);       
+        font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);       
         batch.draw(animation.getKeyFrame(state_time), -19, 0, 38, 38);
         batch.end();
         //batch.setProjectionMatrix(camera.projection);
@@ -107,35 +110,56 @@ public class AwardScreen extends GameScreen{
         initializeWorld();
         updateReferences();
         String s = ""+mngr.getPreviousScore();
-        score = "YOU SAVED " + s + " BROS";
+        middle_text = "YOU SAVED " + s + " BROS";
         System.out.println("score: "+s);
-        layout_middle = new GlyphLayout(font, score);
-        new PointLight(ray_handler, 5000, Color.WHITE, 500, camera.viewportWidth/2, -300 );
-        new PointLight(ray_handler, 5000, Color.BLACK, 500, camera.viewportWidth/2, 300 );
-        new PointLight(ray_handler, 5000, Color.BLACK, 500, -camera.viewportWidth/2, -300 );
-        new PointLight(ray_handler, 5000, Color.WHITE, 500, -camera.viewportWidth/2, 300 );
+        layout_middle = new GlyphLayout(font, middle_text);
+        
         
         int total_score = mngr.getTotalScore();
         int top_score =  mngr.getTopScore();
         //AnimatedSprite sp;
         
         //adding moving animation
+        Color color;
+        
         if(total_score == top_score){
             animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.PLATINUM).getRegions());
+            middle_text = "";
+            bottom_text = "PERFECT!";
+            color = Color.WHITE;
         }
         else if(mngr.getTotalScore() > mngr.getTopScore()-2){
             animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.GOLD).getRegions());
+            middle_text = "AWESOME!";
+            bottom_text = "TRY FOR PLATINUM!";
+            color = Color.GOLD;
         }
         else if(mngr.getTotalScore() > mngr.getTopScore()-5){
             animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.SILVER).getRegions());
+            middle_text = "GREAT!";
+            bottom_text = "TRY FOR GOLD!";
+            color = Color.SLATE;
         }
         else if(mngr.getTotalScore() > mngr.getTopScore() - 8){
             animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.BRONZE).getRegions());
+            middle_text = "GOOD!";
+            bottom_text = "TRY FOR SILVER!";
+            color = Color.TAN;
         }
         else{
             animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.BRONZE).getRegions());
+            middle_text = "";
+            bottom_text = "WHAT!";
+            color = Color.BLACK;
         }
-            sprite = new AnimatedSprite(animation);
+        
+        new PointLight(ray_handler, 5000, color, 500, camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, Color.BLACK, 500, camera.viewportWidth/2, 300 );
+        new PointLight(ray_handler, 5000, Color.BLACK, 500, -camera.viewportWidth/2, -300 );
+        new PointLight(ray_handler, 5000, color, 500, -camera.viewportWidth/2, 300 );
+        
+        layout_bottom = new GlyphLayout(font, bottom_text);
+        sprite = new AnimatedSprite(animation);
         
         animation.setPlayMode(Animation.PlayMode.LOOP);
         sprite.setTime(0);

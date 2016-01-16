@@ -404,7 +404,7 @@ public final int
         levels.add(new LevelThree(this, 20));
         
         top_score = 0;
-        
+        total_score = 0;
         
         controllers.add(levels.get(0));
         controllers.add(levels.get(1));
@@ -486,7 +486,7 @@ public final int
     
     public void incrementLevel(){
         mngr.transition();
-        if (level < levels.size - 1/*change back to one*/){
+        if (level < levels.size - 3/*change back to one*/){
             this.setLevel(level + 1);
         }
         else{
