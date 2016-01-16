@@ -215,11 +215,13 @@ public final int
                 ray_handler.setCombinedMatrix(camera);            
             }
             
-            controller.update();
+            
             
             if(!isPaused()){
                 world.step(this.fps, 6, 2);
             }
+            
+            controller.update();
             
         }
         
