@@ -45,7 +45,7 @@ public class AwardScreen extends GameScreen{
         font.getData().setScale(0.3f, 0.3f);  
         game_over = "AWARD!";
         bottom_text = "";
-        middle_text = "0";
+        //middle_text = "0";
         
         layout_top = new GlyphLayout(font, game_over);
         
@@ -90,7 +90,7 @@ public class AwardScreen extends GameScreen{
         super.render();
         batch.begin();
         //font.draw(batch, layout_top, top_font_x, top_font_y);
-        //font.draw(batch, layout_middle, middle_font_x, middle_font_y);
+        font.draw(batch, layout_middle, middle_font_x, middle_font_y);
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);       
         batch.draw(animation.getKeyFrame(state_time), -19, 0, 38, 38);
         batch.end();
@@ -110,9 +110,9 @@ public class AwardScreen extends GameScreen{
         initializeWorld();
         updateReferences();
         String s = ""+mngr.getPreviousScore();
-        middle_text = "YOU SAVED " + s + " BROS";
+        //middle_text = "YOU SAVED " + s + " BROS";
         System.out.println("score: "+s);
-        layout_middle = new GlyphLayout(font, middle_text);
+        
         
         
         int total_score = mngr.getTotalScore();
@@ -153,11 +153,12 @@ public class AwardScreen extends GameScreen{
             color = Color.BLACK;
         }
         
+        
         new PointLight(ray_handler, 5000, color, 500, camera.viewportWidth/2, -300 );
         new PointLight(ray_handler, 5000, Color.BLACK, 500, camera.viewportWidth/2, 300 );
         new PointLight(ray_handler, 5000, Color.BLACK, 500, -camera.viewportWidth/2, -300 );
         new PointLight(ray_handler, 5000, color, 500, -camera.viewportWidth/2, 300 );
-        
+        layout_middle = new GlyphLayout(font, middle_text);
         layout_bottom = new GlyphLayout(font, bottom_text);
         sprite = new AnimatedSprite(animation);
         
