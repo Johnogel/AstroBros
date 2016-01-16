@@ -182,7 +182,7 @@ protected OrthographicCamera camera;
             sun_bodies.add(s.getBody());
         }
         
-        setBroTextures();
+        //setBroTextures();
         
         initializeAnimations();
         
@@ -463,9 +463,7 @@ protected OrthographicCamera camera;
 
             mngr.updateGameObjects();
 
-            if(dead){
-                notifyLoss();
-            }
+            
             
             /*this was the part where you could switch, but I'm nixing it
             //switches player if connected
@@ -593,6 +591,9 @@ protected OrthographicCamera camera;
                 updateSunSound();
                 background.update();
                 updateLocators(mngr.getSpriteBatch());
+            }
+            if(dead){
+                notifyLoss();
             }
             
             
@@ -910,11 +911,6 @@ protected OrthographicCamera camera;
         return this.texture_handler;
     }
     
-    private void setBroTextures(){
-        for(Player p : bros){
-            p.setTexture(mngr.getTextureHandler().getTexture(TextureHandler.ASTRO_BRO));
-        }
-    }
     
     public void clearArrays(){
         

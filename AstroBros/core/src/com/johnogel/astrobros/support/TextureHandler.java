@@ -20,18 +20,21 @@ public class TextureHandler implements Disposable{
 private final Array<Texture> textures;
 public TextureAtlas atlas;
 public Array<TextureAtlas> atlases;
+public Array<FileHandle> texture_handles;
+private Texture placeholder;
 //private Array<FileHandle> atlas_handles;
 public static final int 
-        ASTRO_BRO = 0,
-        SUN = 1,
-        BOUNDARY_RED = 2,
-        BOUNDARY_BLUE = 3,
-        BOUNDARY_OUTER = 4,
-        BACKGROUND = 5,
-        BACKGROUND_BIG = 6,
-        BACKGROUND_SMALL = 7,
-        LOCATOR = 8,
-        PAUSED= 9,
+        
+        SUN = 0,
+        BOUNDARY_RED = 1,
+        BOUNDARY_BLUE = 2,
+        BOUNDARY_OUTER = 3,
+        BACKGROUND = 4,
+        BACKGROUND_BIG = 5,
+        BACKGROUND_SMALL = 6,
+        LOCATOR = 7,
+        PAUSED= 8,
+        TEMP = 9,
         AWAKE = 0,
         MOVE = 1,
         SLEEP = 2,
@@ -42,14 +45,17 @@ public static final int
 
     public TextureHandler(){
         textures = new Array(10);  
-        atlases = new Array(7);
+        atlases = new Array(5);
+        texture_handles = new Array(10);
        
     }
     
 
     
     public void initialize(){
-        textures.add(new Texture(Gdx.files.internal("test.png")));
+        
+        
+        
         textures.add(new Texture(Gdx.files.internal("SunOutline.png")));
         textures.add(new Texture(Gdx.files.internal("boundary-red.png")));
         textures.add(new Texture(Gdx.files.internal("boundary-blue.png")));
@@ -59,7 +65,18 @@ public static final int
         textures.add(new Texture(Gdx.files.internal("background-small.png")));
         textures.add(new Texture(Gdx.files.internal("locator.png")));
         textures.add(new Texture(Gdx.files.internal("paused.png")));
-        //atlas = new TextureAtlas(Gdx.files.internal("bro/bros.pack"));
+        textures.add(new Texture(Gdx.files.internal("test.png")));
+        
+        texture_handles.add(Gdx.files.internal("SunOutline.png"));
+        texture_handles.add(Gdx.files.internal("boundary-red.png"));
+        texture_handles.add(Gdx.files.internal("boundary-blue.png"));
+        texture_handles.add(Gdx.files.internal("boundary-outer.png"));
+        texture_handles.add(Gdx.files.internal("background.png"));
+        texture_handles.add(Gdx.files.internal("background-big.png"));
+        texture_handles.add(Gdx.files.internal("background-small.png"));
+        texture_handles.add(Gdx.files.internal("locator.png"));
+        texture_handles.add(Gdx.files.internal("paused.png"));
+        
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/awake/awake.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/move/move.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/sleep/sleep.pack")));
@@ -67,11 +84,17 @@ public static final int
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/silver/silver.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/bronze/bronze.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/platinum/platinum.pack")));
-
+        
+        disposeAndClear();
     }
     
-    public Texture getTexture(int texture){
-        return textures.get(texture);
+    public Texture getTexture(int index){
+        Texture t1 = textures.get(index);
+        Texture t2 = textures.get(TEMP);
+        if(t1 == t2){
+            textures.set(index, new Texture(texture_handles.get(index)));
+        }
+        return textures.get(index);
     }
     
     /*public TextureAtlas getBroPack(){
@@ -83,11 +106,15 @@ public static final int
         
     }
     
-    public void disposeAtlases(){
-        for (TextureAtlas a : atlases){
+    public void disposeAndClear(){
+        /*for (TextureAtlas a : atlases){
             a.dispose();
+        }*/
+        for(int i = 0; i < textures.size - 1; i++){
+            textures.get(i).dispose();
+            textures.set(i, textures.get(TEMP));
         }
-        atlases.clear();
+        //atlases.clear();
     }
     
     @Override
@@ -95,12 +122,10 @@ public static final int
         for(Texture t : textures){
             t.dispose();
         }
+        
         for(TextureAtlas a : atlases){
             a.dispose();
         }
-        
-        
-        //atlas.dispose();
     }
     
     
