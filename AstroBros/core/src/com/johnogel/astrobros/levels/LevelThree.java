@@ -39,9 +39,9 @@ public class LevelThree extends Level{
 
         //this.free_bros.add(new Player(world, camera, 1));
         //this.free_bros.add(new Player(world, camera, 120));
-        //this.free_bros.add(new Player(world, camera, 100));
-        //this.free_bros.add(new Player(world, camera, 50));
-        this.free_bros.add(new Player(world, camera, 80));
+        this.free_bros.add(new Player(world, camera, 100));
+        this.free_bros.add(new Player(world, camera, 130));
+        this.free_bros.add(new Player(world, camera, 160));
                                 
         //world.createJoint(joint_def);
         

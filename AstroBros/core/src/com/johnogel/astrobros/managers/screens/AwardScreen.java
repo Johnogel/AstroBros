@@ -115,11 +115,27 @@ public class AwardScreen extends GameScreen{
         new PointLight(ray_handler, 5000, Color.BLACK, 500, -camera.viewportWidth/2, -300 );
         new PointLight(ray_handler, 5000, Color.WHITE, 500, -camera.viewportWidth/2, 300 );
         
+        int total_score = mngr.getTotalScore();
+        int top_score =  mngr.getTopScore();
         //AnimatedSprite sp;
         
         //adding moving animation
-        animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.GOLD).getRegions());
-        sprite = new AnimatedSprite(animation);
+        if(total_score == top_score){
+            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.PLATINUM).getRegions());
+        }
+        else if(mngr.getTotalScore() > mngr.getTopScore()-2){
+            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.GOLD).getRegions());
+        }
+        else if(mngr.getTotalScore() > mngr.getTopScore()-5){
+            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.SILVER).getRegions());
+        }
+        else if(mngr.getTotalScore() > mngr.getTopScore() - 8){
+            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.BRONZE).getRegions());
+        }
+        else{
+            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.BRONZE).getRegions());
+        }
+            sprite = new AnimatedSprite(animation);
         
         animation.setPlayMode(Animation.PlayMode.LOOP);
         sprite.setTime(0);

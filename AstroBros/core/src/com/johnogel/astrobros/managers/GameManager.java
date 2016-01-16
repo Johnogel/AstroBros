@@ -84,7 +84,6 @@ public final int
         
         texture_handler = mngr.getTextureHandler();
         
-        
         batch = new SpriteBatch(100);
         
         shape_renderer = new ShapeRenderer();
@@ -400,9 +399,9 @@ public final int
         levels.clear();
         controllers.clear();
         
-        levels.add(new LevelOne(this, 4));
-        levels.add(new LevelTwo(this, 10));
-        levels.add(new LevelThree(this, 10));
+        levels.add(new LevelOne(this, 20));
+        levels.add(new LevelTwo(this, 20));
+        levels.add(new LevelThree(this, 20));
         
         top_score = 0;
         
@@ -487,7 +486,7 @@ public final int
     
     public void incrementLevel(){
         mngr.transition();
-        if (level < levels.size - 3/*change back to one*/){
+        if (level < levels.size - 1/*change back to one*/){
             this.setLevel(level + 1);
         }
         else{
