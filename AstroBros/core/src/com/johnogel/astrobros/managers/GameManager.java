@@ -294,7 +294,7 @@ public final int
     @Override
     public void dispose() {
         batch.dispose();
-        world.dispose();
+        //world.dispose();
     }
     
     public SpriteBatch getSpriteBatch(){

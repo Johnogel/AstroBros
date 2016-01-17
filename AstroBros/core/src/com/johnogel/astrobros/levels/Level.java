@@ -843,7 +843,7 @@ private float corner_x, corner_y;
     //call in initialize method
     protected void initializePlayer(){
         player_index = 0;
-        controlled_bros.add(new Player(world, camera, 40));
+        controlled_bros.add(new Player(world, camera, 70));
         player = (Player)controlled_bros.get(player_index);
         player.enablePlayer();
         

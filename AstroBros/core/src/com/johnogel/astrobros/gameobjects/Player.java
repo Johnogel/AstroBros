@@ -129,7 +129,7 @@ private boolean active_player;
     
     public void setOrbit(Sun sun){
         float distance = body.getPosition().dst(sun.getPosition());
-        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass() - 10000)/distance));
+        body.setLinearVelocity(0, (float)Math.sqrt((body.getMass()*(sun.getMass() - 90000))*.005f/distance));
         System.out.println("\nMASS OF SUN: "+sun.getMass()+"\nVELOCITY: "+body.getLinearVelocity().y);
     }
     

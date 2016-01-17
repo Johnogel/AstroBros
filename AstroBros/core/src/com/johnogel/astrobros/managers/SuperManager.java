@@ -221,7 +221,10 @@ public static final int
     
     @Override
     public void dispose() {
-        manager.dispose();
+        for(Controller m: managers){
+            m.dispose();
+        }
+        
         sound_player.dispose();
         shape_renderer.dispose();
         
