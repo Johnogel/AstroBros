@@ -513,7 +513,7 @@ public final int
     public void incrementLevel(){
         mngr.transition();
 
-        if(level < levels.size - 4/*change back to two*/){
+        if(level < levels.size - 2/*change back to two*/){
             this.setLevel(level + 1);
         }
         else{
