@@ -8,6 +8,7 @@ package com.johnogel.astrobros.managers.screens;
 import box2dLight.PointLight;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -76,6 +77,11 @@ public class GameOverScreen extends GameScreen{
     public void initialize() {
         initializeWorld();
         this.updateReferences();
+        mngr.getSuperManager().getSoundPlayer().initializeLevelSounds();
+        Music s = mngr.getSuperManager().getSoundPlayer().getSunSound(); 
+        
+        s.setLooping(true);
+        s.play();
         new PointLight(ray_handler, 5000, Color.RED, 500, -camera.viewportWidth/2, -300 );
         new PointLight(ray_handler, 5000, Color.RED, 500, camera.viewportWidth/2, -300 );
         new PointLight(ray_handler, 5000, Color.RED, 500, -camera.viewportWidth/2, 300 );

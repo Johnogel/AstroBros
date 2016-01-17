@@ -16,16 +16,12 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author johno-gel
  */
 public class Player extends NonPlayer{
-private final int max_vel = 3000, max_force = 12000;
+private final int max_vel = 3000, max_force = 5000;
 private boolean space_pressed;
 private boolean active_player;
 
     public Player(World world, OrthographicCamera camera){
-        super(world, camera);
-        
-        
-
-  
+        super(world, camera);  
     }
     
     public Player(World world, OrthographicCamera camera, float distance) {
@@ -133,7 +129,7 @@ private boolean active_player;
     
     public void setOrbit(Sun sun){
         float distance = body.getPosition().dst(sun.getPosition());
-        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass())/distance));
+        body.setLinearVelocity(0, (float)Math.sqrt((sun.getMass() - 10000)/distance));
         System.out.println("\nMASS OF SUN: "+sun.getMass()+"\nVELOCITY: "+body.getLinearVelocity().y);
     }
     

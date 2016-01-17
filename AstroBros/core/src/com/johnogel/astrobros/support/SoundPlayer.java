@@ -22,6 +22,7 @@ private final Array<FileHandle> sound_handles, music_handles;
 public static int
         BUMP_SOUND = 0,
         STICK_SOUND = 1,
+        SIZZLE_SOUND = 2,
         GAMEPLAY_SONG = 0,
         TITLE_SONG = 1,
         BURNED_OUT = 2,
@@ -41,6 +42,7 @@ boolean initialized;
     public void initialize(){
         sound_handles.add(Gdx.files.internal("sounds/bump.ogg"));
         sound_handles.add(Gdx.files.internal("sounds/stick.ogg"));
+        sound_handles.add(Gdx.files.internal("sounds/sizzle.ogg"));
         music_handles.add(Gdx.files.internal("music/AstroPlay.ogg"));
         music_handles.add(Gdx.files.internal("music/Astro.ogg"));
         music_handles.add(Gdx.files.internal("music/BurnedOut.ogg"));
@@ -51,6 +53,7 @@ boolean initialized;
     public void initializeLevelSounds(){
         sounds.add(Gdx.audio.newSound(sound_handles.get(0)));
         sounds.add(Gdx.audio.newSound(sound_handles.get(1)));
+        sounds.add(Gdx.audio.newSound(sound_handles.get(2)));
         sun = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
         
     }

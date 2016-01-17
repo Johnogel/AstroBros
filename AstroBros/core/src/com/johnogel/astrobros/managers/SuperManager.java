@@ -129,6 +129,7 @@ public static final int
 
                         manager = managers.get(index);
                         this.super_controller_changed = false;
+                        sound_player.dispose();
                         manager.initialize();
                         manager.update();
                     }

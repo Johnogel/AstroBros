@@ -37,10 +37,10 @@ import com.johnogel.astrobros.gameobjects.CircleObject;
 import com.johnogel.astrobros.gameobjects.Locator;
 import com.johnogel.astrobros.gameobjects.NonPlayer;
 import com.johnogel.astrobros.interfaces.Controller;
-import com.johnogel.astrobros.managers.SuperManager;
 import com.johnogel.astrobros.support.Background;
 import com.johnogel.astrobros.support.SoundPlayer;
 import com.johnogel.astrobros.support.TextureHandler;
+import java.util.Random;
 
 /**
  *
@@ -91,7 +91,7 @@ protected Sound bump_sound;
 protected Music sun_sound;
 
 protected int total_bros;
-protected boolean dead, paused;
+protected boolean dead, paused, sizzle;
 
 private final SoundPlayer sound_player;
 
@@ -163,6 +163,8 @@ private float corner_x, corner_y;
         sound_player = mngr.getSuperManager().getSoundPlayer();
         
         bumps  = 0;
+        
+        sizzle = false;
     }
     
     public Player getPlayer(){
@@ -228,6 +230,8 @@ private float corner_x, corner_y;
                 //check if a bro is touching the sun
                 if (contact.getFixtureA().getBody().equals(suns.get(0).getBody())
                         || contact.getFixtureB().getBody().equals(suns.get(0).getBody())){
+                    
+                    sizzle = true;
                     
                 
                     if (bro_bodies.contains(contact.getFixtureA().getBody(), true)){
@@ -462,6 +466,13 @@ private float corner_x, corner_y;
         
         
         if(!paused){
+            
+            if(sizzle){
+                Random r = new Random();
+                
+                sound_player.playSound(SoundPlayer.SIZZLE_SOUND, .9f, r.nextFloat()*5+1.0f);
+                sizzle = false;
+            }
         
             this.camera_last_x = camera.position.x;
             this.camera_last_y = camera.position.y;
@@ -779,7 +790,7 @@ private float corner_x, corner_y;
         
         batch.begin();
         for (int i = 0; i < mngr.getLives(); i++){
-            batch.draw(this.texture_handler.getTexture(TextureHandler.LIFE), corner_x + 11 * i, corner_y, 10, 10);
+            batch.draw(this.texture_handler.getTexture(TextureHandler.LIFE), corner_x + 9 * i, corner_y, 8, 8);
         }
         batch.end();
     }
