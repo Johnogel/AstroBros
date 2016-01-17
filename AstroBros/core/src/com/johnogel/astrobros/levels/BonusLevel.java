@@ -277,6 +277,7 @@ public class BonusLevel extends Level{
         
         //sun_sound_id = sun_sound.play(0);
         sun_sound.setLooping(true);
+        sun_sound.setVolume(1);
         sun_sound.play();
         
         total_bros = bros.size;

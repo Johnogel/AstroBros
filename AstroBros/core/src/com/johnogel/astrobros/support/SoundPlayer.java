@@ -134,6 +134,7 @@ boolean initialized;
     
     public void stop(){
         music.stop();
+        sun.stop();
     }
     
     public void setVolume(float volume){

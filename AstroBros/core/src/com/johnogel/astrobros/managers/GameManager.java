@@ -496,6 +496,7 @@ public final int
     public void resolveBonusWin(){
         mngr.transition();
         
+        
     }
     
     public int getCurrentLevel(){
