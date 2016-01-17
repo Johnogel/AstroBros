@@ -26,7 +26,8 @@ public static int
         GAMEPLAY_SONG = 0,
         TITLE_SONG = 1,
         BURNED_OUT = 2,
-        WIN_JINGLE = 3;
+        WIN_JINGLE = 3,
+        AWARDED = 4;
 
 boolean initialized;
 
@@ -47,6 +48,7 @@ boolean initialized;
         music_handles.add(Gdx.files.internal("music/Astro.ogg"));
         music_handles.add(Gdx.files.internal("music/BurnedOut.ogg"));
         music_handles.add(Gdx.files.internal("music/WinJingle.ogg"));
+        music_handles.add(Gdx.files.internal("music/Awarded.ogg"));
         //file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
     }
     

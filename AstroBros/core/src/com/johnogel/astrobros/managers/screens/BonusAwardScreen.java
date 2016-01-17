@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.johnogel.astrobros.managers.GameManager;
 import com.johnogel.astrobros.managers.SuperManager;
+import com.johnogel.astrobros.support.SoundPlayer;
 import com.johnogel.astrobros.support.TextureHandler;
 import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
 
@@ -112,7 +113,11 @@ public class BonusAwardScreen extends GameScreen{
         //middle_text = "YOU SAVED " + s + " BROS";
         System.out.println("score: "+s);
         
-        
+        SoundPlayer sp = mngr.getSuperManager().getSoundPlayer();
+        sp.setSong(SoundPlayer.AWARDED);
+        sp.setLooping(true);
+        sp.setVolume(.9f);
+        sp.playSong();
         
         int total_score = mngr.getTotalScore();
         int top_score =  mngr.getTopScore();
