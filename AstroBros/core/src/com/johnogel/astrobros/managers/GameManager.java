@@ -72,7 +72,7 @@ public final int
 
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
-        this.fps = 1/60f;
+        this.fps = 1/48f;
         max_count = 50;
         alpha = 1;
         delta = .001f;
@@ -214,7 +214,7 @@ public final int
             
             
             if(!isPaused()){
-                world.step(this.fps, 6, 2);
+                world.step(this.fps, 8, 4);
             }
             
             controller.update();

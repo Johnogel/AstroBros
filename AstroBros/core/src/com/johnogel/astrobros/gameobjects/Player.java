@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author johno-gel
  */
 public class Player extends NonPlayer{
-private final int max_vel = 3500, max_force = 20000;
+private final int max_vel = 5000, max_force = 20000;
 private boolean space_pressed;
 private boolean active_player;
 
