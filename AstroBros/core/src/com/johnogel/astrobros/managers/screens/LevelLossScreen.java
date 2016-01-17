@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.johnogel.astrobros.managers.GameManager;
+import com.johnogel.astrobros.support.SoundPlayer;
 
 /**
  *
@@ -76,6 +77,11 @@ public class LevelLossScreen extends GameScreen{
         
         initializeWorld();
         this.updateReferences();
+        SoundPlayer sp = mngr.getSuperManager().getSoundPlayer();
+        sp.setSong(SoundPlayer.BURNED_OUT);
+        sp.setLooping(false);
+        sp.setVolume(.9f);
+        sp.playSong();
         new PointLight(ray_handler, 5000, Color.YELLOW, 500, -camera.viewportWidth/2, -300 );
         new PointLight(ray_handler, 5000, Color.YELLOW, 500, camera.viewportWidth/2, -300 );
         new PointLight(ray_handler, 5000, Color.YELLOW, 500, -camera.viewportWidth/2, 300 );

@@ -23,7 +23,8 @@ public static int
         BUMP_SOUND = 0,
         STICK_SOUND = 1,
         GAMEPLAY_SONG = 0,
-        TITLE_SONG = 1;
+        TITLE_SONG = 1,
+        BURNED_OUT = 2;
 
 boolean initialized;
 
@@ -41,6 +42,7 @@ boolean initialized;
         sound_handles.add(Gdx.files.internal("sounds/stick.ogg"));
         music_handles.add(Gdx.files.internal("music/AstroPlay.ogg"));
         music_handles.add(Gdx.files.internal("music/Astro.ogg"));
+        music_handles.add(Gdx.files.internal("music/BurnedOut.ogg"));
         //file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
     }
     
