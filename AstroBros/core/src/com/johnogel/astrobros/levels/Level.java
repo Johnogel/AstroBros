@@ -155,7 +155,7 @@ protected OrthographicCamera camera;
         //bump_sound_id = bump_sound.play(0);
         //sun_sound_id = sun_sound.play(0);
         
-        sound_player = mngr.getSuperManager().getMusicPlayer();
+        sound_player = mngr.getSuperManager().getSoundPlayer();
         
         bumps  = 0;
     }

@@ -6,11 +6,12 @@
 package com.johnogel.astrobros.support;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.johnogel.astrobros.managers.SuperManager;
 
 /**
  *
@@ -20,6 +21,8 @@ public class TextureHandler implements Disposable{
 private final Array<Texture> textures;
 public TextureAtlas atlas;
 public Array<TextureAtlas> atlases;
+private Array<String> filenames, unloads;
+private AssetManager mngr;
 //private Array<FileHandle> atlas_handles;
 public static final int 
         ASTRO_BRO = 0,
@@ -32,24 +35,26 @@ public static final int
         BACKGROUND_SMALL = 7,
         LOCATOR = 8,
         PAUSED= 9,
-        AWAKE = 0,
-        MOVE = 1,
-        SLEEP = 2,
-        GOLD = 3,
-        SILVER = 4,
-        BRONZE = 5,
-        PLATINUM = 6;
+        AWAKE = 10,
+        MOVE = 11,
+        SLEEP = 12,
+        GOLD = 13,
+        SILVER = 14,
+        BRONZE = 15,
+        PLATINUM = 16;
 
-    public TextureHandler(){
+    public TextureHandler(SuperManager sm){
         textures = new Array(10);  
         atlases = new Array(7);
+        filenames = new Array(20);
+        unloads = new Array(20);
+        
+        mngr = sm.getAssetManager();
        
     }
     
-
-    
     public void initialize(){
-        textures.add(new Texture(Gdx.files.internal("test.png")));
+       /* textures.add(new Texture(Gdx.files.internal("test.png")));
         textures.add(new Texture(Gdx.files.internal("SunOutline.png")));
         textures.add(new Texture(Gdx.files.internal("boundary-red.png")));
         textures.add(new Texture(Gdx.files.internal("boundary-blue.png")));
@@ -66,12 +71,43 @@ public static final int
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/gold/gold.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/silver/silver.pack")));
         atlases.add(new TextureAtlas(Gdx.files.internal("animations/bronze/bronze.pack")));
-        atlases.add(new TextureAtlas(Gdx.files.internal("animations/platinum/platinum.pack")));
+        atlases.add(new TextureAtlas(Gdx.files.internal("animations/platinum/platinum.pack")));*/
+        
+        filenames.add("test.png");
+        filenames.add("SunOutline.png");
+        filenames.add("boundary-red.png");
+        filenames.add("boundary-blue.png");
+        filenames.add("boundary-outer.png");
+        filenames.add("background.png");
+        filenames.add("background-big.png");
+        filenames.add("background-small.png");
+        filenames.add("locator.png");
+        filenames.add("paused.png");
+        filenames.add("animations/awake/awake.pack");
+        filenames.add("animations/move/move.pack");
+        filenames.add("animations/sleep/sleep.pack");
+        filenames.add("animations/gold/gold.pack");
+        filenames.add("animations/silver/silver.pack");
+        filenames.add("animations/bronze/bronze.pack");
+        filenames.add("animations/platinum/platinum.pack");
+        
+        for (int i = 0; i < 10; i++){
+            mngr.load(filenames.get(i), Texture.class);
+        }
+        
+        for (int i = 10; i < 17; i++){
+            mngr.load(filenames.get(i), TextureAtlas.class);
+        }
+        
+        //mngr.finishLoading();
 
     }
     
+    
+    
     public Texture getTexture(int texture){
-        return textures.get(texture);
+        
+        return mngr.get(filenames.get(texture), Texture.class);
     }
     
     /*public TextureAtlas getBroPack(){
@@ -79,8 +115,22 @@ public static final int
     }*/
     
     public TextureAtlas getTextureAtlas(int index){
-        return atlases.get(index);
+        return mngr.get(filenames.get(index), TextureAtlas.class);
         
+    }
+    
+    public boolean isLoading(){
+        
+        for(String s : filenames){
+            if (!mngr.isLoaded(s)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void clear(){
+        mngr.clear();
     }
     
     public void disposeAtlases(){

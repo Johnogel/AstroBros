@@ -36,6 +36,7 @@ public class MenuManager implements Controller{
     private Array<Light> lights;
     private int title_width, title_height, space_width, space_height;
     private final SoundPlayer music;
+    private Texture blue_bar, container;
     
     public MenuManager(SuperManager mngr){
         
@@ -51,7 +52,8 @@ public class MenuManager implements Controller{
         this.space_width = 120;
         this.space_height = 35;
         
-        music = mngr.getMusicPlayer();
+        
+        music = mngr.getSoundPlayer();
         
         
         
@@ -60,8 +62,8 @@ public class MenuManager implements Controller{
     @Override
     public void update() {
         
-        if (Gdx.input.isKeyJustPressed(Keys.SPACE)){
-            mngr.transition();
+        if (Gdx.input.isKeyJustPressed(Keys.SPACE) && !mngr.isLoading()){
+            initializeController();
             
             
         }
@@ -74,17 +76,14 @@ public class MenuManager implements Controller{
 
     @Override
     public void initializeController(){
-        mngr.setController(SuperManager.GAME_MANAGER);
+        mngr.transition();
+        mngr.setSuperController(SuperManager.GAME_MANAGER);
     }
         
     @Override
     public void render() {
         
         batch.setProjectionMatrix(camera.projection);   
-        
-        Gdx.gl20.glClearColor(0, 0, 0, 1);
-        
-        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         ray_handler.setCombinedMatrix(camera);
         
@@ -96,7 +95,14 @@ public class MenuManager implements Controller{
         //batch.draw(press_space, Gdx.graphics.getWidth()/2 - press_space.getWidth()/2, Gdx.graphics.getHeight()/2 - press_space.getHeight()/2);
         //batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, Gdx.graphics.getHeight()/2+100);
         batch.draw(title, 0 - this.title_width*0.5f, camera.viewportHeight/2*.1f, this.title_width, this.title_height);
-        batch.draw(press_space, 0 - this.space_width*0.5f, -camera.viewportHeight/2*.6f, this.space_width,this.space_height);
+        if(mngr.isLoading()){
+            batch.draw(container, 0 - this.space_width*0.5f, -camera.viewportHeight/2*.6f, this.space_width,this.space_height);
+            batch.draw(blue_bar, 0 - this.space_width*0.45f, -camera.viewportHeight/2*.55f, this.space_width * mngr.getLoadingProgress(),this.space_height-1);
+        }
+        else{
+            batch.draw(press_space, 0 - this.space_width*0.5f, -camera.viewportHeight/2*.6f, this.space_width,this.space_height);
+
+        }
         
         
         batch.end();
@@ -105,6 +111,11 @@ public class MenuManager implements Controller{
 
     @Override
     public void dispose() {
+        press_space.dispose();
+        title.dispose();
+        container.dispose();
+        blue_bar.dispose();
+        
     }
 
 
@@ -115,10 +126,15 @@ public class MenuManager implements Controller{
         mngr.initializeWorld();
         this.ray_handler = mngr.getRayHandler();
         this.camera = mngr.getCamera();
-               
+        
+        if(press_space != null){
+            dispose();
+        }
+        
         press_space = new Texture(Gdx.files.internal("PressSpace.png"));
         title = new Texture(Gdx.files.internal("AstroBros.png"));
-        
+        blue_bar = new Texture(Gdx.files.internal("blue-bar.png"));
+        container = new Texture(Gdx.files.internal("load-container.png"));
         ray_handler.setCombinedMatrix(camera);
         
     }
@@ -129,8 +145,14 @@ public class MenuManager implements Controller{
         this.ray_handler = mngr.getRayHandler();
         this.camera = mngr.getCamera();
                
+        if(press_space != null){
+            dispose();
+        }
+        
         press_space = new Texture(Gdx.files.internal("PressSpace.png"));
         title = new Texture(Gdx.files.internal("AstroBros.png"));
+        blue_bar = new Texture(Gdx.files.internal("blue-bar.png"));
+        container = new Texture(Gdx.files.internal("load-container.png"));
         
         new PointLight(ray_handler, 200, Color.BLUE, 600, 0, 300);
         new PointLight(ray_handler, 200, Color.BLUE, 600, 0, -300);

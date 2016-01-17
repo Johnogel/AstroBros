@@ -40,7 +40,7 @@ boolean initialized;
         sound_handles.add(Gdx.files.internal("sounds/bump.ogg"));
         sound_handles.add(Gdx.files.internal("sounds/stick.ogg"));
         music_handles.add(Gdx.files.internal("music/DontSleep.ogg"));
-        music_handles.add(Gdx.files.internal("music/Sleep.ogg"));
+        music_handles.add(Gdx.files.internal("music/Astro.ogg"));
         //file_handles.add(Gdx.files.internal("sounds/bump.ogg"));
     }
     

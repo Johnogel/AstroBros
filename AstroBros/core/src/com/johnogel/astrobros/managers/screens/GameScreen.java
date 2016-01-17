@@ -46,7 +46,7 @@ public abstract class GameScreen implements Controller{
         this.camera = mngr.getCamera();        
         this.batch = mngr.getSpriteBatch();
         this.ray_handler = mngr.getRayHandler();
-        music = mngr.getSuperManager().getMusicPlayer();
+        music = mngr.getSuperManager().getSoundPlayer();
         
     }
     

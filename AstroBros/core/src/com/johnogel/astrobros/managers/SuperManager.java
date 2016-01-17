@@ -10,6 +10,7 @@ import box2dLight.Light;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -40,21 +41,28 @@ private final float DELTA = .05f;
 private int index;
 private boolean super_controller_changed;
 private final TextureHandler texture_handler;
+private AssetManager asset_manager;
+private boolean transitioning;
+private boolean closing;
 
 protected SoundPlayer sound_player;
 public static final int 
         MENU_MANAGER = 0,
         GAME_MANAGER = 1;
 
-    public SuperManager(World world, OrthographicCamera camera, RayHandler ray_handler){
+    public SuperManager(){
         lights = new Array();
         managers = new Array();
+        closing = false;
+        asset_manager = new AssetManager();
         
-        this.world = world;
+        transitioning = false;
+        
+        /*this.world = world;
         this.camera = camera;
         this.ray_handler = ray_handler;
-        
-        texture_handler = new TextureHandler();
+        */
+        texture_handler = new TextureHandler(this);
         texture_handler.initialize();
         
         alpha = 0f;
@@ -67,8 +75,7 @@ public static final int
         managers.add(new GameManager(this));
         
         //initialize();
-        manager = managers.get(SuperManager.MENU_MANAGER);
-        manager.initialize();
+        
         
         shape_renderer = new ShapeRenderer();
         
@@ -79,12 +86,22 @@ public static final int
 
     }
     
+    public void close(){
+        closing = true;
+    }
+    
+    public AssetManager getAssetManager(){
+        return asset_manager;
+    }
+    
     public void transition(){
         fading_out = true;
+        transitioning = true;
     }
     
     @Override
     public void update() {
+        asset_manager.update();
         if(!isTransitioning()){
             manager.update();
         }
@@ -102,24 +119,29 @@ public static final int
     
     
     private void resolveTransition(){
-        if(fading_out || fading_in){
+        if((fading_out || fading_in) ){
             if(fading_out){
                 alpha += DELTA;
                 if(alpha > .999f){
                     fading_out = false;
-                    fading_in = true;
+                    //fading_in = true;
                     if(this.super_controller_changed){
+                        
+
                         manager = managers.get(index);
                         this.super_controller_changed = false;
                         manager.initialize();
                         manager.update();
                     }
-                    else{
+                    else {
+                        
                         manager.initializeController();
                         manager.update(); 
+                        
                     }         
                 }
             }
+            
             
             else if (fading_in){
                 alpha -= DELTA;
@@ -136,6 +158,21 @@ public static final int
             shape_renderer.end();
             Gdx.gl.glDisable(GL20.GL_BLEND);
         }
+        
+//        else if (texture_handler.isLoading() && transitioning){
+//            Gdx.gl.glEnable(GL20.GL_BLEND);
+//            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+//            shape_renderer.setColor(0, 0, .50f, .08f);
+//            shape_renderer.begin(ShapeRenderer.ShapeType.Filled);  
+//            shape_renderer.rect(-50, 0,1200, 1200);            
+//            shape_renderer.end();
+//            Gdx.gl.glDisable(GL20.GL_BLEND);
+//                
+//        }
+//        else if(transitioning){
+//            fading_in = true;
+//            transitioning = false;
+//        }
     }
     
     private boolean isTransitioning(){
@@ -179,11 +216,17 @@ public static final int
         manager.dispose();
         sound_player.dispose();
         shape_renderer.dispose();
-        texture_handler.dispose();
-
+        
+        //texture_handler.clear();
+        if(closing){
+            asset_manager.dispose();
+    
+        }
     }
 
-
+    public float getLoadingProgress(){
+        return asset_manager.getProgress();
+    }
     
 @Override
     public void initializeWorld(){
@@ -191,8 +234,10 @@ public static final int
             ray_handler.dispose();
         }
         if(sound_player != null){
-            sound_player.dispose();
+            //sound_player.dispose();
         }
+        
+        //sound_player.initialize();
         
         //texture_handler.disposeAtlases();
         
@@ -214,7 +259,7 @@ public static final int
         
     }
     
-    public SoundPlayer getMusicPlayer(){
+    public SoundPlayer getSoundPlayer(){
         return sound_player;
     }
     
@@ -228,12 +273,17 @@ public static final int
         
         //music = Gdx.audio.newMusic(Gdx.files.internal(filename));
     }
+    
+    public boolean isLoading(){
+        return texture_handler.isLoading();
+    }
 
     @Override
     public void initialize() {
         ray_handler = new RayHandler(world);
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
-        sound_player = new SoundPlayer();
+        manager = managers.get(SuperManager.MENU_MANAGER);
+        manager.initialize();
 
     }
 
