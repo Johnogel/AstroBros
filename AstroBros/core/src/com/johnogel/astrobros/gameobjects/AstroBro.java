@@ -84,7 +84,7 @@ protected final int
         if(ticker % 70 == 0){
             frame++;
         }
-        if(frame % 2 == 0){
+        if(frame % 3 == 0){
             this.animated_sprite.setTime(0);
         }
         

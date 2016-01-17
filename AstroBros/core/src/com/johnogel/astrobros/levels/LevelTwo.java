@@ -40,6 +40,7 @@ public class LevelTwo extends Level{
         //this.free_bros.add(new Player(world, camera, 200));
         this.free_bros.add(new Player(world, camera, 170));
         this.free_bros.add(new Player(world, camera, 150));
+        this.free_bros.add(new Player(world, camera, 200));
         //this.free_bros.add(new Player(world, camera, 80));
 
         //world.createJoint(joint_def);
@@ -52,7 +53,7 @@ public class LevelTwo extends Level{
         
         
         //adds sun to suns array without storing locally
-        new Sun(this, suns, 8000, Color.BLUE, 1200, width/2, height/2 );
+        new Sun(this, suns, 8000, Color.BLUE, 1000, width/2, height/2 );
         
         this.setOrbits();
         

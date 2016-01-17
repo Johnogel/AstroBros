@@ -134,13 +134,13 @@ public class AwardScreen extends GameScreen{
             bottom_text = "TRY FOR PLATINUM!";
             color = Color.GOLD;
         }
-        else if(mngr.getTotalScore() > mngr.getTopScore()-5){
+        else if(mngr.getTotalScore() > mngr.getTopScore()-3){
             animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.SILVER).getRegions());
             middle_text = "GREAT!";
             bottom_text = "TRY FOR GOLD!";
             color = Color.SLATE;
         }
-        else if(mngr.getTotalScore() > mngr.getTopScore() - 8){
+        else if(mngr.getTotalScore() > mngr.getTopScore() - 5){
             animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.BRONZE).getRegions());
             middle_text = "GOOD!";
             bottom_text = "TRY FOR SILVER!";

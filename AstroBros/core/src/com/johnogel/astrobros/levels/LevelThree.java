@@ -42,6 +42,7 @@ public class LevelThree extends Level{
         this.free_bros.add(new Player(world, camera, 100));
         this.free_bros.add(new Player(world, camera, 130));
         this.free_bros.add(new Player(world, camera, 160));
+        this.free_bros.add(new Player(world, camera, 200));
                                 
         //world.createJoint(joint_def);
         
@@ -53,7 +54,7 @@ public class LevelThree extends Level{
         
         
         //adds sun to suns array without storing locally
-        new Sun(this, suns, 8000, Color.RED, 1500, width/2, height/2 );
+        new Sun(this, suns, 8000, Color.RED, 1000, width/2, height/2 );
         
         this.setOrbits();
         
