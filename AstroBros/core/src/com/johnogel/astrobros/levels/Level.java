@@ -71,7 +71,7 @@ protected RayHandler ray_handler;
 protected int width, height, player_index;
 
 protected BitmapFont score;
-protected CharSequence score_chars, timer_chars;
+protected CharSequence score_chars, timer_chars, win_timer_chars;
 protected int safe_bros, timer, ticker;
 
 protected final int START_TIME;
@@ -92,12 +92,15 @@ protected Music sun_sound;
 
 protected int total_bros;
 protected boolean dead, paused, sizzle;
-
+private final int 
+        WIN_TIMER_MAX = 5;
 private final SoundPlayer sound_player;
 
 protected ShapeRenderer shape_renderer;
 
 protected int bumps;
+
+protected int win_timer;
 
 protected OrthographicCamera camera;
 
@@ -109,6 +112,7 @@ private float corner_x, corner_y;
         this.START_TIME = start_time;
         score_chars = "0 / 0";
         timer_chars = ""+start_time;
+        win_timer_chars = "5";
         score = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         score.getData().setScale(0.3f, 0.3f);
         CharSequence glyphs = "0123456789";
@@ -165,6 +169,8 @@ private float corner_x, corner_y;
         bumps  = 0;
         
         sizzle = false;
+        
+        win_timer = 5;
     }
     
     public Player getPlayer(){
@@ -582,6 +588,22 @@ private float corner_x, corner_y;
             if(ticker%60 == 0){
                 timer--;
                 timer_chars = ""+timer;
+                if(safe_bros == bros.size){
+                    win_timer--;
+                    
+                }
+                else{
+                    win_timer = this.WIN_TIMER_MAX;
+                    
+                }
+                win_timer_chars = ""+win_timer;
+            }
+            if(win_timer < 1 && safe_bros == bros.size){
+                notifyWin();
+            }
+            
+            if(bros.size == 1){
+                notifyLoss();
             }
 
             //check if level is over
@@ -779,6 +801,10 @@ private float corner_x, corner_y;
         //score.draw(batch, score_chars, 0-camera.viewportWidth*0.4f,camera.viewportHeight*0.4f);
         score.draw(batch, score_chars, -camera.viewportWidth*0.33f,camera.viewportHeight*0.47f, 2, 0, false);
         score.draw(batch, timer_chars, camera.viewportWidth*0.45f,camera.viewportHeight*0.47f, 2, 0, false);
+        
+        if(safe_bros == bros.size){   
+            score.draw(batch, win_timer_chars, 0,30, 2, 0, false);
+        }
         //score.draw(batch, score_chars, 0,0);
         
         //score.draw(batch, score_chars, 0, 0, 20, 10, true);
