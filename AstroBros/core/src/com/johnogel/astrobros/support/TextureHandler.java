@@ -36,13 +36,14 @@ public static final int
         LOCATOR = 8,
         PAUSED= 9,
         LIFE = 10,
-        AWAKE = 11,
-        MOVE = 12,
-        SLEEP = 13,
-        GOLD = 14,
-        SILVER = 15,
-        BRONZE = 16,
-        PLATINUM = 17;
+        BLACK_HOLE = 11,
+        AWAKE = 12,
+        MOVE = 13,
+        SLEEP = 14,
+        GOLD = 15,
+        SILVER = 16,
+        BRONZE = 17,
+        PLATINUM = 18;
 
     public TextureHandler(SuperManager sm){
         
@@ -86,6 +87,7 @@ public static final int
         filenames.add("locator.png");
         filenames.add("paused.png");
         filenames.add("life.png");
+        filenames.add("BlackHole.png");
         filenames.add("animations/awake/awake.pack");
         filenames.add("animations/move/move.pack");
         filenames.add("animations/sleep/sleep.pack");
@@ -94,11 +96,11 @@ public static final int
         filenames.add("animations/bronze/bronze.pack");
         filenames.add("animations/platinum/platinum.pack");
         
-        for (int i = 0; i < 11; i++){
+        for (int i = 0; i < 12; i++){
             mngr.load(filenames.get(i), Texture.class);
         }
         
-        for (int i = 11; i < 18; i++){
+        for (int i = 12; i < 19; i++){
             mngr.load(filenames.get(i), TextureAtlas.class);
         }
         

@@ -99,9 +99,17 @@ public class AwardScreen extends GameScreen{
                 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             //mngr.setLevel(mngr.getCurrentLevel());
+            int total_score = mngr.getTotalScore();
+            int top_score =  mngr.getTopScore();
             
-            mngr.getSuperManager().setSuperController(SuperManager.MENU_MANAGER);
-            mngr.getSuperManager().transition();
+            if(total_score == top_score){
+                mngr.initializeBonus();
+            }
+            else{
+                mngr.getSuperManager().setSuperController(SuperManager.MENU_MANAGER);
+                mngr.getSuperManager().transition();
+        
+            }
         }
     }
 

@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.interfaces.GameObject;
 import com.johnogel.astrobros.levels.Level;
+import com.johnogel.astrobros.support.TextureHandler;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 /**
@@ -26,11 +27,11 @@ import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
  * @author johno-gel
  */
 public class Sun extends CircleObject{
-private RayHandler ray_handler;
-private PointLight light;
-private OrthographicCamera camera;
-private Texture texture;
-private Box2DSprite sprite;
+protected RayHandler ray_handler;
+protected PointLight light;
+protected OrthographicCamera camera;
+protected Texture texture;
+protected Box2DSprite sprite;
 
     public Sun(Level level, Array<Sun> suns, int num_rays, Color color, int intensity, float x, float y){
         
@@ -50,7 +51,7 @@ private Box2DSprite sprite;
         circle_def.type = BodyDef.BodyType.StaticBody;
         circle_def.position.set(x,y);
         
-        texture = new Texture(Gdx.files.internal("SunOutline.png"));
+        //texture = new Texture(Gdx.files.internal("SunOutline.png"));
         
         
         body = level.getWorld().createBody(circle_def);
@@ -66,9 +67,9 @@ private Box2DSprite sprite;
         
         body.createFixture(circle_fixture);
         
-        sprite = new Box2DSprite(texture);
+        /*sprite = new Box2DSprite(texture);
         
-        body.setUserData(sprite);
+        body.setUserData(sprite);*/
         
         body.createFixture(circle_fixture);
         
@@ -76,6 +77,13 @@ private Box2DSprite sprite;
         
         circle_shape.dispose();
         
+    }
+    
+    public void initializeTexture(TextureHandler h, int index){
+        texture = h.getTexture(index);
+        sprite = new Box2DSprite(texture);
+        
+        body.setUserData(sprite);
     }
     
     public void turnOff(){

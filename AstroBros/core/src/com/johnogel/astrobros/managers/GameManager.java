@@ -15,13 +15,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.johnogel.astrobros.levels.BonusLevel;
 import com.johnogel.astrobros.levels.Level;
 import com.johnogel.astrobros.levels.LevelOne;
 import com.johnogel.astrobros.levels.LevelThree;
@@ -64,11 +64,12 @@ public final int
         LEVEL_ONE = 0,
         LEVEL_TWO = 1,
         LEVEL_THREE = 2,
-        GAME_OVER = 3,
-        LEVEL_WIN = 4,
-        LEVEL_LOSS = 5,
-        GAME_END = 6,
-        AWARD = 7;
+        LEVEL_FOUR = 3,
+        GAME_OVER = 4,
+        LEVEL_WIN = 5,
+        LEVEL_LOSS = 6,
+        GAME_END = 7,
+        AWARD = 8;
 
     public GameManager(SuperManager mngr){
         this.mngr = mngr;
@@ -383,6 +384,13 @@ public final int
         return shape_renderer;
     }
     
+    public void initializeBonus(){
+        mngr.transition();
+        setLevel(levels.size - 1);
+        
+        
+    }
+    
     @Override
     public void initialize() {
         shape_renderer.dispose();
@@ -400,6 +408,7 @@ public final int
         levels.add(new LevelOne(this, 60));
         levels.add(new LevelTwo(this, 60));
         levels.add(new LevelThree(this, 60));
+        levels.add(new BonusLevel(this, 60));
         
         top_score = 0;
         total_score = 0;
@@ -407,6 +416,7 @@ public final int
         controllers.add(levels.get(0));
         controllers.add(levels.get(1));
         controllers.add(levels.get(2));
+        controllers.add(levels.get(3));
         controllers.add(new GameOverScreen(this));
         controllers.add(new LevelWinScreen(this));
         controllers.add(new LevelLossScreen(this));
@@ -474,6 +484,20 @@ public final int
         
     }
     
+    
+    
+    public void resolveBonusLoss(){
+        mngr.transition();
+        controller_index = this.GAME_OVER;
+        
+        
+    }
+    
+    public void resolveBonusWin(){
+        mngr.transition();
+        
+    }
+    
     public int getCurrentLevel(){
         return level;
     }
@@ -484,7 +508,8 @@ public final int
     
     public void incrementLevel(){
         mngr.transition();
-        if (level < levels.size - 1/*change back to one*/){
+
+        if(level < levels.size - 4/*change back to one*/){
             this.setLevel(level + 1);
         }
         else{

@@ -10,6 +10,7 @@ import com.johnogel.astrobros.gameobjects.BoundaryCircle;
 import com.johnogel.astrobros.gameobjects.Player;
 import com.johnogel.astrobros.gameobjects.Sun;
 import com.johnogel.astrobros.managers.GameManager;
+import com.johnogel.astrobros.support.TextureHandler;
 
 /**
  *
@@ -40,7 +41,7 @@ public class LevelOne extends Level{
         //this.free_bros.add(new Player(world, camera, 120));
         //this.free_bros.add(new Player(world, camera, 100));
         //this.free_bros.add(new Player(world, camera, 50));
-        this.free_bros.add(new Player(world, camera, 60));
+        //this.free_bros.add(new Player(world, camera, 60));
         this.free_bros.add(new Player(world, camera, 100));
         //this.free_bros.add(new Player(world, camera, 80));
         //this.free_bros.add(new Player(world, camera, 50));
@@ -56,6 +57,8 @@ public class LevelOne extends Level{
         
         //adds sun to suns array without storing locally
         new Sun(this, suns, 8000, Color.YELLOW, 1000, width/2, height/2 );
+        
+        suns.get(0).initializeTexture(texture_handler, TextureHandler.SUN);
         
         this.setOrbits();
         

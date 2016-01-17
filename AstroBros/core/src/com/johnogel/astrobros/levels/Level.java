@@ -92,9 +92,9 @@ protected Music sun_sound;
 
 protected int total_bros;
 protected boolean dead, paused, sizzle;
-private final int 
+protected final int 
         WIN_TIMER_MAX = 5;
-private final SoundPlayer sound_player;
+protected final SoundPlayer sound_player;
 
 protected ShapeRenderer shape_renderer;
 
@@ -403,7 +403,7 @@ private float corner_x, corner_y;
         return world;
     }
     
-    private void attachBodies(){
+    protected void attachBodies(){
         /*System.out.println("CONTROLLED BROS SIZE: "+controlled_bros.size+"\nCONTROLLED BODIES SIZE: "+controlled_bodies.size);
         System.out.println("FREE BROS SIZE: "+free_bros.size+"\nFREE BODIES SIZE: "+free_bodies.size);
         System.out.println("BROS SIZE: "+bros.size);*/
@@ -639,7 +639,7 @@ private float corner_x, corner_y;
 
     }
     
-    private void cleanUp(){
+    protected void cleanUp(){
         for(Body b : to_be_destroyed){
             
             b.setActive(false);
@@ -679,13 +679,13 @@ private float corner_x, corner_y;
         to_be_destroyed.clear();
     }
     
-    private void updateLocators(SpriteBatch batch){
+    protected void updateLocators(SpriteBatch batch){
         for (Locator l : locators){
             l.update(batch);
         }
     }
     //should call mngr method to handle screen changing
-    private void notifyWin(){
+    protected void notifyWin(){
         sound_player.stop();
         sun_sound.stop();
         mngr.updateTopScore(total_bros);
@@ -693,7 +693,7 @@ private float corner_x, corner_y;
     }
     
     //should call mngr method to handle screen changing
-    private void notifyLoss(){
+    protected void notifyLoss(){
         sound_player.stop();
         sun_sound.stop();
         mngr.resolveLevelLoss();
@@ -704,14 +704,14 @@ private float corner_x, corner_y;
         
     }
     
-    private void updateSunSound(){
+    protected void updateSunSound(){
         float dst = player.getBody().getPosition().dst(suns.get(0).getPosition());
         if(dst < outer_orbit.getRadius()){
             sun_sound.setVolume((outer_orbit.getRadius()-dst)*this.sun_sound_constant);
         }
     }
     
-    private void enforceOutOfBounds(AstroBro b){
+    protected void enforceOutOfBounds(AstroBro b){
         Sun s = suns.get(0);
         
         float distance_squared = CircleObject.distance(s, b)*CircleObject.distance(s, b);
@@ -752,7 +752,7 @@ private float corner_x, corner_y;
         
     }
     
-    private void gravitate(){
+    protected void gravitate(){
         
         //sets force on each body towards each sun
         for (Sun s : suns){
@@ -867,7 +867,7 @@ private float corner_x, corner_y;
         return this.total_bros;
     }
     
-    private void resolvePause(){
+    protected void resolvePause(){
         paused = !paused;
         if(paused){
             sound_player.pause();
@@ -959,7 +959,7 @@ private float corner_x, corner_y;
         return this.texture_handler;
     }
     
-    private void setBroTextures(){
+    protected void setBroTextures(){
         for(Player p : bros){
             p.setTexture(mngr.getTextureHandler().getTexture(TextureHandler.ASTRO_BRO));
         }

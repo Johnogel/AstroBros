@@ -10,6 +10,7 @@ import com.johnogel.astrobros.gameobjects.BoundaryCircle;
 import com.johnogel.astrobros.gameobjects.Player;
 import com.johnogel.astrobros.gameobjects.Sun;
 import com.johnogel.astrobros.managers.GameManager;
+import com.johnogel.astrobros.support.TextureHandler;
 
 /**
  *
@@ -55,6 +56,8 @@ public class LevelThree extends Level{
         
         //adds sun to suns array without storing locally
         new Sun(this, suns, 8000, Color.RED, 1000, width/2, height/2 );
+        
+        suns.get(0).initializeTexture(texture_handler, TextureHandler.SUN);
         
         this.setOrbits();
         
