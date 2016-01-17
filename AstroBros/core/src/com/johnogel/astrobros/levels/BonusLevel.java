@@ -8,12 +8,14 @@ package com.johnogel.astrobros.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
 import com.johnogel.astrobros.gameobjects.AstroBro;
 import com.johnogel.astrobros.gameobjects.BlackHole;
 import com.johnogel.astrobros.gameobjects.CircleObject;
+import com.johnogel.astrobros.gameobjects.Locator;
 import com.johnogel.astrobros.gameobjects.Player;
 import com.johnogel.astrobros.gameobjects.Sun;
 import com.johnogel.astrobros.managers.GameManager;
@@ -216,7 +218,7 @@ public class BonusLevel extends Level{
                 notifyWin();
             }
             
-            if(bros.size == 1){
+            if(bros.size < total_bros){
                 notifyLoss();
             }
 
@@ -300,7 +302,38 @@ public class BonusLevel extends Level{
         sound_player.playSong();
 
     }
-    
+    @Override
+    public void drawHUD(SpriteBatch batch){
+        camera.update();
+        batch.setProjectionMatrix(camera.projection);
+
+        batch.begin();
+        //score.setColor(Color.WHITE);
+        
+      
+        //score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
+        //score.draw(batch, score_chars, 0-camera.viewportWidth*0.4f,camera.viewportHeight*0.4f);
+        score.draw(batch, score_chars, -camera.viewportWidth*0.33f,camera.viewportHeight*0.47f, 2, 0, false);
+        score.draw(batch, timer_chars, camera.viewportWidth*0.45f,camera.viewportHeight*0.47f, 2, 0, false);
+        
+        if(safe_bros == bros.size){   
+            score.draw(batch, win_timer_chars, 0,30, 2, 0, false);
+        }
+        //score.draw(batch, score_chars, 0,0);
+        
+        //score.draw(batch, score_chars, 0, 0, 20, 10, true);
+        batch.end();
+        for(Locator l : locators){
+            l.render(batch);
+        }
+        
+        
+        /*batch.begin();
+        for (int i = 0; i < mngr.getLives(); i++){
+            batch.draw(this.texture_handler.getTexture(TextureHandler.LIFE), corner_x + 9 * i, corner_y, 8, 8);
+        }
+        batch.end();*/
+    }
     @Override
     protected void notifyWin(){
         sound_player.stop();

@@ -26,11 +26,11 @@ import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
 public class AwardScreen extends GameScreen{
 
     private final BitmapFont font;
-    private final CharSequence game_over;
+    private CharSequence bonus_text;
     private CharSequence middle_text, bottom_text;
-    private GlyphLayout layout_top, layout_bottom, layout_middle;
-    private float top_font_x, bottom_font_x;
-    private float top_font_y, bottom_font_y;
+    private GlyphLayout layout_bonus, layout_bottom, layout_middle;
+    private float bonus_font_x, bottom_font_x;
+    private float bonus_font_y, bottom_font_y;
     private float middle_font_x, middle_font_y;
     private int level;
     private Animation animation;
@@ -44,15 +44,15 @@ public class AwardScreen extends GameScreen{
         
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         font.getData().setScale(0.3f, 0.3f);  
-        game_over = "AWARD!";
+        bonus_text = "";
         bottom_text = "";
         //middle_text = "0";
         
-        layout_top = new GlyphLayout(font, game_over);
+        layout_bonus = new GlyphLayout(font, bonus_text);
         
         layout_bottom = new GlyphLayout(font, bottom_text);
-        top_font_x =  -layout_top.width / 2;
-        top_font_y =  20;
+        bonus_font_x =  -layout_bonus.width / 2;
+        bonus_font_y =  -40;
         
         middle_font_y = 0;
         
@@ -93,6 +93,7 @@ public class AwardScreen extends GameScreen{
         //font.draw(batch, layout_top, top_font_x, top_font_y);
         font.draw(batch, layout_middle, middle_font_x, middle_font_y);
         font.draw(batch, layout_bottom, bottom_font_x, bottom_font_y);       
+        font.draw(batch, layout_bonus, this.bonus_font_x, this.bonus_font_y);       
         batch.draw(animation.getKeyFrame(state_time), -19, 0, 38, 38);
         batch.end();
         //batch.setProjectionMatrix(camera.projection);
@@ -138,7 +139,8 @@ public class AwardScreen extends GameScreen{
         if(total_score == top_score){
             animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.PLATINUM).getRegions());
             middle_text = "PERFECT!";
-            bottom_text = "BONUS LEVEL!";
+            bottom_text = "BONUS LEVEL! ONE LIFE!";
+            bonus_text = "YOU MUST BE FLAWLESS";
             color = Color.WHITE;
         }
         else if(mngr.getTotalScore() > mngr.getTopScore()-2){
