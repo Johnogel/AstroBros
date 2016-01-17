@@ -34,7 +34,7 @@ public class MenuManager implements Controller{
     OrthographicCamera camera;
     private SuperManager mngr;
     private Array<Light> lights;
-    private int title_width, title_height, space_width, space_height;
+    private int title_width, title_height, space_width, space_height, loading_width, loading_height;
     private final SoundPlayer music;
     private Texture blue_bar, container;
     
@@ -51,6 +51,10 @@ public class MenuManager implements Controller{
         this.title_height = 50;
         this.space_width = 120;
         this.space_height = 35;
+        this.loading_width = 80;
+        this.loading_height = 25;
+        
+        
         
         
         music = mngr.getSoundPlayer();
@@ -63,7 +67,7 @@ public class MenuManager implements Controller{
     public void update() {
         
         if (Gdx.input.isKeyJustPressed(Keys.SPACE) && !mngr.isLoading()){
-            initializeController();
+            mngr.transition();
             
             
         }
@@ -76,8 +80,8 @@ public class MenuManager implements Controller{
 
     @Override
     public void initializeController(){
-        mngr.transition();
-        mngr.setSuperController(SuperManager.GAME_MANAGER);
+        
+        mngr.setController(SuperManager.GAME_MANAGER);
     }
         
     @Override
@@ -96,8 +100,8 @@ public class MenuManager implements Controller{
         //batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, Gdx.graphics.getHeight()/2+100);
         batch.draw(title, 0 - this.title_width*0.5f, camera.viewportHeight/2*.1f, this.title_width, this.title_height);
         if(mngr.isLoading()){
-            batch.draw(container, 0 - this.space_width*0.5f, -camera.viewportHeight/2*.6f, this.space_width,this.space_height);
-            batch.draw(blue_bar, 0 - this.space_width*0.45f, -camera.viewportHeight/2*.55f, this.space_width * mngr.getLoadingProgress(),this.space_height-1);
+            batch.draw(container, 0 - this.loading_width*0.5f, -camera.viewportHeight/2*.6f, this.loading_width,this.loading_height);
+            batch.draw(blue_bar, - (mngr.getLoadingProgress()*loading_width)*.5f, -camera.viewportHeight/2*.52f, this.loading_width * mngr.getLoadingProgress(),this.loading_height-9.5f);
         }
         else{
             batch.draw(press_space, 0 - this.space_width*0.5f, -camera.viewportHeight/2*.6f, this.space_width,this.space_height);

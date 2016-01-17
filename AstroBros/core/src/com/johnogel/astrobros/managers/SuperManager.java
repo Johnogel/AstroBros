@@ -96,7 +96,7 @@ public static final int
     
     public void transition(){
         fading_out = true;
-        transitioning = true;
+        //transitioning = true;
     }
     
     @Override
@@ -124,9 +124,8 @@ public static final int
                 alpha += DELTA;
                 if(alpha > .999f){
                     fading_out = false;
-                    //fading_in = true;
+                    fading_in = true;
                     if(this.super_controller_changed){
-                        
 
                         manager = managers.get(index);
                         this.super_controller_changed = false;
