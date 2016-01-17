@@ -120,10 +120,12 @@ public class MenuManager implements Controller{
 
     @Override
     public void dispose() {
-        press_space.dispose();
-        title.dispose();
-        container.dispose();
-        blue_bar.dispose();
+        if(press_space != null){
+            press_space.dispose();
+            title.dispose();
+            container.dispose();
+            blue_bar.dispose();
+        }
         
     }
 
