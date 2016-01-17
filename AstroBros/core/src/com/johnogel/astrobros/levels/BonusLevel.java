@@ -50,9 +50,9 @@ public class BonusLevel extends Level{
         //this.free_bros.add(new Player(world, camera, 1));
         //this.free_bros.add(new Player(world, camera, 120));
         this.free_bros.add(new Player(world, camera, 100));
-        this.free_bros.add(new Player(world, camera, 130));
-        this.free_bros.add(new Player(world, camera, 160));
-        this.free_bros.add(new Player(world, camera, 200));
+        //this.free_bros.add(new Player(world, camera, 130));
+        //this.free_bros.add(new Player(world, camera, 160));
+        //this.free_bros.add(new Player(world, camera, 200));
                                 
         //world.createJoint(joint_def);
         

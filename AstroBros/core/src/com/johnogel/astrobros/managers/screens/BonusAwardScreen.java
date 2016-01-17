@@ -15,15 +15,13 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.johnogel.astrobros.managers.GameManager;
 import com.johnogel.astrobros.managers.SuperManager;
 import com.johnogel.astrobros.support.TextureHandler;
-import net.dermetfan.gdx.graphics.g2d.AnimatedBox2DSprite;
 import net.dermetfan.gdx.graphics.g2d.AnimatedSprite;
 
 /**
  *
  * @author johno-gel
  */
-public class AwardScreen extends GameScreen{
-
+public class BonusAwardScreen extends GameScreen{
     private final BitmapFont font;
     private final CharSequence game_over;
     private CharSequence middle_text, bottom_text;
@@ -37,7 +35,7 @@ public class AwardScreen extends GameScreen{
     private final float 
             FPS = 1/60f;
     private float state_time;
-    public AwardScreen(GameManager mngr){
+    public BonusAwardScreen(GameManager mngr){
     
         super(mngr);
         
@@ -98,18 +96,11 @@ public class AwardScreen extends GameScreen{
         
                 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            //mngr.setLevel(mngr.getCurrentLevel());
-            int total_score = mngr.getTotalScore();
-            int top_score =  mngr.getTopScore();
+     
+            mngr.getSuperManager().setSuperController(SuperManager.MENU_MANAGER);
+            mngr.getSuperManager().transition();
+
             
-            if(total_score == top_score){
-                mngr.initializeBonus();
-            }
-            else{
-                mngr.getSuperManager().setSuperController(SuperManager.MENU_MANAGER);
-                mngr.getSuperManager().transition();
-        
-            }
         }
     }
 
@@ -129,37 +120,11 @@ public class AwardScreen extends GameScreen{
         
         //adding moving animation
         Color color;
+        animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.BLACK).getRegions());
+        middle_text = "YOU ROCK";
+        bottom_text = "SERIOUSLY!";
+        color = Color.BLACK;
         
-        if(total_score == top_score){
-            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.PLATINUM).getRegions());
-            middle_text = "PERFECT!";
-            bottom_text = "BONUS LEVEL!";
-            color = Color.WHITE;
-        }
-        else if(mngr.getTotalScore() > mngr.getTopScore()-2){
-            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.GOLD).getRegions());
-            middle_text = "AWESOME!";
-            bottom_text = "TRY FOR PLATINUM!";
-            color = Color.GOLD;
-        }
-        else if(mngr.getTotalScore() > mngr.getTopScore()-3){
-            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.SILVER).getRegions());
-            middle_text = "GREAT!";
-            bottom_text = "TRY FOR GOLD!";
-            color = Color.SLATE;
-        }
-        else if(mngr.getTotalScore() > mngr.getTopScore() - 5){
-            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.BRONZE).getRegions());
-            middle_text = "GOOD!";
-            bottom_text = "TRY FOR SILVER!";
-            color = Color.TAN;
-        }
-        else{
-            animation = new Animation(FPS, mngr.getTextureHandler().getTextureAtlas(TextureHandler.BRONZE).getRegions());
-            middle_text = "";
-            bottom_text = "WHAT!";
-            color = Color.BLACK;
-        }
         
         
         new PointLight(ray_handler, 5000, color, 500, camera.viewportWidth/2, -300 );
@@ -177,4 +142,5 @@ public class AwardScreen extends GameScreen{
 
         
     }
+    
 }

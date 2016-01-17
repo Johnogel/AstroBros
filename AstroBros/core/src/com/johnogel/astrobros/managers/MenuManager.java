@@ -37,6 +37,7 @@ public class MenuManager implements Controller{
     private int title_width, title_height, space_width, space_height, loading_width, loading_height;
     private final SoundPlayer music;
     private Texture blue_bar, container;
+    private boolean initialized = false;
     
     public MenuManager(SuperManager mngr){
         
@@ -66,7 +67,7 @@ public class MenuManager implements Controller{
     @Override
     public void update() {
         
-        if (Gdx.input.isKeyJustPressed(Keys.SPACE) && !mngr.isLoading()){
+        if (Gdx.input.isKeyJustPressed(Keys.SPACE) && !mngr.isLoading() && initialized){
             mngr.transition();
             
             
@@ -76,6 +77,10 @@ public class MenuManager implements Controller{
         camera.update();
         
         ray_handler.setCombinedMatrix(camera);
+        
+        if(!initialized){
+            initialized = true;
+        }
     }
 
     @Override
@@ -166,6 +171,8 @@ public class MenuManager implements Controller{
         music.setSong(SoundPlayer.TITLE_SONG);
         music.setLooping(true);
         music.playSong();
+        
+        initialized = false;
         
     }
 

@@ -43,7 +43,8 @@ public static final int
         GOLD = 15,
         SILVER = 16,
         BRONZE = 17,
-        PLATINUM = 18;
+        PLATINUM = 18,
+        BLACK = 19;
 
     public TextureHandler(SuperManager sm){
         
@@ -95,12 +96,13 @@ public static final int
         filenames.add("animations/silver/silver.pack");
         filenames.add("animations/bronze/bronze.pack");
         filenames.add("animations/platinum/platinum.pack");
+        filenames.add("animations/black/black.pack");
         
         for (int i = 0; i < 12; i++){
             mngr.load(filenames.get(i), Texture.class);
         }
         
-        for (int i = 12; i < 19; i++){
+        for (int i = 12; i < 20; i++){
             mngr.load(filenames.get(i), TextureAtlas.class);
         }
         

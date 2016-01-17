@@ -48,7 +48,8 @@ private boolean closing;
 protected SoundPlayer sound_player;
 public static final int 
         MENU_MANAGER = 0,
-        GAME_MANAGER = 1;
+        GAME_MANAGER = 1,
+        OPENING_MANAGER = 2;
 
     public SuperManager(){
         lights = new Array();
@@ -63,7 +64,8 @@ public static final int
         this.ray_handler = ray_handler;
         */
         texture_handler = new TextureHandler(this);
-        texture_handler.initialize();
+        
+        
         
         alpha = 0f;
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
@@ -73,6 +75,7 @@ public static final int
         
         managers.add(new MenuManager(this));
         managers.add(new GameManager(this));
+        managers.add(new OpeningManager(this));
         
         //initialize();
         
@@ -173,6 +176,11 @@ public static final int
 //            fading_in = true;
 //            transitioning = false;
 //        }
+    }
+    
+    public void fadeIn(){
+        fading_in = true;
+        alpha = 1;
     }
     
     private boolean isTransitioning(){
@@ -281,8 +289,9 @@ public static final int
     @Override
     public void initialize() {
         ray_handler = new RayHandler(world);
+        
         //music = Gdx.audio.newMusic(Gdx.files.internal(TITLE_SONG));
-        manager = managers.get(SuperManager.MENU_MANAGER);
+        manager = managers.get(SuperManager.OPENING_MANAGER);
         manager.initialize();
 
     }
