@@ -101,11 +101,13 @@ protected int bumps;
 
 protected OrthographicCamera camera;
 
+private float corner_x, corner_y;
+
 
     public Level(GameManager mngr, int start_time){
         
         this.START_TIME = start_time;
-        score_chars = "SAFE: 0/0";
+        score_chars = "0 / 0";
         timer_chars = ""+start_time;
         score = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         score.getData().setScale(0.3f, 0.3f);
@@ -154,6 +156,9 @@ protected OrthographicCamera camera;
         //bump_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bump.ogg"));
         //bump_sound_id = bump_sound.play(0);
         //sun_sound_id = sun_sound.play(0);
+        
+        corner_x = -96;
+        corner_y = -57;
         
         sound_player = mngr.getSuperManager().getSoundPlayer();
         
@@ -553,7 +558,7 @@ protected OrthographicCamera camera;
             }
 
             safe_bros = i;
-            score_chars = "SAFE: "+i+"/"+this.total_bros;
+            score_chars = i+" / "+this.total_bros;
 
 
             if(!goldilocks && !is_red){
@@ -761,7 +766,7 @@ protected OrthographicCamera camera;
       
         //score.draw(batch, score_chars, player.getPosition().x, player.getPosition().y+Gdx.graphics.getHeight()/2);
         //score.draw(batch, score_chars, 0-camera.viewportWidth*0.4f,camera.viewportHeight*0.4f);
-        score.draw(batch, score_chars, -camera.viewportWidth*0.11f,camera.viewportHeight*0.47f, 2, 0, false);
+        score.draw(batch, score_chars, -camera.viewportWidth*0.33f,camera.viewportHeight*0.47f, 2, 0, false);
         score.draw(batch, timer_chars, camera.viewportWidth*0.45f,camera.viewportHeight*0.47f, 2, 0, false);
         //score.draw(batch, score_chars, 0,0);
         
@@ -770,6 +775,13 @@ protected OrthographicCamera camera;
         for(Locator l : locators){
             l.render(batch);
         }
+        
+        
+        batch.begin();
+        for (int i = 0; i < mngr.getLives(); i++){
+            batch.draw(this.texture_handler.getTexture(TextureHandler.LIFE), corner_x + 11 * i, corner_y, 10, 10);
+        }
+        batch.end();
     }
     
     //must call after suns are created in initialize method

@@ -35,15 +35,17 @@ public static final int
         BACKGROUND_SMALL = 7,
         LOCATOR = 8,
         PAUSED= 9,
-        AWAKE = 10,
-        MOVE = 11,
-        SLEEP = 12,
-        GOLD = 13,
-        SILVER = 14,
-        BRONZE = 15,
-        PLATINUM = 16;
+        LIFE = 10,
+        AWAKE = 11,
+        MOVE = 12,
+        SLEEP = 13,
+        GOLD = 14,
+        SILVER = 15,
+        BRONZE = 16,
+        PLATINUM = 17;
 
     public TextureHandler(SuperManager sm){
+        
         textures = new Array(10);  
         atlases = new Array(7);
         filenames = new Array(20);
@@ -83,6 +85,7 @@ public static final int
         filenames.add("background-small.png");
         filenames.add("locator.png");
         filenames.add("paused.png");
+        filenames.add("life.png");
         filenames.add("animations/awake/awake.pack");
         filenames.add("animations/move/move.pack");
         filenames.add("animations/sleep/sleep.pack");
@@ -91,11 +94,11 @@ public static final int
         filenames.add("animations/bronze/bronze.pack");
         filenames.add("animations/platinum/platinum.pack");
         
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 11; i++){
             mngr.load(filenames.get(i), Texture.class);
         }
         
-        for (int i = 10; i < 17; i++){
+        for (int i = 11; i < 18; i++){
             mngr.load(filenames.get(i), TextureAtlas.class);
         }
         

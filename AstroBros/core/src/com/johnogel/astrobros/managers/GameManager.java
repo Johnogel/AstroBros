@@ -484,7 +484,7 @@ public final int
     
     public void incrementLevel(){
         mngr.transition();
-        if (level < levels.size - 1/*change back to one*/){
+        if (level < levels.size - 3/*change back to one*/){
             this.setLevel(level + 1);
         }
         else{
@@ -495,7 +495,11 @@ public final int
         
  
     }
-
+    
+    public int getLives(){
+        return lives;
+    }
+    
     @Override
     public boolean isPaused() {
         return controller.isPaused();
