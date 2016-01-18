@@ -78,7 +78,7 @@ private float angle;
             //sprite.draw(batch);
             //batch.dr
             //batch.draw(sprite, position.x, position.y, 10, 10);
-            batch.draw(sprite, position.x, position.y, 2.5f, 2.5f, 5, 5, 1, 1, angle-90);
+            batch.draw(sprite, position.x, position.y, 3f, 3f, 6, 6, 1, 1, angle-90);
             batch.end();
         }
     }

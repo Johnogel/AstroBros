@@ -35,7 +35,7 @@ public class LevelWinScreen extends GameScreen{
         
         font = new BitmapFont(Gdx.files.internal("data/score.fnt"));
         font.getData().setScale(0.3f, 0.3f);  
-        game_over = "PASSED!";
+        game_over = "LEVEL COMPLETE";
         press_space = "PRESS SPACE TO CONTINUE";
         score = "0";
         

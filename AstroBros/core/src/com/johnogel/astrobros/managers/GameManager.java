@@ -162,7 +162,7 @@ public final int
     
     public void resolveEndGame(){
         mngr.transition();
-        if(this.total_score > top_score / 2){
+        if(this.total_score > 4){
             controller_index = this.AWARD;
         }
         else{
@@ -214,13 +214,13 @@ public final int
                 ray_handler.setCombinedMatrix(camera);            
             }
             
+            controller.update();
             
-            
-            if(!isPaused()){
+            if(!isPaused() && !levels.get(level).playerDead()){
                 world.step(this.fps, 8, 4);
             }
             
-            controller.update();
+            
             
         }
         
@@ -487,8 +487,7 @@ public final int
         
     }
     
-    
-    
+
     public void resolveBonusLoss(){
         mngr.transition();
         controller_index = this.GAME_OVER;

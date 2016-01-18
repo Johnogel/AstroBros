@@ -52,6 +52,10 @@ public class BonusLevel extends Level{
         //this.free_bros.add(new Player(world, camera, 1));
         //this.free_bros.add(new Player(world, camera, 120));
         this.free_bros.add(new Player(world, camera, 100));
+        this.free_bros.add(new Player(world, camera, 130));
+        this.free_bros.add(new Player(world, camera, 160));
+        this.free_bros.add(new Player(world, camera, 190));
+        this.free_bros.add(new Player(world, camera, 200));
         //this.free_bros.add(new Player(world, camera, 130));
         //this.free_bros.add(new Player(world, camera, 160));
         //this.free_bros.add(new Player(world, camera, 200));
@@ -204,7 +208,7 @@ public class BonusLevel extends Level{
             if(ticker%60 == 0){
                 timer--;
                 timer_chars = ""+timer;
-                if(safe_bros == bros.size){
+                if(safe_bros == bros.size - 1){
                     win_timer--;
                     
                 }
@@ -214,7 +218,7 @@ public class BonusLevel extends Level{
                 }
                 win_timer_chars = ""+win_timer;
             }
-            if(win_timer < 1 && safe_bros == bros.size){
+            if(win_timer < 1 && safe_bros == bros.size - 1){
                 notifyWin();
             }
             
@@ -224,7 +228,7 @@ public class BonusLevel extends Level{
 
             //check if level is over
             if(timer < 1){
-                if(this.safe_bros > this.total_bros/2){
+                if(this.safe_bros > 0){
                     notifyWin();
                 }
 
@@ -282,7 +286,7 @@ public class BonusLevel extends Level{
         sun_sound.setVolume(1);
         sun_sound.play();
         
-        total_bros = bros.size;
+        total_bros = bros.size - 1;
         
         dead = false;
         
@@ -316,7 +320,7 @@ public class BonusLevel extends Level{
         score.draw(batch, score_chars, -camera.viewportWidth*0.33f,camera.viewportHeight*0.47f, 2, 0, false);
         score.draw(batch, timer_chars, camera.viewportWidth*0.45f,camera.viewportHeight*0.47f, 2, 0, false);
         
-        if(safe_bros == bros.size){   
+        if(safe_bros == bros.size - 1){   
             score.draw(batch, win_timer_chars, 0,30, 2, 0, false);
         }
         //score.draw(batch, score_chars, 0,0);

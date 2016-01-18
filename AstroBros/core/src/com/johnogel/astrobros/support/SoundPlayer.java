@@ -131,6 +131,7 @@ boolean initialized;
     
     public void pause(){
         music.pause();
+        sun.pause();
        
     }
     

@@ -35,11 +35,11 @@ private float
         layer_4_y;
 
 private final float
-        SCALE_1 = .25f,
+        SCALE_1 = .20f,
         SCALE_2 = .10f,
         SCALE_3 = .05f,
         SCALE_4 = .02f,
-        SIZE_1 = .25f,
+        SIZE_1 = .20f,
         SIZE_2 = .25f,
         SIZE_3 = .3f,
         SIZE_4 = .12f;
@@ -56,7 +56,7 @@ private final float
         textures.add(level.getTextureHandler().getTexture(TextureHandler.BACKGROUND_SMALL));
         
         this.layer_1_x = -this.SIZE_1*textures.get(0).getWidth()/2;
-        this.layer_1_y = -500;
+        this.layer_1_y = -350;
         this.layer_2_x = -this.SIZE_2*textures.get(1).getWidth()/2;
         this.layer_2_y = -500;
         this.layer_3_x = -this.SIZE_3*textures.get(2).getWidth()/2;

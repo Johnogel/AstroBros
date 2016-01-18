@@ -199,7 +199,7 @@ private float corner_x, corner_y;
         
         initializeAnimations();
         
-        total_bros = bros.size;
+        total_bros = bros.size - 1;
         
         
         
@@ -411,7 +411,7 @@ private float corner_x, corner_y;
             
             for(int i = to_be_attached.size - 1; i < to_be_attached.size; i++){
                 if(Gdx.input.isKeyPressed(Keys.SPACE)){
-                    sound_player.playSound(SoundPlayer.STICK_SOUND, 1f);
+                    sound_player.playSound(SoundPlayer.STICK_SOUND, .9f);
                     RevoluteJointDef joint_def = new RevoluteJointDef();
                     joint_def.bodyA = to_be_attached_to.get(i);
                     joint_def.bodyB = to_be_attached.get(i);
@@ -555,7 +555,9 @@ private float corner_x, corner_y;
             for(AstroBro b : bros){
                 if(CircleObject.distance(b, inner_orbit) > inner_orbit.getRadius() && CircleObject.distance(b, outer_orbit) < outer_orbit.getRadius()){
                     //System.out.println("GOLDILOCKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    i++;
+                    if(!b.equals(player)){
+                        i++;
+                    }
                     goldilocks = true;
 
                     if(is_red){
@@ -588,7 +590,7 @@ private float corner_x, corner_y;
             if(ticker%60 == 0){
                 timer--;
                 timer_chars = ""+timer;
-                if(safe_bros == bros.size){
+                if(safe_bros == bros.size - 1 ){
                     win_timer--;
                     
                 }
@@ -598,7 +600,7 @@ private float corner_x, corner_y;
                 }
                 win_timer_chars = ""+win_timer;
             }
-            if(win_timer < 1 && safe_bros == bros.size){
+            if(win_timer < 1 && safe_bros == bros.size - 1){
                 notifyWin();
             }
             
@@ -608,7 +610,7 @@ private float corner_x, corner_y;
 
             //check if level is over
             if(timer < 1){
-                if(this.safe_bros > this.total_bros/2){
+                if(this.safe_bros > 0){
                     notifyWin();
                 }
 
@@ -625,9 +627,10 @@ private float corner_x, corner_y;
                 bumps--;
             }
 
-            cleanUp();
+            
 
             if(!dead){
+                cleanUp();
                 updateSunSound();
                 background.update();
                 updateLocators(mngr.getSpriteBatch());
@@ -802,7 +805,7 @@ private float corner_x, corner_y;
         score.draw(batch, score_chars, -camera.viewportWidth*0.33f,camera.viewportHeight*0.47f, 2, 0, false);
         score.draw(batch, timer_chars, camera.viewportWidth*0.45f,camera.viewportHeight*0.47f, 2, 0, false);
         
-        if(safe_bros == bros.size){   
+        if(safe_bros == bros.size - 1){   
             score.draw(batch, win_timer_chars, 0,30, 2, 0, false);
         }
         //score.draw(batch, score_chars, 0,0);
@@ -876,7 +879,7 @@ private float corner_x, corner_y;
             }
         }
         else{
-            
+            sun_sound.play();
             sound_player.playSong();
             for(Player p : bros){
                 p.setAnimationPlaying(true);
@@ -907,6 +910,10 @@ private float corner_x, corner_y;
 
     }
     
+    public boolean playerDead(){
+        return dead;
+    }
+    
     public void initializeGameObjects(){
 //        for (AstroBro g : free_bros){
 //            mngr.addGameObject(g);
@@ -934,7 +941,7 @@ private float corner_x, corner_y;
         sun_sound.setLooping(true);
         sun_sound.play();
         
-        total_bros = bros.size;
+        total_bros = bros.size - 1;
         
         dead = false;
         
