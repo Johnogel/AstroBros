@@ -57,7 +57,7 @@ boolean initialized;
         sounds.add(Gdx.audio.newSound(sound_handles.get(1)));
         sounds.add(Gdx.audio.newSound(sound_handles.get(2)));
         
-        sun = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.wav"));
+        sun = Gdx.audio.newMusic(Gdx.files.internal("sounds/fire.ogg"));
         
     }
     
